@@ -1,0 +1,149 @@
+<mat-toolbar>
+    <mat-form-field appearance="fill">
+        <mat-label>Crear partido</mat-label>
+        <mat-select>
+          <mat-option value="option1" disabled>Crear torneo (deshabilitado)</mat-option>
+          <mat-option value="option2">Crear partido</mat-option>
+          <mat-option value="option3">Visualizar eventos</mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-toolbar>
+<table>
+    <tr>
+        <td>
+            <mat-label>Torneo al que pertenece</mat-label>
+        </td>
+        <td>
+            <mat-form-field>              
+                <mat-select>
+                  <mat-option value="option1">Torneo 1</mat-option>
+                  <mat-option value="option2">Torneo 2</mat-option>
+                  <mat-option value="option3">Torneo 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Fecha de inicio</mat-label>
+        </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker1">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Hora de inicio</mat-label>
+        </td>
+        <td>
+            <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker2">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Fase del torneo</mat-label>
+        </td>
+        <td>
+            <mat-form-field>              
+                <mat-select>
+                  <mat-option value="option1">Octavos</mat-option>
+                  <mat-option value="option2">Cuartos</mat-option>
+                  <mat-option value="option3">Semifinal</mat-option>
+                  <mat-option value="option3">Final</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Equipo 1</mat-label>
+        </td>
+        <td>
+            <mat-form-field>              
+                <mat-select>
+                  <mat-option value="option1">Equipo</mat-option>
+                  <mat-option value="option2">Equipo</mat-option>
+                  <mat-option value="option3">Equipo</mat-option>
+                  <mat-option value="option3">Equipo</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Equipo 2</mat-label>
+        </td>
+        <td>
+            <mat-form-field>              
+                <mat-select>
+                  <mat-option value="option1">Equipo</mat-option>
+                  <mat-option value="option2">Equipo</mat-option>
+                  <mat-option value="option3">Equipo</mat-option>
+                  <mat-option value="option3">Equipo</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <mat-label>Sede</mat-label>
+        </td>
+        <td>
+            <mat-form-field>              
+                <mat-select>
+                  <mat-option value="option1">Sede 1</mat-option>
+                  <mat-option value="option2">Sede 2</mat-option>
+                  <mat-option value="option3">Sede 3</mat-option>
+                  <mat-option value="option3">Sede 4</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+</table>
+<div style="margin-left: 80%; margin-top: 10%">
+    <button mat-raised-button>Salir</button>
+    <button mat-raised-button (click)="to_view_events()">Guardar partido</button>
+</div>
+
+
+
+
+
+
+<!--
+<div class="centrar">
+    <table class="center-content">
+        <tr *ngFor="let item of torneos;let indice=index">
+          <td>
+            <button mat-raised-button (click)="elegir_torneo(item)">{{item}} <mat-icon>input</mat-icon></button>
+        </td>
+        </tr>
+    </table>
+</div>
+
+<div class="centrar">
+    <mat-label>Elija al equipo 1</mat-label>
+    <br>
+    <mat-radio-group >
+        <mat-radio-button value="1">Option 1</mat-radio-button>
+        <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group>
+    <span></span>
+    <mat-label>Elija al equipo 2</mat-label>
+    <mat-radio-group>
+        <mat-radio-button value="1">Option 1</mat-radio-button>
+        <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group>  
+</div>
+-->
+

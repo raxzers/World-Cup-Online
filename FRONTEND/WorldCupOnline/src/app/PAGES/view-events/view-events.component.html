@@ -1,0 +1,34 @@
+<mat-toolbar>
+    <mat-form-field appearance="fill">
+        <mat-label>Vista de eventos</mat-label>
+        <mat-select>
+          <mat-option value="option1" disabled>Crear torneo (deshabilitado)</mat-option>
+          <mat-option value="option2">Crear partido</mat-option>
+          <mat-option value="option3">Visualizar eventos</mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-toolbar>
+<mat-tab-group>
+    <mat-tab label="Torneo 1"> 
+        <mat-grid-list cols="2" rowHeight="3:2">
+            <mat-grid-tile>
+                23-09-22  -  9:00 a.m
+                <br>
+                <br>
+                0  Equipo 1  VS  Equipo 2  0   
+                <br>
+                <br>            
+                Octavos    Pendiente
+            </mat-grid-tile>
+            <mat-grid-tile>2</mat-grid-tile>
+            <mat-grid-tile>3</mat-grid-tile>
+            <mat-grid-tile>4</mat-grid-tile>
+        </mat-grid-list>
+    </mat-tab>
+    <mat-tab label="Torneo 2"> 
+        Content 2 
+    </mat-tab>
+    <mat-tab label="Torneo 3"> 
+        Content 3 
+    </mat-tab>
+  </mat-tab-group>

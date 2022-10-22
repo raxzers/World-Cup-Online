@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="../../../assets/LogoLogin.png" id="icon" alt="User Icon" />
+      </div>
+      <br>
+      <div>
+        <mat-form-field  class="fadeIn third">
+          <mat-label>Ingrese su usuario</mat-label>
+          <input name="user" #user ngModel matInput class="fadeIn second" placeholder="usuario" autofocus>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field  class="fadeIn third">
+          <mat-label>Ingrese su contraseña</mat-label>
+          <input name="password" #password ngModel matInput [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+          
+      <input type="submit" (click)="enter(user.value, password.value)" class="fadeIn fourth" value="Verificar">
+
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">¿Olvidó su contraseña?</a>
+      </div>
+  
+    </div>
+  </div>
+  
