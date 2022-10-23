@@ -1,21 +1,22 @@
+
 <div class="wrapper fadeInDown">
     <div id="formContent">
       <!-- Tabs Titles -->
   
       <!-- Icon -->
       <div class="fadeIn first">
-        <img src="../../../assets/LogoLogin.png" id="icon" alt="User Icon" />
+        <img src="../../../assets/XFIFA.png" id="icon" alt="User Icon" />
       </div>
       <br>
       <div>
         <mat-form-field  class="fadeIn third">
-          <mat-label>Ingrese su usuario</mat-label>
-          <input name="user" #user ngModel matInput class="fadeIn second" placeholder="usuario" autofocus>
+          <mat-label style="color: white">Ingrese su usuario</mat-label>
+          <input name="user" #user ngModel matInput class="fadeIn second" placeholder="usuario" style="color:white ;" autofocus>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field  class="fadeIn third">
-          <mat-label>Ingrese su contraseña</mat-label>
+          <mat-label style="color: white;">Ingrese su contraseña</mat-label>
           <input name="password" #password ngModel matInput [type]="hide ? 'password' : 'text'">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>

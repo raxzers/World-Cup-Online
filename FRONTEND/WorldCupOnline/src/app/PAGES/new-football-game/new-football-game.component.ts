@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,6 +19,6 @@ export class NewFootballGameComponent implements OnInit {
     this.router.navigate(['/view_events']);
   }
 
-  disableSelect = new FormControl(false);
+  disableSelect = new UntypedFormControl(false);
 
 }

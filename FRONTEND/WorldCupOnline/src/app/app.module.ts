@@ -13,12 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './PAGES/login/login.component';
 import { HomeComponent } from './PAGES/home/home.component';
 import { NewFootballGameComponent } from './PAGES/new-football-game/new-football-game.component';
 import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
+import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
     LoginComponent,
     HomeComponent,
     NewFootballGameComponent,
-    ViewEventsComponent
+    ViewEventsComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,7 @@ import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
     MatInputModule,
     MatNativeDateModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
