@@ -1,3 +1,80 @@
+
+
 <app-navbar></app-navbar>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <title>Movie Seat Booking</title>
+  </head>
+  <body>
+     <!-- <h1></h1>
+      <form [formGroup]="seleccionesForm">
+        <label>Seleccione Sucursal:</label>
+        <select formControlName="sucursalControl" id="sucursales" (click)="getValue()">
+            <option [value]='sucursal' *ngFor="let sucursal of lugares">{{sucursal}}</option>
+        </select>
+    </form>
+    <form [formGroup]="salasForm">
+        <label>Seleccione Sala:</label>
+        <select formControlName="salaControl" id="salas" >
+            <option [value]='sala' *ngFor="let sala of salasDeBranch">{{sala}}</option>
+        </select>
+    </form>
+    <form [formGroup]="MoviesForm">
+      <label> Seleccione Pelicula:</label>
+       (click)="getValue()" 
+      <select formControlName="movieControl" id="peliculas"  >
+          <option [value]="movie" *ngFor="let movie of arrayMovies">{{movie}}</option>
+      </select>
+  </form> --> 
+  <h2 style="color: black;" class="text-center">
+    Torneo
+  </h2>
+  <div class="form-group">
+        <div class="input-group">
+            <input type="text" class="form-control" formControlName="name_Protagonist"
+                placeholder="Nombre del Torneo">
+        </div>
+ </div>
+    <div class="col-md-5">
+      <h2 style="color: black;" class="text-center">
+        Fecha de Inicio
+      </h2>
+    <!--<form [formGroup]="fechaInicioForm" >-->  
+        <div class="row">
+          <h6> </h6>
+          <div class="form-group">
+            <div class="input-group">  <!--(click)="getValueDate()-->
+              <input type="date" id="date" class="form-control" formControlName="fechaInicioControl"  placeholder="fechaInicio">
+            </div>
+          </div>
+        </div>
+    <!--  </form>-->
+    </div>
+    <div class="col-md-5">
+        <h2 style="color: black;" class="text-center">
+          Fecha de Finalizacion
+        </h2>
+      <!--<form [formGroup]="fechaInicioForm" >-->  
+          <div class="row">
+            <h6> </h6>
+            <div class="form-group">
+              <div class="input-group">  <!--(click)="getValueDate()-->
+                <input type="date" id="date" class="form-control" formControlName="fechaFinalControl"  placeholder="fechaFinal">
+              </div>
+            </div>
+          </div>
+      <!--  </form>-->
+      </div>
+    <div>
+     <!-- <button class="button1 btn-sucess btn-lg btn-block" (click)="getValue()" (click)="guardarProyeccion()" >Resgistrar Proyeccion</button>-->
+    </div>
+    <script></script>
+   
+  </body>
+</html>
