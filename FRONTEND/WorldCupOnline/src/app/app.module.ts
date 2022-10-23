@@ -22,6 +22,7 @@ import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
 import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatTabsModule,
     MatGridListModule,NgbModule,
-    FormsModule,ReactiveFormsModule
+    FormsModule,ReactiveFormsModule,HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

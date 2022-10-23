@@ -24,14 +24,12 @@
         <select formControlName="salaControl" id="salas" >
             <option [value]='sala' *ngFor="let sala of salasDeBranch">{{sala}}</option>
         </select>
-    </form>
-    <form [formGroup]="MoviesForm">
-      <label> Seleccione Pelicula:</label>
-       (click)="getValue()" 
-      <select formControlName="movieControl" id="peliculas"  >
-          <option [value]="movie" *ngFor="let movie of arrayMovies">{{movie}}</option>
-      </select>
-  </form> --> 
+    </form>--> 
+    
+  <div class="row">
+    
+  <div class="column">
+   
   <h2 style="color: black;" class="text-center">
     Torneo
   </h2>
@@ -40,8 +38,8 @@
             <input type="text" class="form-control" formControlName="name_Protagonist"
                 placeholder="Nombre del Torneo">
         </div>
- </div>
-    <div class="col-md-5">
+  </div>
+   
       <h2 style="color: black;" class="text-center">
         Fecha de Inicio
       </h2>
@@ -53,10 +51,10 @@
               <input type="date" id="date" class="form-control" formControlName="fechaInicioControl"  placeholder="fechaInicio">
             </div>
           </div>
-        </div>
+        
     <!--  </form>-->
     </div>
-    <div class="col-md-5">
+    
         <h2 style="color: black;" class="text-center">
           Fecha de Finalizacion
         </h2>
@@ -68,13 +66,40 @@
                 <input type="date" id="date" class="form-control" formControlName="fechaFinalControl"  placeholder="fechaFinal">
               </div>
             </div>
+            <form [formGroup]="equiposForm" class="select">
+              <h2> Tipo de Equipos:</h2>
+              <select id="tipoEquipos">
+                <option  value="0">Seleccion</option>
+                <option  value="1">Club</option>
+              </select>
+          </form> 
+            <mat-form-field class="description" appearance="fill">
+              <mat-label>Descripción del Torneo</mat-label>
+              <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+            </mat-form-field>
           </div>
+
+          
       <!--  </form>-->
-      </div>
-    <div>
-     <!-- <button class="button1 btn-sucess btn-lg btn-block" (click)="getValue()" (click)="guardarProyeccion()" >Resgistrar Proyeccion</button>-->
-    </div>
-    <script></script>
+      
+
+    
+  </div>
+  <div class="column">
+    
+    <form [formGroup]="equiposForm" class="select">
+      <h2> Seleccionar Equipos:</h2>
+      <select formControlName="equiposControl" id="equipos"  (click)="getValue()"  >
+        <option [value]="equipo" *ngFor="let equipo of arrayEquipos">{{equipo}}</option>
+      </select>
+      <div class="column">
+        <div>
+          <button class="button1 btn-sucess btn-lg btn-block">Agregar Equipo</button>
+        </div>
+      </div> 
+  </form> 
    
+  </div>
+</div>
   </body>
 </html>
