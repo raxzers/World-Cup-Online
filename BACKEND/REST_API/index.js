@@ -32,14 +32,14 @@ app.use((req, res, next) => {
 
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/equipo', equipoRoutes);
-app.use('/api/usuario', clubesRoutes );
-app.use('/api/usuario', jugadores_clubRoutes );
-app.use('/api/usuario', jugadores_seleccionRoutes );
-app.use('/api/usuario', partidoRoutes);
-app.use('/api/usuario', seleccionesRoutes);
-app.use('/api/usuario', torneoRoutes );
-app.use('/api/usuario', torneo_equipoRoutes);
-app.use('/api/usuario', torneo_faseRoutes );
+app.use('/api/clubes', clubesRoutes );
+app.use('/api/jugadores_club', jugadores_clubRoutes );
+app.use('/api/jugadores_seleccion', jugadores_seleccionRoutes );
+app.use('/api/partido', partidoRoutes);
+app.use('/api/selecciones', seleccionesRoutes);
+app.use('/api/torneo', torneoRoutes );
+app.use('/api/torneo_equipo', torneo_equipoRoutes);
+app.use('/api/torneo_fase', torneo_faseRoutes );
 
 
 
