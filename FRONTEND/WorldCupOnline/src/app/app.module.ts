@@ -20,6 +20,8 @@ import { HomeComponent } from './PAGES/home/home.component';
 import { NewFootballGameComponent } from './PAGES/new-football-game/new-football-game.component';
 import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
 import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
     MatInputModule,
     MatNativeDateModule,
     MatTabsModule,
-    MatGridListModule,NgbModule
+    MatGridListModule,NgbModule,
+    FormsModule,ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
