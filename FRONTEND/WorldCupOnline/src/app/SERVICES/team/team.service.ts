@@ -8,18 +8,18 @@ import { teamModel } from 'src/app/MODELS/Team';
 })
 export class TeamService {
 
-  private APIurl="https://.../";
+  APIurl="https://.../";
   list: teamModel[];
 
-  private actualizarForm = new BehaviorSubject<teamModel>({} as any);
+  actualizarForm = new BehaviorSubject<teamModel>({} as any);
 
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
   guardarEquipo(equipo: teamModel): Observable<teamModel> {
     return this.http.post<teamModel>(this.APIurl, equipo);
   }
-  obtenerClientes() {
-    this.http.get(this.APIurl).toPromise().then(data => {
+  obtenerClubs() {
+    this.http.get('http://localhost:3000/api/clubes/').toPromise().then(data => {
       this.list = data as teamModel[];
     });
   }
@@ -30,10 +30,18 @@ export class TeamService {
   actualizarCliente(cliente: teamModel): Observable<teamModel> {
     return this.http.put<teamModel>(this.APIurl, cliente);
   }
-  obtenerCliente(): Observable<teamModel> {
+  obtenerClub(): Observable<teamModel> {
+    return this.actualizarForm.asObservable();
+  }
+  obtenerSeleccion():  Observable<teamModel> {
     return this.actualizarForm.asObservable();
   }
   
+  
+  eliminarCliente(id: number): Observable<teamModel>{
+    return this.http.delete<teamModel>('http://localhost:15451/api/Client/'+ id);
+  }
+
   //getTeams():Observable<teamModel> {
   // return this.http.get<teamModel>(this.APIurl);
   //} 

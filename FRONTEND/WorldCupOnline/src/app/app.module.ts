@@ -23,6 +23,10 @@ import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
+import { MatTableModule} from '@angular/material/table';
+import { ToastrModule } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr/public_api';
+
 
 @NgModule({
   declarations: [
@@ -45,10 +49,12 @@ import { HttpClientModule} from '@angular/common/http';
     MatSelectModule,
     MatDatepickerModule,
     MatInputModule,
+    MatTableModule,
     MatNativeDateModule,
     MatTabsModule,
     MatGridListModule,NgbModule,
-    FormsModule,ReactiveFormsModule,HttpClientModule
+    FormsModule,ReactiveFormsModule,HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
