@@ -1,9 +1,9 @@
 const get = "SELECT * FROM public.\"Torneo_Equipos\"";
-const getById = "SELECT \"ID\", \"Torneo\", \"Equipo\" FROM public.\"Torneo_Equipos\" WHERE \"ID\" = '$1'";
-const checkIdExists = "SELECT * FROM public.\"Torneo_Equipos\" WHERE \"ID\" = '$1'";
-const add = "INSERT INTO public.\"Torneo_Equipos\" (\"ID\", \"Torneo\", \"Equipo\") VALUES ('$1', '$2', '$3')";
-const remove = "DELETE FROM public.\"Torneo_Equipos\" WHERE \"ID\" = '$1'";
-const update = "UPDATE public.\"Torneo_Equipos\" SET \"ID\"= '$1', \"Torneo\" = '$2', \"Equipo\" = '$3' WHERE \"ID\" = '$4'";
+const getById = "SELECT id, \"Torneo\", \"Equipo\" FROM public.\"Torneo_Equipos\" WHERE id = $1";
+const checkIdExists = "SELECT * FROM public.\"Torneo_Equipos\" WHERE id = $1";
+const add = "INSERT INTO public.\"Torneo_Equipos\" (id, \"Torneo\", \"Equipo\") VALUES ($1, $2, $3)";
+const remove = "DELETE FROM public.\"Torneo_Equipos\" WHERE id = $1";
+const update = "UPDATE public.\"Torneo_Equipos\" SET id= $1, \"Torneo\" = $2, \"Equipo\" = $3 WHERE id = $4";
 
 module.exports = {
     get,
