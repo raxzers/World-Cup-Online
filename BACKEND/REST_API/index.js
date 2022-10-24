@@ -1,6 +1,6 @@
 const express = require("express");
 const usuarioRoutes = require('./src/usuario/routes');
-const equipoRoutes = require('./src/equipo/routes');
+const rankingRoutes = require('./src/ranking/routes');
 const clubesRoutes = require('./src/clubes/routes');
 const jugadores_clubRoutes = require('./src/jugadores_club/routes');
 const jugadores_seleccionRoutes = require('./src/jugadores_seleccion/routes');
@@ -10,15 +10,12 @@ const torneoRoutes = require('./src/torneo/routes');
 const torneo_equipoRoutes = require('./src/torneo_equipos/routes');
 const torneo_faseRoutes = require('./src/torneo_fase/routes');
 
-var cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-
-app.use(cors());
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,7 +38,7 @@ app.use((req, res, next) => {
   app.use('/api/torneo', torneoRoutes );
   app.use('/api/torneo_equipo', torneo_equipoRoutes);
   app.use('/api/torneo_fase', torneo_faseRoutes );
-
+  app.use('/api/ranking', rankingRoutes );
 
 
 app.listen(port, () => console.log(`listening on port ${port}`));
