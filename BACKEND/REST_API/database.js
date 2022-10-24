@@ -11,10 +11,10 @@ const pool = new Pool({
 */
 
 const pool = new Pool({
-    user: "mfaebpejhrtipe",
-    host: "ec2-52-20-166-21.compute-1.amazonaws.com",
-    database: "d40nr1bm7h11hj",
-    password: "bc7629832fcbde524a0353c6af1fb1dc3f52b5428c157eadfe32c48fc35764ee",
+    user: "postgres",
+    host: "localhost",
+    database: "World Cup-Online",
+    password: "guillen1",
     //ssl: { "rejectUnauthorized": false },
     //rejectUnauthorized: false,//add when working with https sites
     //requestCert: false,//add when working with https sites
