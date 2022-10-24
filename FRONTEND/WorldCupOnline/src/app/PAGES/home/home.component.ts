@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { teamModel } from 'src/app/MODELS/Team';
 import { TeamService } from 'src/app/SERVICES/team/team.service';
 
 
@@ -21,21 +22,17 @@ export class HomeComponent implements OnInit {
   fechaInicioForm: FormGroup;
   fechaFinalForm: FormGroup;
   equiposForm: FormGroup;
-  arrayEquipos:[];
+  arrayEquipos: any[];
+  nombresEquipos:any[];
  
-  constructor(private formBuilder: FormBuilder,private router:Router,private toastr:ToastrService, public equipoService:TeamService) {
-    this.arrayEquipos=[]; 
-    this.seleccionesForm = this.formBuilder.group({})
-    this.fechaInicioForm = this.formBuilder.group({})
-    this.fechaFinalForm = this.formBuilder.group({})
-    this.equiposForm = this.formBuilder.group({})
-
-  }
+  constructor(private formBuilder: FormBuilder,private router:Router,private toastr:ToastrService, public  equipoService:TeamService) {}
 
   ngOnInit(): void {
     this.equipoService.obtenerClubs();
-    
-      this.fechaInicioForm=this.formBuilder.group({
+    this.arrayEquipos=[];
+    this.nombresEquipos=[];
+
+    this.fechaInicioForm=this.formBuilder.group({
       fechaInicioControl:[]
     })
     this.fechaFinalForm=this.formBuilder.group({
@@ -44,6 +41,7 @@ export class HomeComponent implements OnInit {
     this.equiposForm=this.formBuilder.group({
       equiposControl:[]
     }) 
+    this.obtenerSucursal();
   }
   eliminarEquipo(id){
     if(confirm('Desea eliminar este equipo?')){
@@ -51,12 +49,28 @@ export class HomeComponent implements OnInit {
      this.equipoService.list.splice(index,1);
       this.equipoService.eliminarCliente(id).subscribe(data=>{
          this.toastr.warning('Eliminar Exitoso', 'Equipo Eliminado');
- 
          this.equipoService.obtenerClubs();
       })
     }
    }
-  getValue(){}
+  obtenerSucursal() {
+    
+    this.equipoService.obtenerClubs1().then(data => {
+      this.arrayEquipos as teamModel[];
+      this.arrayEquipos = data as teamModel[];
+      for (let equipo of this.arrayEquipos) {
+        var nombreEquipo = equipo.Club;
+        console.log(nombreEquipo)
+        this.nombresEquipos.push(nombreEquipo);
+     }
+  
+    });
+  }
+  getValue(){
+   // this.obtenerSucursal();
+   // this.obtenerSucursal();
+    //console.log(this.equiposForm.value);
+  }
 
   to_new_football_game(){
     this.router.navigate(['/new_football_game']);

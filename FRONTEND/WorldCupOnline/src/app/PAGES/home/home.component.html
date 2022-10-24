@@ -90,7 +90,7 @@
     <form [formGroup]="equiposForm" class="select">
       <h2> Seleccionar Equipos:</h2>
       <select formControlName="equiposControl" id="equipos"  (click)="getValue()"  >
-        <option [value]="equipo" *ngFor="let equipo of arrayEquipos">{{equipo}}</option>
+        <option [value]='equipo' *ngFor="let equipo of nombresEquipos">{{equipo}}</option>
       </select>
       <div class="column">
         <div>
@@ -98,19 +98,23 @@
         </div>
       </div> 
   </form> 
+  <!--
   <table class="table table-sm">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <tr *ngFor="let equipo of equipoService.list">
-        <td style="color: white;">
-            {{equipo.nombre}}
+        <td style="color: black;">
+            {{equipo.Club}}
         </td>
+        <td style="color: black;">
+          {{equipo.ID}}
+      </td>
         <td>
-            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo.id)" style="cursor: pointer;"></i>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo.ID)" style="cursor: pointer;"></i>
         </td>
        
     </tr>
 
-</table>
+</table>-->
 
   </div>
 </div>
