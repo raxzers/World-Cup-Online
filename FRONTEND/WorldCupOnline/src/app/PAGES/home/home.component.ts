@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { teamModel } from 'src/app/MODELS/Team';
+import { teamModel } from 'src/app/MODELS/teamModel';
 import { TeamService } from 'src/app/SERVICES/team/team.service';
 
 
