@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { HttpHeaders } from '@angular/common/http';
+import { seleccionModel } from 'src/app/MODELS/seleccionModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,11 @@ export class TeamService {
 
   //APIurl="https://.../";
   list: teamModel[];
+  list2: seleccionModel[];
 
   actualizarForm = new BehaviorSubject<teamModel>({} as any);
+
+  actualizarForm2 =new BehaviorSubject<seleccionModel>({} as any);
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +25,9 @@ export class TeamService {
   }
   obtenerClubs() {
     this.http.get('http://localhost:3000/api/clubes/').toPromise().then(data => { this.list = data as teamModel[]; });
+  }
+  obtenerSelecciones() {
+    this.http.get('http://localhost:3000/api/selecciones/').toPromise().then(data => { this.list2 = data as seleccionModel[]; });
   }
   actualizar(equipo) {
     this.actualizarForm.next(equipo);
@@ -32,10 +39,9 @@ export class TeamService {
   obtenerClub(): Observable<teamModel> {
     return this.actualizarForm.asObservable();
   }
-  obtenerSeleccion(): Observable<teamModel> {
-    return this.actualizarForm.asObservable();
+  obtenerSeleccion(): Observable<seleccionModel> {
+    return this.actualizarForm2.asObservable();
   }
-
 
   eliminarCliente(id: number): Observable<teamModel> {
     return this.http.delete<teamModel>('http://localhost:15451/api/Client/' + id);
@@ -44,6 +50,12 @@ export class TeamService {
     return this.http.get('http://localhost:3000/api/clubes/')
       .toPromise()
       .then(data => this.list = data as teamModel[]);
+  }
+
+  obtenerSelecciones1(): Promise<seleccionModel[]> {
+    return this.http.get('http://localhost:3000/api/selecciones/')
+      .toPromise()
+      .then(data => this.list2 = data as seleccionModel[]);
   }
   //getTeams():Observable<teamModel> {
   // return this.http.get<teamModel>(this.APIurl);

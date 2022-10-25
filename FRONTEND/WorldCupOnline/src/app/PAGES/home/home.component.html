@@ -64,9 +64,9 @@
                 <input type="date" id="date" class="form-control" formControlName="fechaFinalControl"  placeholder="fechaFinal">
               </div>
             </div>
-            <form [formGroup]="equiposForm" class="select">
+            <form [formGroup]="categoriaForm" class="select">
               <h2> Tipo de Equipos:</h2>
-              <select id="tipoEquipos">
+              <select id="tipoEquipos" (click)="getTipoEquipo()">
                 <option  value="0">Seleccion</option>
                 <option  value="1">Club</option>
               </select>
@@ -87,34 +87,33 @@
     
     <form [formGroup]="equiposForm" class="select">
       <h2> Seleccionar Equipos:</h2>
-      <select formControlName="equiposControl" id="equipos"  (click)="getValue()"  >
+      <div class="column">
+      <select formControlName="equiposControl" id="equipos"    >
         <option [value]='equipo' *ngFor="let equipo of nombresEquipos">{{equipo}}</option>
       </select>
+    </div>
       <div class="column">
         <div>
-          <button class="button1 btn-sucess btn-lg btn-block">Agregar Equipo</button>
+          <button class="button1 btn-sucess btn-lg btn-block" (click)="getEquipotoAdd()">Agregar Equipo</button>
         </div>
+        
       </div> 
   </form> 
-  <!--
-  <table class="table table-sm">
+  <table class="table">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <tr *ngFor="let equipo of equipoService.list">
+    <tr *ngFor="let equipo of equiposTorneo">
         <td style="color: black;">
-            {{equipo.Club}}
+            {{equipo}}
         </td>
-        <td style="color: black;">
-          {{equipo.ID}}
-      </td>
         <td>
-            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo.ID)" style="cursor: pointer;"></i>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo)" style="cursor: pointer;"></i>
         </td>
-       
     </tr>
-
-</table>-->
-
-  </div>
+  </table>
+ </div>
+ <div class="centeredButton">
+  <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarTorneo()">Guardar Torneo</button>
+</div>
 </div>
   </body>
 </html>

@@ -1,6 +1,8 @@
 .column {
   float: left;
   width: 50%;
+ // border: 3px solid #004590;
+  padding: 10px;
 }
 
 /* Clear floats after the columns */
@@ -33,6 +35,17 @@ h2{
   align-items: center;
   background-color: white;
 }
-table {
-  width: 100%;
+.table {
+  width: 50%;
+  //border: 3px solid #004590;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+.centeredButton{
+  //border: 3px solid #004590;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //height: 0%;
 }
