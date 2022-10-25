@@ -26,7 +26,7 @@ const add = (req, res) => {
         }
         pool.query(queries.add, [ID,Club], (error, results) => {
             if(error) throw error;
-            res.status(201).send("¡Creado exitosamente!");
+            res.status(201).send();
         });
     });
 };
@@ -41,7 +41,7 @@ const remove = (req, res) => {
         } 
         pool.query(queries.remove, [id], (error, results) => {
             if(error) throw error;
-            res.status(200).send("Eliminado exitosamente");
+            res.status(200).send();
         });    
     });  
 };
@@ -58,7 +58,7 @@ const update = (req, res) => {
         }
         pool.query(queries.update, [ID, Club,id], (error, results) => {
             if(error) throw error;
-            res.status(200).send("Actualizado exitosamente");
+            res.status(200).send();
         });
     });
 };

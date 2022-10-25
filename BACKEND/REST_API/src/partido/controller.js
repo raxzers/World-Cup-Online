@@ -25,7 +25,7 @@ const add = (req, res) => {
         }
         pool.query(queries.add, [ID,Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido], (error, results) => {
             if(error) throw error;
-            res.status(201).send("¡Creado exitosamente!");
+            res.status(201).send();
         });
     });
 };
@@ -40,7 +40,7 @@ const remove = (req, res) => {
         } 
         pool.query(queries.remove, [id], (error, results) => {
             if(error) throw error;
-            res.status(200).send("Eliminado exitosamente");
+            res.status(200).send();
         });    
     });  
 };
@@ -57,7 +57,7 @@ const update = (req, res) => {
         }
         pool.query(queries.update, [ID,Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido, id], (error, results) => {
             if(error) throw error;
-            res.status(200).send("Actualizado exitosamente");
+            res.status(200).send();
         });
     });
 };
