@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { HttpHeaders } from '@angular/common/http';
 import { seleccionModel } from 'src/app/MODELS/seleccionModel';
+import { faseModel } from 'src/app/MODELS/faseMode';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,8 @@ export class TeamService {
   guardarEquipo(equipo: teamModel): Observable<teamModel> {
     return this.http.post<teamModel>('http://localhost:3000/api/clubes/', equipo);
   }
+
+ 
   obtenerClubs() {
     this.http.get('http://localhost:3000/api/clubes/').toPromise().then(data => { this.list = data as teamModel[]; });
   }

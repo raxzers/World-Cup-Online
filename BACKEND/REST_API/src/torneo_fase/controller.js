@@ -17,9 +17,9 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { id,Torneo,Fase } = req.body;
+    const {Torneo,Fase } = req.body;
     
-        pool.query(queries.add, [id,Torneo,Fase], (error, results) => {
+        pool.query(queries.add, [Torneo,Fase], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });

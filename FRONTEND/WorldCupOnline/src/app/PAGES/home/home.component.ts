@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { faseModel } from 'src/app/MODELS/faseMode';
+import { rankingModel } from 'src/app/MODELS/rankingModel';
 import { seleccionModel } from 'src/app/MODELS/seleccionModel';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { torneoEquipoModel } from 'src/app/MODELS/torneoEquipoModel';
@@ -29,23 +31,31 @@ export class HomeComponent implements OnInit {
   categoriaForm: FormGroup;
   nombreTorneoForm: FormGroup;
   reglasForm: FormGroup;
+  faseForm: FormGroup;
 
   arrayEquipos: any[];
   nombresEquipos: any[];
   nombreEquipoSeleccionado: any[];
+  fases:any[];
 
   equiposTorneo: any[];
   btnState: boolean = false;
   numlength: any;
+  numlength2: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService, public equipoService: TeamService, private torneoService: TorneoServiceService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private toastr: ToastrService, public equipoService: TeamService, 
+    private torneoService: TorneoServiceService) { }
 
   ngOnInit(): void {
     this.equipoService.obtenerClubs();
     this.arrayEquipos = [];
     this.nombresEquipos = [];
     this.equiposTorneo = [];
+    this.fases=[];
 
+    this.faseForm = this.formBuilder.group({
+      faseControl: ['', [Validators.required]]
+    })
     this.reglasForm = this.formBuilder.group({
       reglasControl: ['', [Validators.maxLength(1000)]]
     })
@@ -85,12 +95,28 @@ export class HomeComponent implements OnInit {
       })
       this.equiposTorneo = newArr;
       console.log(newArr);
-      const index = this.equipoService.list.indexOf(equipo);
-      this.equipoService.list.splice(index, 1);
-      this.equipoService.eliminarCliente(equipo).subscribe(data => {
-        this.toastr.warning('Eliminar Exitoso', 'Equipo Eliminado');
-        this.equipoService.obtenerClubs();
+      //const index = this.equipoService.list.indexOf(equipo);
+      //this.equipoService.list.splice(index, 1);
+      //this.equipoService.eliminarCliente(equipo).subscribe(data => {
+       // this.toastr.warning('Eliminar Exitoso', 'Equipo Eliminado');
+        //this.equipoService.obtenerClubs();
+      //})
+    }
+  }
+  eliminarFase(fase){
+    //console.log(fase);
+    if (confirm('Desea eliminar este equipo?')) {
+      const newArr: any[] = this.fases.filter((element) => {
+        return element != fase;
       })
+      this.fases = newArr;
+      //console.log(newArr);
+     // const index = this.equipoService.list.indexOf(equipo);
+      //this.equipoService.list.splice(index, 1);
+      //this.equipoService.eliminarCliente(equipo).subscribe(data => {
+        //this.toastr.warning('Eliminar Exitoso', 'Equipo Eliminado');
+        //this.equipoService.obtenerClubs();
+      //})
     }
   }
   obtenerClub() {
@@ -165,9 +191,24 @@ export class HomeComponent implements OnInit {
       this.torneoService.guardarTorneo(torneo).subscribe(data => {
         this.toastr.success('Torneo agregado exitosamente', 'Torneo Guardado')
       })
-      setTimeout(() => {this.guardarEquipos();}, 1000); 
+      setTimeout(() => {this.guardarEquipos();}, 500); 
+      setTimeout(() => {this.guardarFaseFinal();}, 600); 
+      setTimeout(() => {this.crearRanking();}, 700);
+      
     }
     else { this.toastr.error('Se necesitan 2 o más equipos para crear el torneo','Favor Agregar más equipos') }
+
+  }
+  crearRanking(){ 
+    const ranking:rankingModel={
+    Torneo:this.nombreTorneoForm.get('nombreTorneo').value,
+    Username:"Carlos",
+    Puntaje:800,
+  }
+  
+  this.torneoService.crearRanking(ranking).subscribe(data => {
+    this.toastr.success('Ranking PAPUlince')
+  })
 
   }
   guardarEquipos(){
@@ -181,6 +222,24 @@ export class HomeComponent implements OnInit {
         this.toastr.success('Torneo y Equipo ADDED')
       })
     }
+  }
+  guardarFase(){
+    var nombreFase = this.faseForm.get('faseControl').value;
+    this.fases.push(nombreFase);
+   // console.log(this.fases)
+  }
+  guardarFaseFinal(){
+    for (let i = 0; i < this.fases.length; i++) {
+     const fase:faseModel={
+      Torneo:this.nombreTorneoForm.get('nombreTorneo').value,
+      Fase:this.fases[i],
+    }
+    console.log(fase);
+    this.torneoService.guardarFase(fase).subscribe(data => {
+      this.toastr.success('FASE GOOOD')
+    })
+
+  }
   }
   to_new_football_game() {
     this.router.navigate(['/new_football_game']);

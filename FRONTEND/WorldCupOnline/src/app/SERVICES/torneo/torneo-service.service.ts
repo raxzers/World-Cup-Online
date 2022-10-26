@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { torneoEquipoModel } from 'src/app/MODELS/torneoEquipoModel';
+import { faseModel } from 'src/app/MODELS/faseMode';
+import { rankingModel } from 'src/app/MODELS/rankingModel';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +22,11 @@ export class TorneoServiceService {
   }
   actualizar(torneo) {
     this.actualizarForm.next(torneo);
+  }
+  guardarFase(fase: faseModel): Observable<faseModel> {
+    return this.http.post<faseModel>('http://localhost:3000/api/torneo_fase/', fase);
+  }
+  crearRanking(fase: rankingModel): Observable<rankingModel> {
+    return this.http.post<rankingModel>('http://localhost:3000/api/ranking/', fase);
   }
 }

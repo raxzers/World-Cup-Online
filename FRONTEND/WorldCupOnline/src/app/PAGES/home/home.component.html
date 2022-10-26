@@ -36,11 +36,8 @@
       <form [formGroup]="nombreTorneoForm">
         <div class="form-group">
           <div class="input-group">
-
             <input (input)="onInput()" class="text" type="text" class="form-control" formControlName="nombreTorneo"
               placeholder="Nombre del Torneo" [(ngModel)]="numlength" maxlength="30" required>
-
-
           </div>
         </div>
       </form>
@@ -90,12 +87,6 @@
           </mat-form-field>
         </form>
       </div>
-
-
-
-
-
-
     </div>
     <div class="column">
 
@@ -122,6 +113,31 @@
           </td>
           <td>
             <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo)" style="cursor: pointer;"></i>
+          </td>
+        </tr>
+      </table>
+      
+      <form [formGroup]="faseForm" class="select">
+        <h2> Crear Fase:</h2>
+        <div class="form-group">
+          <div class="input-group">
+            <input (input)="onInput()" class="text" type="text" class="form-control" formControlName="faseControl"
+              placeholder="Nombre de la Fase" [(ngModel)]="numlength2" maxlength="30" required>
+          </div>
+        </div>
+          <div>
+            <button class="button2 btn-sucess btn-lg btn-block" (click)="guardarFase()">Crear Fase</button>
+          </div> 
+      </form>
+      <table class="table">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+        <tr *ngFor="let fase of fases">
+          <td style="color: black;">
+            {{fase}}
+          </td>
+          <td>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarFase(fase)" style="cursor: pointer;"></i>
           </td>
         </tr>
       </table>
