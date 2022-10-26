@@ -312,7 +312,7 @@ export class HomeComponent implements OnInit {
           Nombre: this.nombreTorneoForm.get('nombreTorneo').value,
           Fecha_inicio: this.fechaInicioForm.get('fechaInicioControl').value,
           Fecha_fin: this.fechaFinalForm.get('fechaFinalControl').value,
-          Equipos: 'seleccion',
+          Equipos: this.tipoEquipo,
           Reglas: this.reglasForm.get("reglasControl").value,
         }
         console.log(torneo)
