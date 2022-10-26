@@ -155,7 +155,6 @@ export class HomeComponent implements OnInit {
     if (this.equiposTorneo.length >= 2) {
       console.log(this.categoriaForm.get('categoriaControl').value);
       const torneo: torneoModel = {
-        ID: "1",
         Nombre: this.nombreTorneoForm.get('nombreTorneo').value,
         Fecha_inicio: this.fechaInicioForm.get('fechaInicioControl').value,
         Fecha_fin: this.fechaFinalForm.get('fechaFinalControl').value,
@@ -166,19 +165,22 @@ export class HomeComponent implements OnInit {
       this.torneoService.guardarTorneo(torneo).subscribe(data => {
         this.toastr.success('Torneo agregado exitosamente', 'Torneo Guardado')
       })
-      for (let i = 0; i < this.equiposTorneo.length; i++) {
-        const torneoEquipo: torneoEquipoModel = {
-          id: "1",
-          Torneo: this.nombreTorneoForm.get('nombreTorneo').value,
-          Equipo: this.equiposTorneo[i],
-        }
-        this.torneoService.guardarTorneoEquipos(torneoEquipo).subscribe(data => {
-          this.toastr.success('Torneo y Equipo ADDED')
-        })
-      }
+      setTimeout(() => {this.guardarEquipos();}, 1000); 
     }
     else { this.toastr.error('Se necesitan 2 o más equipos para crear el torneo','Favor Agregar más equipos') }
 
+  }
+  guardarEquipos(){
+    for (let i = 0; i < this.equiposTorneo.length; i++) {
+      const torneoEquipo: torneoEquipoModel = {
+        Torneo: this.nombreTorneoForm.get('nombreTorneo').value,
+        Equipo: this.equiposTorneo[i],
+      }
+      console.log(torneoEquipo);
+      this.torneoService.guardarTorneoEquipos(torneoEquipo).subscribe(data => {
+        this.toastr.success('Torneo y Equipo ADDED')
+      })
+    }
   }
   to_new_football_game() {
     this.router.navigate(['/new_football_game']);
