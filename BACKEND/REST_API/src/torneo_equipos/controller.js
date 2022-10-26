@@ -17,17 +17,13 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { id,Torneo,Equipo} = req.body;
-    pool.query(queries.checkIdExists, [id], (error, results) => {
-        const found = results.rows.length;
-        if(found) {
-            res.send("El id ya existe");
-        }
-        pool.query(queries.add, [id,Torneo,Equipo], (error, results) => {
+    const { Torneo,Equipo} = req.body;
+    
+        pool.query(queries.add, [Torneo,Equipo], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
-    });
+    
 };
 
 const remove = (req, res) => {
@@ -47,7 +43,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const {ID,Torneo,Equipo} = req.body;
+    const {Torneo,Equipo} = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;

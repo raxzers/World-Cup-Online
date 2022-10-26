@@ -18,17 +18,12 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { ID, Club } = req.body;
-    pool.query(queries.checkIdExists, [ID], (error, results) => {
-        const found = results.rows.length;
-        if(found) {
-            res.send("El id ya existe");
-        }
-        pool.query(queries.add, [ID,Club], (error, results) => {
+    const { Club } = req.body;
+        pool.query(queries.add, [Club], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
-    });
+    
 };
 
 const remove = (req, res) => {
@@ -48,7 +43,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const { ID, Club } = req.body;
+    const {  Club } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -56,7 +51,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [ID, Club,id], (error, results) => {
+        pool.query(queries.update, [id, Club,id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
