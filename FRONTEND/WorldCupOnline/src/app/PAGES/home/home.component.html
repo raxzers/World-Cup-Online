@@ -2,15 +2,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Movie Seat Booking</title>
-  </head>
-  <body>
-     <!-- <h1></h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Movie Seat Booking</title>
+</head>
+
+<body>
+  <!-- <h1></h1>
       <form [formGroup]="seleccionesForm">
         <label>Seleccione Sucursal:</label>
         <select formControlName="sucursalControl" id="sucursales" (click)="getValue()">
@@ -22,98 +24,113 @@
         <select formControlName="salaControl" id="salas" >
             <option [value]='sala' *ngFor="let sala of salasDeBranch">{{sala}}</option>
         </select>
-    </form>--> 
-    
+    </form>-->
+
   <div class="row">
-    
-  <div class="column">
-   
-  <h2 style="color: black;" class="text-center">
-    Torneo
-  </h2>
-  <div class="form-group">
-        <div class="input-group">
-            <input type="text" class="form-control" formControlName="name_Protagonist"
-                placeholder="Nombre del Torneo">
+
+    <div class="column">
+
+      <h2 style="color: black;" class="text-center">
+        Torneo
+      </h2>
+      <form [formGroup]="nombreTorneoForm">
+        <div class="form-group">
+          <div class="input-group">
+
+            <input (input)="onInput()" class="text" type="text" class="form-control" formControlName="nombreTorneo"
+              placeholder="Nombre del Torneo" [(ngModel)]="numlength" maxlength="30" required>
+
+
+          </div>
         </div>
-  </div>
-   
+      </form>
       <h2 style="color: black;" class="text-center">
         Fecha de Inicio
       </h2>
-    <!--<form [formGroup]="fechaInicioForm" >-->  
-        <div class="row">
-          <h6> </h6>
+
+      <div class="row">
+        <h6> </h6>
+        <form [formGroup]="fechaInicioForm">
           <div class="form-group">
-            <div class="input-group">  <!--(click)="getValueDate()-->
-              <input type="date" id="date" class="form-control" formControlName="fechaInicioControl"  placeholder="fechaInicio">
+            <div class="input-group">
+              <!--(click)="getValueDate()-->
+              <input type="date" id="date" class="form-control" formControlName="fechaInicioControl"
+                placeholder="fechaInicio" required>
             </div>
           </div>
-        
-    <!--  </form>-->
-    </div>
-    
-        <h2 style="color: black;" class="text-center">
-          Fecha de Finalizacion
-        </h2>
-      <!--<form [formGroup]="fechaInicioForm" >-->  
-          <div class="row">
-            <h6> </h6>
-            <div class="form-group">
-              <div class="input-group">  <!--(click)="getValueDate()-->
-                <input type="date" id="date" class="form-control" formControlName="fechaFinalControl"  placeholder="fechaFinal">
-              </div>
+
+        </form>
+      </div>
+
+      <h2 style="color: black;" class="text-center">
+        Fecha de Finalizacion
+      </h2>
+
+      <div class="row">
+        <h6> </h6>
+        <form [formGroup]="fechaFinalForm">
+          <div class="form-group">
+            <div class="input-group">
+              <!--(click)="getValueDate()-->
+              <input type="date" id="date" class="form-control" formControlName="fechaFinalControl" required placeholder="fechaFinal">
             </div>
-            <form [formGroup]="categoriaForm" class="select">
-              <h2> Tipo de Equipos:</h2>
-              <select id="tipoEquipos" (click)="getTipoEquipo()">
-                <option  value="0">Seleccion</option>
-                <option  value="1">Club</option>
-              </select>
-          </form> 
-            <mat-form-field class="description" appearance="fill">
-              <mat-label>Descripción del Torneo</mat-label>
-              <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-            </mat-form-field>
           </div>
+        </form>
+        <form [formGroup]="categoriaForm" class="select">
+          <h2> Tipo de Equipos:</h2>
+          <select id="tipoEquipos" (click)="getTipoEquipo()" formControlName="categoriaControl" required>
+            <option value="0">Seleccion</option>
+            <option value="1">Club</option>
+          </select>
+        </form>
+        <form [formGroup]="reglasForm" class="select">
+          <mat-form-field class="description" appearance="fill">
+            <mat-label>Descripción del Torneo</mat-label>
+            <textarea matInput placeholder="El torneo trata sobre" formControlName="reglasControl" maxlength="1000"></textarea>
+          </mat-form-field>
+        </form>
+      </div>
 
-          
-      <!--  </form>-->
-      
 
-    
-  </div>
-  <div class="column">
-    
-    <form [formGroup]="equiposForm" class="select">
-      <h2> Seleccionar Equipos:</h2>
-      <div class="column">
-      <select formControlName="equiposControl" id="equipos"    >
-        <option [value]='equipo' *ngFor="let equipo of nombresEquipos">{{equipo}}</option>
-      </select>
+
+
+
+
     </div>
-      <div class="column">
-        <div>
-          <button class="button1 btn-sucess btn-lg btn-block" (click)="getEquipotoAdd()">Agregar Equipo</button>
+    <div class="column">
+
+      <form [formGroup]="equiposForm" class="select">
+        <h2> Seleccionar Equipos:</h2>
+        <div class="column">
+          <select formControlName="equiposControl" id="equipos">
+            <option [value]='equipo' *ngFor="let equipo of nombresEquipos">{{equipo}}</option>
+          </select>
         </div>
-        
-      </div> 
-  </form> 
-  <table class="table">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <tr *ngFor="let equipo of equiposTorneo">
-        <td style="color: black;">
+        <div class="column">
+          <div>
+            <button class="button1 btn-sucess btn-lg btn-block" (click)="getEquipotoAdd()">Agregar Equipo</button>
+          </div>
+
+        </div>
+      </form>
+      <table class="table">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+        <tr *ngFor="let equipo of equiposTorneo">
+          <td style="color: black;">
             {{equipo}}
-        </td>
-        <td>
+          </td>
+          <td>
             <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarEquipo(equipo)" style="cursor: pointer;"></i>
-        </td>
-    </tr>
-  </table>
- </div>
- <div class="centeredButton">
-  <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarTorneo()">Guardar Torneo</button>
-</div>
-</div>
-  </body>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="centeredButton">
+      <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarTorneo()" [disabled]="btnState">Guardar
+        Torneo</button>
+    </div>
+  </div>
+</body>
+
 </html>
