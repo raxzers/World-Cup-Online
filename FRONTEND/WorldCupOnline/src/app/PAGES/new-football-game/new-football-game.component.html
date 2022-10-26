@@ -29,10 +29,10 @@
         </td>
         <td>
             <mat-form-field  style="width:20%;">
-                <input matInput [matDatepicker]="picker1">
+                <input matInput #f (dateChange)="setFecha($event,f.value)" [matDatepicker]="fecha">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+                <mat-datepicker #fecha></mat-datepicker>
             </mat-form-field>
         </td>
     </tr>
@@ -42,10 +42,10 @@
         </td>
         <td>
             <mat-form-field  style="width:20%;">
-                <input matInput [matDatepicker]="picker2">
+                <input matInput #h (dateChange)="sethora($event,h.value)" [matDatepicker]="hora">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="hora"></mat-datepicker-toggle>
+                <mat-datepicker #hora></mat-datepicker>
             </mat-form-field>
         </td>
     </tr>
@@ -56,7 +56,7 @@
         <td>
             <mat-form-field  style="width:20%;">              
                 <mat-select>
-                  <mat-option value="fase" (click)="tounament_phases(fase)" *ngFor="let fase of fases">{{fase}}</mat-option>
+                  <mat-option value="fase" (click)="tounament_phases(fase)" *ngFor="let fase of nombre_fases">{{fase}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
@@ -68,7 +68,7 @@
         <td>
             <mat-form-field  style="width:20%;">              
                 <mat-select>
-                  <mat-option value="equipo" (click)="selected_team1(equipo)" *ngFor="let equipo of equipos">{{equipo}}</mat-option>
+                  <mat-option value="equipo" (click)="selected_team1(equipo)" *ngFor="let equipo of nombre_equipos">{{equipo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
@@ -80,7 +80,7 @@
         <td>
             <mat-form-field  style="width:20%;">              
                 <mat-select>
-                  <mat-option value="equipo" (click)="selected_team2(equipo)" *ngFor="let equipo of equipos">{{equipo}}</mat-option>
+                  <mat-option value="equipo" (click)="selected_team2(equipo)" *ngFor="let equipo of nombre_equipos">{{equipo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
@@ -90,7 +90,8 @@
             <h2 style="color: black; margin-left: 10%;" class="text-center">Sede</h2>
         </td>
         <td>
-            <mat-form-field  style="width:20%;">              
+            <mat-form-field  style="width:20%;"> 
+                <input matInput  #sede>             
                 <mat-select>
                   <mat-option value="sede" (click)="selected_sede(sede)" *ngFor="let sede of sedes">{{sede}}</mat-option>
                 </mat-select>
@@ -100,7 +101,7 @@
 </table>
 <div style="margin-left: 80%; margin-top: 10%">
     <button mat-raised-button (click)="to_home()">Salir</button>
-    <button mat-raised-button (click)="to_view_events()">Guardar partido</button>
+    <button mat-raised-button (click)="save(sede.value)">Guardar partido</button>
 </div>
 
 
