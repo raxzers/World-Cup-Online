@@ -51,7 +51,7 @@
           <div class="form-group">
             <div class="input-group">
               <!--(click)="getValueDate()-->
-              <input type="date" id="date" class="form-control" formControlName="fechaInicioControl"
+              <input  (click)="verificarFechaActual()" type="date" id="date" class="form-control" formControlName="fechaInicioControl"
                 placeholder="fechaInicio" required>
             </div>
           </div>
@@ -121,12 +121,12 @@
         <h2> Crear Fase:</h2>
         <div class="form-group">
           <div class="input-group">
-            <input (input)="onInput()" class="text" type="text" class="form-control" formControlName="faseControl"
+            <input (input)="onInput2()" class="text" type="text" class="form-control" formControlName="faseControl"
               placeholder="Nombre de la Fase" [(ngModel)]="numlength2" maxlength="30" required>
           </div>
         </div>
           <div>
-            <button class="button2 btn-sucess btn-lg btn-block" (click)="guardarFase()">Crear Fase</button>
+            <button class="button2 btn-sucess btn-lg btn-block" (click)="guardarFase()" [disabled]="btnStateFase">Crear Fase</button>
           </div> 
       </form>
       <table class="table">
