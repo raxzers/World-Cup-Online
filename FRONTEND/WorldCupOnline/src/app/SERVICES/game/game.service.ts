@@ -12,8 +12,8 @@ import { torneo_fase_Model } from 'src/app/MODELS/torneo_fase_Model';
 })
 export class GameService {
 
-  torneo_URL='http://localhost:3000/api/torneo';
-  torneo_equipo_URL='http://localhost:3000/api/torneo_equipo';
+  torneo_URL='http://localhost:3000/api/torneo/';
+  torneo_equipo_URL='http://localhost:3000/api/torneo_equipo/';
   torneo_fase_URL='http://localhost:3000/api/torneo_fase/';
   partido_URL='http://localhost:3000/api/partido/';
 
@@ -34,12 +34,12 @@ export class GameService {
     return this.http.get<torneoModel[]>(this.torneo_URL);
   }
 
-  obtener_equipos_del_torneo():Observable<torneo_equipo_Model[]> {
-    return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL);
+  obtener_equipos_del_torneo(torneo:string):Observable<torneo_equipo_Model[]> {
+    return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL + torneo);
   }
 
-  obtener_fases_del_torneo():Observable<torneo_fase_Model[]> {
-    return this.http.get<torneo_fase_Model[]>(this.torneo_fase_URL);
+  obtener_fases_del_torneo(torneo:string):Observable<torneo_fase_Model[]> {
+    return this.http.get<torneo_fase_Model[]>(this.torneo_fase_URL + torneo);
   }
 
   agregar_partido(partido:gameModel): Observable<gameModel>{
@@ -53,12 +53,6 @@ export class GameService {
   }
   actualizarCliente(equipo: teamModel): Observable<teamModel> {
     return this.http.put<teamModel>('http://localhost:3000/api/clubes/', equipo);
-  }
-  obtenerClub(): Observable<teamModel> {
-    return this.actualizarForm.asObservable();
-  }
-  obtenerSeleccion(): Observable<teamModel> {
-    return this.actualizarForm.asObservable();
   }
   eliminarCliente(id: number): Observable<teamModel> {
     return this.http.delete<teamModel>('http://localhost:15451/api/Client/' + id);

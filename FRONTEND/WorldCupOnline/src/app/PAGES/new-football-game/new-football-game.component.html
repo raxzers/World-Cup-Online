@@ -91,10 +91,12 @@
         </td>
         <td>
             <mat-form-field  style="width:20%;"> 
-                <input matInput  #sede>             
+                <input matInput (click)="selected_sede(sede.value)" #sede>  
+                <!--           
                 <mat-select>
                   <mat-option value="sede" (click)="selected_sede(sede)" *ngFor="let sede of sedes">{{sede}}</mat-option>
                 </mat-select>
+                -->
             </mat-form-field>
         </td>
     </tr>

@@ -13,8 +13,8 @@ const pool = new Pool({
 const pool = new Pool({
     user: "postgres",
     host: "localhost",
-    database: "WorldCup Online",
-    password: "root",
+    database: "worldcuponline",
+    password: "xxx",
     //ssl: { "rejectUnauthorized": false },
     //rejectUnauthorized: false,//add when working with https sites
     //requestCert: false,//add when working with https sites

@@ -31,7 +31,8 @@ export class NewFootballGameComponent implements OnInit {
 
   sedes:string[]=["sede1","sede2","sede3","sede4"];
 
-  nuevo_partido:gameModel;
+  nuevo_partido:gameModel={ Fecha: null, Hora: null, Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: '' };
+
 
   constructor(private router:Router, public partidoService:GameService) { }
 
@@ -48,22 +49,6 @@ export class NewFootballGameComponent implements OnInit {
         this.nombre_torneos.push(torn.Nombre)
       }
     });
-
-    this.partidoService.obtener_equipos_del_torneo().subscribe((data:torneo_equipo_Model[]) => {
-      this.equipos=data
-      
-      for(let equipo of this.equipos){
-        this.nombre_equipos.push(equipo.Equipo)
-      }
-    });
-
-    this.partidoService.obtener_fases_del_torneo().subscribe((data:torneo_fase_Model[]) => {
-      this.fases=data
-      
-      for(let fase of this.fases){
-        this.nombre_fases.push(fase.Fase)
-      }
-    });
   }
 
   to_view_events(){
@@ -76,9 +61,12 @@ export class NewFootballGameComponent implements OnInit {
 
   save(sede:string){
     this.nuevo_partido.Sede = sede;
+    //console.log(this.nuevo_partido);
+    
     this.send_partido(this.nuevo_partido);
     sleep(3000);
     this.to_view_events();
+    
   }
 
   to_home(){
@@ -86,17 +74,37 @@ export class NewFootballGameComponent implements OnInit {
   }
 
   setFecha(event: { value: any; }, fecha:string){
-    console.log(fecha)
-    //this.nuevo_partido.Fecha = fecha;
+    let newDate = new Date(fecha);
+    this.nuevo_partido.Fecha = newDate;
   }
 
   sethora(event: { value: any; }, hora:string){
-    console.log(hora);
-    //this.nuevo_partido.Hora = hora;
+    let newDate = new Date(hora);
+    this.nuevo_partido.Hora = newDate;
   }
 
   selected_tounament(torneo:string){ 
     this.nuevo_partido.Nombre_Torneo = torneo;
+
+    
+    this.partidoService.obtener_equipos_del_torneo(torneo).subscribe((data:torneo_equipo_Model[]) => {
+      this.nombre_equipos=[]
+      this.equipos=data     
+      for(let equipo of this.equipos){
+        this.nombre_equipos.push(equipo.Equipo)
+      }
+    });
+
+    
+    this.partidoService.obtener_fases_del_torneo(torneo).subscribe((data:torneo_fase_Model[]) => {
+      this.nombre_fases=[]
+      this.fases=data     
+      for(let fase of this.fases){
+        this.nombre_fases.push(fase.Fase)
+      }
+    });
+
+    //new Date('2023-10-06 02:20:00')
   }
 
   tounament_phases(fase:string){
