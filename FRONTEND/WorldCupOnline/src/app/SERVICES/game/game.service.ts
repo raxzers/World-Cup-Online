@@ -30,6 +30,10 @@ export class GameService {
   }
   */
   
+  obtener_partidos():Observable<gameModel[]> {
+    return this.http.get<gameModel[]>(this.partido_URL);
+  }
+
   obtener_torneos():Observable<torneoModel[]> {
     return this.http.get<torneoModel[]>(this.torneo_URL);
   }

@@ -14,17 +14,14 @@ import { GameService } from 'src/app/SERVICES/game/game.service';
 })
 export class NewFootballGameComponent implements OnInit {
 
-  //torneos:string[]=["torneo1","torneo2","torneo3","torneo4","torneo5","torneo6","torneo7","torneo8"];
   torneos:torneoModel[];
 
   nombre_torneos:string[] = [];
 
-  //equipos:string[]=["equipo1","equipo2","equipo3","equipo4"];
   equipos:torneo_equipo_Model[];
 
   nombre_equipos:string[] = [];
 
-  //fases:string[]=["octavos","cuartos","semifinales","final"];
   fases:torneo_fase_Model[];
 
   nombre_fases:string[] = [];
@@ -33,6 +30,7 @@ export class NewFootballGameComponent implements OnInit {
 
   nuevo_partido:gameModel={ Fecha: null, Hora: null, Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: '' };
 
+  //new Date('2023-10-06 02:20:00')
 
   constructor(private router:Router, public partidoService:GameService) { }
 
@@ -103,8 +101,6 @@ export class NewFootballGameComponent implements OnInit {
         this.nombre_fases.push(fase.Fase)
       }
     });
-
-    //new Date('2023-10-06 02:20:00')
   }
 
   tounament_phases(fase:string){
