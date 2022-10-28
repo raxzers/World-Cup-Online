@@ -17,12 +17,13 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido } = req.body;
+    //const id = (req.params.id);
+    const {Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido } = req.body;
     
-        pool.query(queries.add, [Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido], (error, results) => {
-            if(error) throw error;
-            res.status(201).send();
-        });
+    pool.query(queries.add, [Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido], (error, results) => {
+        if(error) throw error;
+        res.status(201).send();
+    });
     
 };
 

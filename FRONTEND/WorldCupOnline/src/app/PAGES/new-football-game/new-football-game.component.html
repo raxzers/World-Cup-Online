@@ -1,14 +1,4 @@
 <app-navbar></app-navbar>
-<!--<mat-toolbar>
-    <mat-form-field appearance="fill">
-        <mat-label>Crear partido</mat-label>
-        <mat-select>
-          <mat-option value="option1" disabled>Crear torneo (deshabilitado)</mat-option>
-          <mat-option value="option2">Crear partido</mat-option>
-          <mat-option value="option3">Visualizar eventos</mat-option>
-        </mat-select>
-    </mat-form-field>
-</mat-toolbar> -->
 <table>
     <tr>
         <td style="width:20%;">
@@ -28,12 +18,18 @@
             <h2 style="color: black; margin-left: 10%;" class="text-center">Fecha de inicio</h2>
         </td>
         <td>
+            <form [formGroup]="fechaInicioForm">
+                <input  style="width:20%;" (click)="verificarFechaActual()" type="date" id="date" class="form-control" formControlName="fechaInicioControl" placeholder="fechaInicio" required>
+            </form>
+            
+            <!--
             <mat-form-field  style="width:20%;">
                 <input matInput #f (dateChange)="setFecha($event,f.value)" [matDatepicker]="fecha">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
                 <mat-datepicker #fecha></mat-datepicker>
             </mat-form-field>
+            -->
         </td>
     </tr>
     <tr>
@@ -41,12 +37,18 @@
             <h2 style="color: black; margin-left: 10%;" class="text-center">Hora de inicio</h2>
         </td>
         <td>
+            <input type="number" min="0" max="23" #hora placeholder="Hora">
+            <input type="number" min="0" max="59" #min placeholder="Min">
+            <input type="number" min="0" max="59" #seg placeholder="Seg">
+
+            <!--
             <mat-form-field  style="width:20%;">
                 <input matInput #h (dateChange)="sethora($event,h.value)" [matDatepicker]="hora">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="hora"></mat-datepicker-toggle>
                 <mat-datepicker #hora></mat-datepicker>
             </mat-form-field>
+            -->
         </td>
     </tr>
     <tr>
@@ -103,38 +105,6 @@
 </table>
 <div style="margin-left: 80%; margin-top: 10%">
     <button mat-raised-button (click)="to_home()">Salir</button>
-    <button mat-raised-button (click)="save(sede.value)">Guardar partido</button>
+    <button mat-raised-button (click)="save(sede.value, hora.value, min.value, seg.value)">Guardar partido</button>
 </div>
-
-
-
-
-
-
-<!--
-<div class="centrar">
-    <table class="center-content">
-        <tr *ngFor="let item of torneos;let indice=index">
-          <td>
-            <button mat-raised-button (click)="elegir_torneo(item)">{{item}} <mat-icon>input</mat-icon></button>
-        </td>
-        </tr>
-    </table>
-</div>
-
-<div class="centrar">
-    <mat-label>Elija al equipo 1</mat-label>
-    <br>
-    <mat-radio-group >
-        <mat-radio-button value="1">Option 1</mat-radio-button>
-        <mat-radio-button value="2">Option 2</mat-radio-button>
-    </mat-radio-group>
-    <span></span>
-    <mat-label>Elija al equipo 2</mat-label>
-    <mat-radio-group>
-        <mat-radio-button value="1">Option 1</mat-radio-button>
-        <mat-radio-button value="2">Option 2</mat-radio-button>
-    </mat-radio-group>  
-</div>
--->
 

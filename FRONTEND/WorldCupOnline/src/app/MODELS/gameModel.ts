@@ -1,7 +1,7 @@
 export interface gameModel {
-    ID?: string;
+    //ID?: string;
     Fecha: Date;
-    Hora: Date;
+    Hora: string;
     Nombre_Torneo: string;
     Fase: string;
     Equipo_1: string;

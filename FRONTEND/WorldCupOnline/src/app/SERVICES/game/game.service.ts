@@ -47,7 +47,8 @@ export class GameService {
   }
 
   agregar_partido(partido:gameModel): Observable<gameModel>{
-    return this.http.post<gameModel>(this.partido_URL, partido);
+    console.log(partido);
+    return this.http.post<gameModel>('http://localhost:3000/api/partido/', partido);
   }
 
 
