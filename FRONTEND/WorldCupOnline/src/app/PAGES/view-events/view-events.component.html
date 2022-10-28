@@ -1,19 +1,18 @@
 <app-navbar></app-navbar>
 <mat-tab-group >
-    <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos"> 
+    <mat-tab label="{{partido.Nombre_Torneo}}" *ngFor="let partido of partidos"> 
         <mat-grid-list cols="2" rowHeight="3:2">
             <mat-grid-tile>
-                23-09-22  -  9:00 a.m
+                Fecha: {{partido.Fecha}}
                 <br>
+                Hora: {{partido.Hora}}
                 <br>
-                0  Equipo 1  VS  Equipo 2  0   
+                0  {{partido.Equipo_1}}  VS  {{partido.Equipo_2}}  0   
                 <br>
+                Fase: {{partido.Fase}} 
                 <br>            
-                Octavos    Pendiente
+                Estado del partido: {{partido.Estado_del_partido}}
             </mat-grid-tile>
-            <mat-grid-tile>2</mat-grid-tile>
-            <mat-grid-tile>3</mat-grid-tile>
-            
         </mat-grid-list>
     </mat-tab>
 </mat-tab-group>

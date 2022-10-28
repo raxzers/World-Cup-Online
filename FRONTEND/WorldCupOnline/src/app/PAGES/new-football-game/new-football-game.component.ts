@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Time } from '@angular/common';
 import { gameModel } from 'src/app/MODELS/gameModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { torneo_equipo_Model } from 'src/app/MODELS/torneo_equipo_Model';
@@ -26,7 +27,7 @@ export class NewFootballGameComponent implements OnInit {
 
   nombre_fases:string[] = [];
 
-  sedes:string[]=["sede1","sede2","sede3","sede4"];
+  //sedes:string[]=["sede1","sede2","sede3","sede4"];
 
   nuevo_partido:gameModel={ Fecha: null, Hora: null, Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: '' };
 
@@ -62,7 +63,7 @@ export class NewFootballGameComponent implements OnInit {
     //console.log(this.nuevo_partido);
     
     this.send_partido(this.nuevo_partido);
-    sleep(3000);
+    //sleep(3000);
     this.to_view_events();
     
   }
