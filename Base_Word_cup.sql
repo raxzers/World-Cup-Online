@@ -216,9 +216,9 @@ ALTER TABLE public."Jugadores_Seleccion"
 
 CREATE TABLE public."Partido"
 (
-    "ID" bigint NOT NULL DEFAULT nextval('Partido_id_seq'::regclass),
+    "ID" bigint NOT NULL DEFAULT nextval('partido_id_seq'::regclass),
     "Fecha" date NOT NULL,
-    "Hora" time without time zone NOT NULL,
+    "Hora" character varying NOT NULL,
     "Nombre_Torneo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Fase" character varying(15) COLLATE pg_catalog."default" NOT NULL,
     "Equipo_1" character varying(50) COLLATE pg_catalog."default" NOT NULL,
@@ -236,7 +236,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Partido"
     OWNER to postgres;
-
 -----------------------------------------------------------------------------------
 -- Table: public.Ranking
 
