@@ -44,7 +44,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const { Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido} = req.body;
+    const { Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Goles_Equipo_1,Equipo_2,Goles_Equipo_2,Sede,Estado_del_partido} = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -52,7 +52,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id,Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Equipo_2,Sede,Estado_del_partido, id], (error, results) => {
+        pool.query(queries.update, [id,Fecha,Hora,Nombre_Torneo,Fase,Equipo_1,Goles_Equipo_1,Equipo_2,Goles_Equipo_2,Sede,Estado_del_partido, id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
