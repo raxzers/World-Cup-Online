@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Time } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 import { gameModel } from 'src/app/MODELS/gameModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { torneo_equipo_Model } from 'src/app/MODELS/torneo_equipo_Model';
@@ -23,6 +23,7 @@ export class NewFootballGameComponent implements OnInit {
 
   torneos:torneoModel[];
   nombre_torneos:string[] = [];
+  torneo_actual:torneoModel;
 
   equipos:torneo_equipo_Model[];
   nombre_equipos:string[] = [];
@@ -30,18 +31,33 @@ export class NewFootballGameComponent implements OnInit {
   fases:torneo_fase_Model[];
   nombre_fases:string[] = [];
 
+  //sede:string;
 
-  nuevo_partido:gameModel={ Fecha: null, Hora: null, Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: 'pendiente' };
+  nuevo_partido:gameModel={ Fecha: null, Hora: '', Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: 'pendiente' };
 
   //new Date('2023-10-06 02:20:00')
 
-  constructor(private router:Router, public partidoService:GameService, private formBuilder: FormBuilder) { }
+  constructor(private router:Router, public partidoService:GameService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
 
-  verificarFechas(){
+  verificarFechasx(){
     if (this.fechaInicioForm.get('fechaInicioControl').value == "") {
       this.fechaInicioCondicion = true;
     } else {
-      this.fechaInicioCondicion = false;
+      this.fechaInicioCondicion = false;  
+    }  
+  }
+
+  verificarFechas(fecha:Date){
+    if(fecha < this.torneo_actual.Fecha_inicio){
+      this.toastr.warning("la fecha es anterior al inicio del torneo");
+      return 1;
+    }
+    else if(fecha > this.torneo_actual.Fecha_fin){
+      this.toastr.warning("La fecha esta despues de finalizado el partido");
+      return 2;
+    }
+    else{
+      return 0;
     }  
   }
 
@@ -60,6 +76,22 @@ export class NewFootballGameComponent implements OnInit {
      }
   }
   
+  verificar_partido(partido:gameModel){
+    if(partido.Nombre_Torneo=='' || partido.Fecha==null || partido.Hora=='' || partido.Fase=='' || partido.Equipo_1=='' || partido.Equipo_2=='' || partido.Sede==''){
+      this.toastr.warning("Debe completar todos los datos, verifique y vuelva a intentar");
+      return false;
+    }
+    else if(this.verificarFechas(partido.Fecha)==1){
+      return false;
+    }
+    else if(this.verificarFechas(partido.Fecha)==2){
+      return false;
+    }
+    else if(this.verificarFechas(partido.Fecha)==0)
+    this.toastr.success("La fecha es válida");
+    return true;
+  }
+ 
 
   actualizar_torneos(torneos:torneoModel[]){
     for(let i=0; i<this.torneos.length; i++){
@@ -85,8 +117,14 @@ export class NewFootballGameComponent implements OnInit {
   }
 
   send_partido(partido:gameModel){
-    this.partidoService.agregar_partido(partido).subscribe(data => {
-    });
+    if(this.verificar_partido(partido)==true){
+      this.partidoService.agregar_partido(partido).subscribe(data => {
+      });
+    }
+    else{
+      this.toastr.warning("Datos incorrectos");
+    }
+    
   }
 
   save(sede:string, hora:string, min:string, seg:string){
@@ -144,6 +182,12 @@ export class NewFootballGameComponent implements OnInit {
         this.nombre_fases.push(fase.Fase)
       }
     });
+
+    for(let torneo_elegido of this.torneos){
+      if(torneo_elegido.Nombre==torneo){
+        this.torneo_actual = torneo_elegido;
+      }
+    }
   }
 
   tounament_phases(fase:string){

@@ -29,16 +29,24 @@ export class ViewEventsComponent implements OnInit {
     
   }
 
-  listar_eventos(partidos:gameModel[]){
-    this.ver_eventos[0].Nombre_Torneo=partidos[0].Nombre_Torneo;
-    this.ver_eventos[0].partidos.push(partidos[0]);
-    let evento:viewEventsModel;
+  listar_eventos_xxx(partidos:gameModel[]){
+    //this.ver_eventos[0].Nombre_Torneo=partidos[0].Nombre_Torneo;
+    //this.ver_eventos[0].partidos.push(partidos[0]);
+    let partidos_por_torneo:viewEventsModel;
+
+    //this.ver_eventos[0]=partidos_por_torneo;
 
     for(let j=0; j<(partidos.length-2); j++){
       for(let i=1; i<(partidos.length-1); i++){
-        if(this.ver_eventos[j].Nombre_Torneo==partidos[i].Nombre_Torneo){
+        if(this.partidos[j].Nombre_Torneo==partidos[i].Nombre_Torneo){
           //this.ver_eventos[j].Nombre_Torneo=partidos[i].Nombre_Torneo;
-          this.ver_eventos[j].partidos.push(partidos[i]);
+          //this.ver_eventos[j].partidos.push(partidos[i]);
+          partidos_por_torneo.Nombre_Torneo=this.partidos[j].Nombre_Torneo;
+          partidos_por_torneo.partidos.push(this.partidos[i]);
+
+          //this.ver_eventos.push(partidos_por_torneo);
+
+          this.partidos[i]=null;
         }
         /*
         else if(){
@@ -47,5 +55,28 @@ export class ViewEventsComponent implements OnInit {
         */
       }    
     }
+  }
+
+  listar_eventos(partidos:gameModel[], n:number){
+    let partidos_por_torneo:viewEventsModel;
+    //n=0
+    if(n<=(partidos.length-2)){
+      for(n; n<=(partidos.length-2); n++){
+        if(this.partidos[n].Nombre_Torneo==partidos[n+1].Nombre_Torneo){
+          partidos_por_torneo.Nombre_Torneo=this.partidos[n].Nombre_Torneo;
+          partidos_por_torneo.partidos.push(this.partidos[n+1]);
+  
+          //this.ver_eventos.push(partidos_por_torneo);
+  
+          this.partidos[n]=null;
+        }
+        /*
+        else if(){
+  
+        }
+        */
+      }  
+    }
+    
   }
 }

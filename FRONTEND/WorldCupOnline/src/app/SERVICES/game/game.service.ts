@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { torneo_equipo_Model } from 'src/app/MODELS/torneo_equipo_Model';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { torneo_fase_Model } from 'src/app/MODELS/torneo_fase_Model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class GameService {
   fases: String[];
 
   actualizarForm = new BehaviorSubject<teamModel>({} as any);
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 /*
   guardarEquipo(equipo: teamModel): Observable<teamModel> {
     return this.http.post<teamModel>('http://localhost:3000/api/clubes/', equipo);
@@ -42,12 +43,17 @@ export class GameService {
     return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL + torneo);
   }
 
+  obtener_torneo_nombre(torneo:string):Observable<torneo_equipo_Model[]> {
+    return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL + torneo);
+  }
+
   obtener_fases_del_torneo(torneo:string):Observable<torneo_fase_Model[]> {
     return this.http.get<torneo_fase_Model[]>(this.torneo_fase_URL + torneo);
   }
 
   agregar_partido(partido:gameModel): Observable<gameModel>{
     console.log(partido);
+    this.toastr.success("Datos correctos e ingresados correctamente");
     return this.http.post<gameModel>('http://localhost:3000/api/partido/', partido);
   }
 
