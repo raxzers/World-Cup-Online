@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
 import { MatTableModule} from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
+import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
 
 
 
@@ -35,7 +36,8 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     NewFootballGameComponent,
     ViewEventsComponent,
-    NavbarComponent
+    NavbarComponent,
+    VRankingComponent
   ],
   imports: [
     BrowserModule,
