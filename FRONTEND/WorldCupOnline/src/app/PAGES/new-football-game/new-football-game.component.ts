@@ -128,11 +128,18 @@ export class NewFootballGameComponent implements OnInit {
 
   save(sede:string, hora:string, min:string, seg:string){
     this.nuevo_partido.Sede = sede;
-    let hora_partido:string = hora+":"+min+":"+seg;
-    
-    this.nuevo_partido.Hora = hora_partido;
+    var horaAux=  Number(hora);
+    var minAux = Number(min);
+    var segAux =Number(seg);
     this.setFechaInicio();
-    this.send_partido(this.nuevo_partido);
+    if(horaAux <=23 && horaAux>= 0 && minAux>=0 && minAux<=59 && segAux>=0 && segAux<=59){
+      let hora_partido:string = hora+":"+min+":"+seg;
+      this.nuevo_partido.Hora = hora_partido;
+      this.send_partido(this.nuevo_partido);
+    }else{
+      this.toastr.warning("La hora debe encontrarse en el rango valido entre 23:59:59 y 00:00:00");
+    }
+   
     //this.to_view_events(); 
   }
 

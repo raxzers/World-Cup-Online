@@ -337,7 +337,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.torneoService.crearRanking(ranking).subscribe(data => {
-      this.toastr.success('Ranking PAPUlince')
+     // this.toastr.success('Ranking PAPUlince')
     })
 
   }
@@ -349,7 +349,7 @@ export class HomeComponent implements OnInit {
       }
       console.log(torneoEquipo);
       this.torneoService.guardarTorneoEquipos(torneoEquipo).subscribe(data => {
-        this.toastr.success('Torneo y Equipo ADDED')
+       // this.toastr.success('Torneo y Equipo ADDED')
       })
     }
   }
@@ -366,7 +366,7 @@ export class HomeComponent implements OnInit {
       }
       console.log(fase);
       this.torneoService.guardarFase(fase).subscribe(data => {
-        this.toastr.success('FASE GOOOD')
+        ////this.toastr.success('FASE GOOOD')
       })
 
     }
