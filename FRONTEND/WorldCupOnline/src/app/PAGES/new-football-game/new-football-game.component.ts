@@ -31,11 +31,8 @@ export class NewFootballGameComponent implements OnInit {
   fases:torneo_fase_Model[];
   nombre_fases:string[] = [];
 
-  //sede:string;
 
   nuevo_partido:gameModel={ Fecha: null, Hora: '', Nombre_Torneo: '', Fase: '', Equipo_1: '', Equipo_2: '', Sede: '', Estado_del_partido: 'pendiente' };
-
-  //new Date('2023-10-06 02:20:00')
 
   constructor(private router:Router, public partidoService:GameService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
 
@@ -87,12 +84,15 @@ export class NewFootballGameComponent implements OnInit {
     else if(this.verificarFechas(partido.Fecha)==2){
       return false;
     }
-    else if(this.verificarFechas(partido.Fecha)==0)
-    this.toastr.success("La fecha es válida");
+    else if(partido.Equipo_1 == partido.Equipo_2){
+      this.toastr.warning("Los equipos no pueden ser iguales");
+      return false;
+    }
+    else if((this.verificarFechas(partido.Fecha)==0) && (partido.Equipo_1 != partido.Equipo_2))
+    this.toastr.success("La fecha es válida y los equipos son diferentes");
     return true;
   }
  
-
   actualizar_torneos(torneos:torneoModel[]){
     for(let i=0; i<this.torneos.length; i++){
       this.nombre_torneos.push(torneos[i].Nombre)
@@ -123,8 +123,7 @@ export class NewFootballGameComponent implements OnInit {
     }
     else{
       this.toastr.warning("Datos incorrectos");
-    }
-    
+    } 
   }
 
   save(sede:string, hora:string, min:string, seg:string){
@@ -132,13 +131,9 @@ export class NewFootballGameComponent implements OnInit {
     let hora_partido:string = hora+":"+min+":"+seg;
     
     this.nuevo_partido.Hora = hora_partido;
-    //this.verificarFechaActual();
     this.setFechaInicio();
-    //console.log(this.nuevo_partido);
     this.send_partido(this.nuevo_partido);
-    //sleep(3000);
-    //this.to_view_events();
-    
+    //this.to_view_events(); 
   }
 
   to_home(){
@@ -147,13 +142,10 @@ export class NewFootballGameComponent implements OnInit {
 
   setFecha(event: { value: any; }, fecha:string){ 
     let newDate = new Date(fecha);
-    //console.log(newDate);
     this.nuevo_partido.Fecha = newDate;
   }
 
   setFechaInicio(){ 
-    //let newDate = new Date(fecha);
-    //console.log(newDate);
     this.nuevo_partido.Fecha = this.fechaInicioForm.get('fechaInicioControl').value;  
   }
 
@@ -164,8 +156,7 @@ export class NewFootballGameComponent implements OnInit {
 
   selected_tounament(torneo:string){ 
     this.nuevo_partido.Nombre_Torneo = torneo;
-
-    
+ 
     this.partidoService.obtener_equipos_del_torneo(torneo).subscribe((data:torneo_equipo_Model[]) => {
       this.nombre_equipos=[]
       this.equipos=data     
@@ -207,9 +198,6 @@ export class NewFootballGameComponent implements OnInit {
   }
 
   disableSelect = new UntypedFormControl(false);
+}
 
-}
-function sleep(arg0: number) {
-  throw new Error('Function not implemented.');
-}
 

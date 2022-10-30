@@ -1,13 +1,13 @@
 <app-navbar></app-navbar>
 <mat-tab-group >
-    <mat-tab label="{{partido.Nombre_Torneo}}" *ngFor="let partido of partidos"> 
-        <mat-grid-list cols="2" rowHeight="3:2">
-            <mat-grid-tile>
+    <mat-tab label="{{torneo}}" *ngFor="let torneo of nombre_torneos"> 
+        <mat-grid-list cols="3" rowHeight="2:1" *ngFor="let partido of partidos" >
+            <mat-grid-tile  *ngIf="partido.Nombre_Torneo==torneo">
                 Fecha: {{partido.Fecha}}
                 <br>
                 Hora: {{partido.Hora}}
                 <br>
-                0  {{partido.Equipo_1}}  VS  {{partido.Equipo_2}}  0   
+                {{partido.Goles_Equipo_1}} --- {{partido.Equipo_1}}  VS  {{partido.Equipo_2}} --- {{partido.Goles_Equipo_2}}  
                 <br>
                 Fase: {{partido.Fase}} 
                 <br>            
@@ -18,3 +18,4 @@
         </mat-grid-list>
     </mat-tab>
 </mat-tab-group>
+

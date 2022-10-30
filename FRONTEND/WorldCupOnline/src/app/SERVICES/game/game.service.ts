@@ -47,6 +47,10 @@ export class GameService {
     return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL + torneo);
   }
 
+  obtener_partidos_por_torneo(torneo:string):Observable<gameModel[]> {
+    return this.http.get<gameModel[]>(this.partido_URL + torneo);
+  }
+
   obtener_fases_del_torneo(torneo:string):Observable<torneo_fase_Model[]> {
     return this.http.get<torneo_fase_Model[]>(this.torneo_fase_URL + torneo);
   }
@@ -56,22 +60,4 @@ export class GameService {
     this.toastr.success("Datos correctos e ingresados correctamente");
     return this.http.post<gameModel>('http://localhost:3000/api/partido/', partido);
   }
-
-
-  /*
-  actualizar(equipo) {
-    this.actualizarForm.next(equipo);
-  }
-  actualizarCliente(equipo: teamModel): Observable<teamModel> {
-    return this.http.put<teamModel>('http://localhost:3000/api/clubes/', equipo);
-  }
-  eliminarCliente(id: number): Observable<teamModel> {
-    return this.http.delete<teamModel>('http://localhost:15451/api/Client/' + id);
-  }
-  obtenerClubs1(): Promise<teamModel[]> {
-    return this.http.get('http://localhost:3000/api/clubes/')
-      .toPromise()
-      .then(data => this.list = data as teamModel[]);
-  }
-  */
 }
