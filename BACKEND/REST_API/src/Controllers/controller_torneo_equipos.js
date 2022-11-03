@@ -1,5 +1,5 @@
 const pool = require("../../database");
-const queries = require('./queries');
+const queries = require('../Queries/queries_torneo_equipos');
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -9,17 +9,17 @@ const get = (req, res) => {
 };
 
 const getById = (req, res) => {
-    const Id = req.params.id;
-    pool.query(queries.getById, [Id], (error, results) => {
+    const id = req.params.id;
+    pool.query(queries.getById, [id], (error, results) => {
         if(error) throw error;
         res.status(200).json(results.rows);
     });
 };
 
 const add = (req, res) => {
-    const { Torneo,Username,Puntaje} = req.body;
+    const { Torneo,Equipo} = req.body;
     
-        pool.query(queries.add, [Torneo,Username,Puntaje], (error, results) => {
+        pool.query(queries.add, [Torneo,Equipo], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
@@ -42,16 +42,16 @@ const remove = (req, res) => {
 };
 
 const update = (req, res) => {
-    const Id = req.params.id;
-    const { Torneo,Username,Puntaje } = req.body;
+    const id = parseInt(req.params.id);
+    const {Torneo,Equipo} = req.body;
 
-    pool.query(queries.getById, [Id], (error, results) => {
+    pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
         if(notFound){
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [Id,Torneo,Username,Puntaje, Id], (error, results) => {
+        pool.query(queries.update, [id,Torneo,Equipo, id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });

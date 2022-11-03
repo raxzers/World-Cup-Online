@@ -1,5 +1,5 @@
 const pool = require("../../database");
-const queries = require('./queries');
+const queries = require('../Queries/queries_jugadores_seleccion');
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -17,17 +17,13 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { nombre, numero, domicilio } = req.body;
-    pool.query(queries.checkIdExists, [numero], (error, results) => {
-        const found = results.rows.length;
-        if(found) {
-            res.send("El id ya existe");
-        }
-        pool.query(queries.add, [nombre, numero, domicilio], (error, results) => {
+    const { Seleccion,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador} = req.body;
+    
+        pool.query(queries.add, [Seleccion,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
-    });
+    
 };
 
 const remove = (req, res) => {
@@ -47,7 +43,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const { nombre, numero, domicilio } = req.body;
+    const { Seleccion,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -55,7 +51,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [nombre, numero, domicilio, id], (error, results) => {
+        pool.query(queries.update, [id,Seleccion,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador, id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });

@@ -1,5 +1,5 @@
 const pool = require("../../database");
-const queries = require('./queries');
+const queries = require('../Queries/queries_torneo_fase');
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {

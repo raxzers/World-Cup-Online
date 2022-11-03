@@ -1,14 +1,14 @@
 const express = require("express");
-const rankingRoutes = require('./src/ranking/routes');
-const clubesRoutes = require('./src/clubes/routes');
-const jugadores_clubRoutes = require('./src/jugadores_club/routes');
-const jugadores_seleccionRoutes = require('./src/jugadores_seleccion/routes');
-const partidoRoutes = require('./src/partido/routes');
-const seleccionesRoutes = require('./src/selecciones/routes');
-const torneoRoutes = require('./src/torneo/routes');
-const torneo_equipoRoutes = require('./src/torneo_equipos/routes');
-const torneo_faseRoutes = require('./src/torneo_fase/routes');
-const torneo_sedeRoutes = require('./src/torneo_sede/routes');
+const rankingRoutes = require('./src/Routes/routes_ranking');
+const clubesRoutes = require('./src/Routes/routes_clubes');
+const jugadores_clubRoutes = require('./src/Routes/routes_jugadores_club');
+const jugadores_seleccionRoutes = require('./src/Routes/routes_jugadores_seleccion');
+const partidoRoutes = require('./src/Routes/routes_partido');
+const seleccionesRoutes = require('./src/Routes/routes_selecciones');
+const torneoRoutes = require('./src/Routes/routes_torneo');
+const torneo_equipoRoutes = require('./src/Routes/routes_torneo_equipos');
+const torneo_faseRoutes = require('./src/Routes/routes_torneo_fase');
+const torneo_sedeRoutes = require('./src/Routes/routes_torneo_sede');
 
 const app = express();
 const port = process.env.PORT || 3000;
