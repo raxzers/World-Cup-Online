@@ -9,6 +9,8 @@ const torneoRoutes = require('./src/Routes/routes_torneo');
 const torneo_equipoRoutes = require('./src/Routes/routes_torneo_equipos');
 const torneo_faseRoutes = require('./src/Routes/routes_torneo_fase');
 const torneo_sedeRoutes = require('./src/Routes/routes_torneo_sede');
+const usuarios = require('./src/Routes/routes_usuarios');
+const quinielas = require('./src/Routes/routes_quinielas');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,7 +41,8 @@ app.use((req, res, next) => {
   app.use('/api/torneo_fase', torneo_faseRoutes );
   app.use('/api/torneo_sede', torneo_sedeRoutes );
   app.use('/api/ranking', rankingRoutes );
-
+  app.use('/api/usuarios', usuarios );
+  app.use('/api/quinielas', quinielas );
 
 app.listen(port, () => console.log(`listening on port ${port}`));
 
