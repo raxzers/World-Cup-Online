@@ -11,6 +11,18 @@ export class VRankingComponent implements OnInit {
   rankingNames: any[];
   arrayRankTorneos:any[];
 
+  torneos:string[]=['Torneo 1','Torneo 2','Torneo 3','Torneo 4'];
+
+  x: rankingModel[] = [
+    { Torneo: 'Torneo 1', Username: 'usuario 1', Puntaje: 1365435636345634 },
+    { Torneo: 'Torneo 2', Username: 'usuario 2', Puntaje: 2 },
+    { Torneo: 'Torneo 3', Username: 'usuario 3', Puntaje: 3 },
+    { Torneo: 'Torneo 1', Username: 'usuario 5', Puntaje: 17 },
+    { Torneo: 'Torneo 4', Username: 'usuario 4', Puntaje: 4 },
+    { Torneo: 'Torneo 1', Username: 'usuario 6', Puntaje: 3653 }
+  ];
+  
+
   constructor( private rankingService: RankingService) { }
 
   ngOnInit(): void {
