@@ -356,11 +356,11 @@ CREATE TABLE public."Usuarios"
     "Fecha_Nacimiento" date NOT NULL,
     "Nombre" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Apellido1" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "Apellido2" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Correo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Password" character varying(8) COLLATE pg_catalog."default" NOT NULL,
     "Rol" character varying(5) COLLATE pg_catalog."default" NOT NULL,
     "Username" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Pais" character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT user_id_key PRIMARY KEY ("ID")
 )
 
@@ -368,16 +368,20 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."Usuarios"
     OWNER to postgres;
-
 ---------------------------------------------------------------
 CREATE TABLE public."Quinielas"
 (
     "Id" bigint NOT NULL DEFAULT nextval('quinielas_id_seq'::regclass),
     "id_Usuario" bigint NOT NULL,
     "id_Partido" bigint NOT NULL,
-    "id_Jugadores_goles" bigint[] NOT NULL,
-    "id_Jugadores_asistencias" bigint[] NOT NULL,
+    "id_Jugadores_goles_Eq1" bigint[],
+    "id_Jugadores_asistencias_Eq1" bigint[],
     "id_Jugador_GOAT" bigint NOT NULL,
+    "Goles_Eq1" integer NOT NULL,
+    "Goles_Eq2" integer NOT NULL,
+    "id_Jugadores_goles_Eq2" bigint[],
+    "id_Jugadores_asistencias_Eq2" bigint[],
+    "Autogoles" integer,
     CONSTRAINT id_quiniela PRIMARY KEY ("Id"),
     CONSTRAINT id_partido_quiniela FOREIGN KEY ("id_Partido")
         REFERENCES public."Partido" ("ID") MATCH SIMPLE
@@ -389,4 +393,16 @@ CREATE TABLE public."Quinielas"
 TABLESPACE pg_default;
 
 ALTER TABLE public."Quinielas"
+    OWNER to postgres;
+
+--------------------------------------------------------------------
+CREATE TABLE public."Paises_Fifa"
+(
+    "Nombre" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Paises_Fifa_pkey" PRIMARY KEY ("Nombre")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Paises_Fifa"
     OWNER to postgres;
