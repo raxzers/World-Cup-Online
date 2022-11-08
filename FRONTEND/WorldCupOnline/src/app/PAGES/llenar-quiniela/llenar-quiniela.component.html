@@ -1,1 +1,52 @@
-<p>llenar-quiniela works!</p>
+<app-navbar></app-navbar>
+<mat-tab-group>
+    <mat-tab label="{{torneo}}" *ngFor="let torneo of torns"> 
+      <mat-grid-list cols="1" rowHeight="5:1" *ngFor="let partido of x">
+        <mat-card *ngIf="partido.Nombre_Torneo==torneo" class="card">
+            <div>
+                <td class="columnas">
+                    Fecha: {{partido.Fecha}}
+                </td>
+                <span></span>
+                <td class="columnas">
+                    Hora: {{partido.Hora}}
+                </td>
+            </div>
+            
+            <div>
+                <td class="columnas">
+                    <input type="number" min="0" max="100" #goles_1 placeholder="Goles"> {{partido.Equipo_1}}  --- VS ---  {{partido.Equipo_2}} <input type="number" min="0" max="100" #goles_2 placeholder="Goles">  
+                </td>
+            </div>
+
+            <div>
+                <td class="columnas">
+                    Fase: {{partido.Fase}}
+                </td>
+                <span></span>
+                <td class="columnas">
+                    Estado del partido: {{partido.Estado_del_partido}}
+                </td>    
+                <span></span>      
+                <td class="columnas">
+                    Sede: {{partido.Sede}}
+                </td>           
+            </div>
+            <h1>Retos</h1>
+            <mat-form-field style="width:20%">  
+                <mat-label>Goleador de: {{partido.Equipo_1}}</mat-label>            
+                <mat-select>
+                  <mat-option value="jugador" *ngFor="let jugador of jugadores">{{jugador}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="width:20%">  
+                <mat-label>Goleador de: {{partido.Equipo_2}}</mat-label>            
+                <mat-select>
+                  <mat-option value="jugador" *ngFor="let jugador of jugadores">{{torneo}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card>
+      </mat-grid-list>
+    </mat-tab>
+</mat-tab-group>
