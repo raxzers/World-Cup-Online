@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { userModel } from 'src/app/MODELS/userModel';
+import { paisModel } from 'src/app/MODELS/paisModel';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,18 @@ export class UserService {
 
   private APIurl="https://.../";
 
+  paises:paisModel[];
   constructor(private http: HttpClient) { }
 
   getUsers():Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
   } 
+  obtenerPaises() {
+    this.http.get('http://localhost:3000/api/paises_fifa/').toPromise().then(data => { this.paises = data as paisModel[]; });
+  }
+  obtenerPaises1(): Promise<paisModel[]> {
+    return this.http.get('http://localhost:3000/api/paises_fifa/')
+      .toPromise()
+      .then(data => this.paises = data as paisModel[]);
+  }
 }

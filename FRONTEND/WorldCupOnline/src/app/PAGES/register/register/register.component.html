@@ -1,0 +1,53 @@
+<app-client-navbar></app-client-navbar>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+
+
+  </head>
+  <body class="text-center">
+
+    <main class="form">
+      <form [formGroup]="form" (ngSubmit)="guardarCliente()">
+        <h1 class="h3 mb-3 fw-normal" style="color: white;">Registro</h1>
+
+        <a style="color: white;">Nombre</a>
+        <label for="inputName" class="visually-hidden">Primer nombre</label>
+        <input id="inputName" class="form-control" formControlName="Nombre" placeholder="Ingrese su nombre" required>
+
+        <a style="color: white;">Apellido</a>
+        <label for="inputApellido" class="visually-hidden">Segundo nombre</label>
+        <input id="inputApellido" class="form-control" formControlName="Apellido1" placeholder="Ingrese su apellido" required>
+
+        <a style="color: white;">Fecha de nacimiento</a>
+        <label for="inputFecha" class="visually-hidden">Fecha nacimiento</label>
+        <input type="date" id="inputFecha" class="form-control" formControlName="fechaNacimiento" required>
+      
+        <h3 style="color: white;"> Seleccionar País:</h3>
+        <div class="column">
+          <select formControlName="paisControl" id="paises">
+            <option [value]='pais' *ngFor="let pais of arrayPaises">{{pais}}</option>
+          </select>
+        </div>
+
+        <a style="color: white;">Correo</a>
+        <label for="inputCorreo" class="visually-hidden">Correo</label>
+        <input type="email" id="inputCorreo" class="form-control" formControlName="correo" placeholder="Ingrese su correo" required>
+
+        <a style="color: white;">Contraseña </a>
+        <label for="inputPassword" class="visually-hidden">Telefono</label>
+        <input id="inputPassword" class="form-control" formControlName="password" placeholder="Ingrese su contraseña" required >
+
+        <a style="color: white;">Nombre de Usuario</a>
+        <label for="inputEmail" class="visually-hidden">Usuario</label>
+        <input id="inputEmail" class="form-control" formControlName="usuario" placeholder="Ingrese su nombre de usuario" required autofocus>
+
+        
+        <button class="button1 btn-sucess btn-lg btn-block" type="submit" style="color: white;"> Registrar</button>
+      </form>
+    </main>
+
+  </body>
+</html>
