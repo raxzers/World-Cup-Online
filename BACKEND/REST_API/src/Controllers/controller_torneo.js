@@ -1,7 +1,8 @@
 const cadenaAleatoria = require("../../extra_f");
 const pool = require("../../database");
 const queries = require('../Queries/queries_torneo');
-
+const queries_Equipos = require('../Queries/queries_torneo_equipos');
+const queries_fase = require('../Queries/queries_torneo_fase');
 
 
 const get = (req, res) => {
@@ -20,7 +21,7 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas } = req.body;
+    const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas,listaEquipos,Fase } = req.body;
     let ID= cadenaAleatoria();
     
     pool.query(queries.checkIdExists, [ID], (error, results) => {
@@ -28,10 +29,30 @@ const add = (req, res) => {
         if(found) {
             res.send("Intentelo de nuevo");
         }
+        
         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
             if(error) throw error;
+            console.log('Creo torneo');
+            for(var i=0; i<listaEquipos.length;i++){
+                pool.query(queries_Equipos.add, [Nombre,listaEquipos[i]], (error, results) => {
+                    if(error) {
+                        pool.query(queries_Equipos.remove, [ID], (error, results) => {}); 
+                        throw error;}
+                    else {
+                        console.log('Agrego Equipos');}
+                });
+            }
+            for(var i=0; i<Fase.length;i++){
+                pool.query(queries_fase.add, [Nombre,Fase[i]], (error, results) => {
+                    if(error) {pool.query(queries_fase.remove, [ID], (error, results) => {}); pool.query(queries_Equipos.remove, [ID], (error, results) => {}); throw error;}
+                    else {
+                        console.log('Agrego Fase');}
+                });
+            }
+
             res.status(201).send();
         });
+        
     });
 };
 
