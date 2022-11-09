@@ -27,7 +27,7 @@ const add = (req, res) => {
     pool.query(queries.checkIdExists, [ID], (error, results) => {
         const found = results.rows.length;
         if(found) {
-            res.send("Intentelo de nuevo");
+            res.send();
         }
         
         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
