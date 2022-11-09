@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { userModel } from 'src/app/MODELS/userModel';
 import { paisModel } from 'src/app/MODELS/paisModel';
+import { clientsModel } from 'src/app/MODELS/clientsModel';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,8 @@ export class UserService {
     return this.http.get('http://localhost:3000/api/paises_fifa/')
       .toPromise()
       .then(data => this.paises = data as paisModel[]);
+  }
+  guardarUsuario(usuario: clientsModel): Observable<clientsModel> {
+    return this.http.post<clientsModel>('http://localhost:3000/api/usuarios/', usuario);
   }
 }

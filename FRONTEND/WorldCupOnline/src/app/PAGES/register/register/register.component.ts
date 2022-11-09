@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { clientsModel } from 'src/app/MODELS/clientsModel';
 import { paisModel } from 'src/app/MODELS/paisModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
@@ -11,11 +12,11 @@ import { UserService } from 'src/app/SERVICES/user/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private userService:UserService,private formBuilder: FormBuilder) { }
+  constructor(private userService:UserService,private formBuilder: FormBuilder, private toastr: ToastrService) { }
   form: FormGroup;
   arrayPaises: any[];
   nombrePaises:any[];
-
+  hide = true;
   ngOnInit(): void {
     this.arrayPaises=[];
     this.nombrePaises=[];
@@ -40,24 +41,23 @@ export class RegisterComponent implements OnInit {
         var nombrePais = pais.Nombre;
         this.nombrePaises.push(nombrePais);
       }
-
+      console.log(this.nombrePaises);
     });
   }
   guardarCliente() {
     const cliente: clientsModel = {
-      Fecha_Nacimiento: this.form.get('apellido1').value,
+      Fecha_Nacimiento: this.form.get('fechaNacimiento').value,
       Nombre: this.form.get('Nombre').value,
       Apellido1: this.form.get('Apellido1').value,
-      Pais: this.form.get('numeroTelefono').value,
-      Correo: this.form.get('Correo').value,
-      Password: this.form.get('Password').value,
-      Rol: this.form.get('Rol').value+"T00:00:00",
-      Username: "Username"
+      Pais: this.form.get('paisControl').value,
+      Correo: this.form.get('correo').value,
+      Password: this.form.get('password').value,
+      Username: this.form.get('usuario').value,
     }
-    //this.clientService.guardarCliente(cliente).subscribe(data => {
-     /// this.toastr.success('Tarjeta Guardada', 'Agregada Exitosamente');
-     /// this.form.reset();
-    ///})
+    this.userService.guardarUsuario(cliente).subscribe(data => {
+      this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
+      this.form.reset();
+    })
 
     console.log(this.form);
     console.log(cliente);

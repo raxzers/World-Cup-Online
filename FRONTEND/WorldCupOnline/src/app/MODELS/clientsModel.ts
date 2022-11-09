@@ -5,6 +5,6 @@ export interface clientsModel {
     Pais: string;
     Correo: string;
     Password: string;
-    Rol: string;
+    Rol?: string;
     Username: string;
 }
