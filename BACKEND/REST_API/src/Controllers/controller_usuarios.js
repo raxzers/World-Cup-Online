@@ -18,7 +18,12 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais } = req.body;
-    
+    pool.query(queries.getByusername, [Username], (error, results) => {
+        const found = results.rows.length;
+        if(found) {
+            res.send("Username no esta disponible, intente con otro");
+        }
+    });
         pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais], (error, results) => {
             if(error) throw error;
             res.status(201).send();
