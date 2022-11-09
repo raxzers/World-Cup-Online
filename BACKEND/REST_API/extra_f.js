@@ -8,4 +8,15 @@ function cadenaAleatoria() {
     return aleatoria;
 };
 
+
+// get crypto module
+const crypto = require("crypto");
+function encriptar(pass,s_key) { 
+const skey = "elihvg561houjtDDDgjean";
+const sha256Hasher = crypto.createHmac("sha256", s_key);
+const hash = sha256Hasher.update(pass).digest("hex");
+    return hash;
+};
+
+module.exports = encriptar;
 module.exports = cadenaAleatoria;
