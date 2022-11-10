@@ -29,7 +29,13 @@ const add = (req, res) => {
         if(found) {
             res.send("Intentelo de nuevo");
         }
-        
+        pool.query(queries.checknameExists, [Nombre], (error, results) => {
+            const found1 = results.rows.length;
+            if(found1) {
+                res.send("Intentelo de nuevo");
+            }
+
+        });
         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
             if(error) throw error;
             console.log('Creo torneo');
