@@ -101,6 +101,27 @@ ALTER SEQUENCE public.Torneo_Sede_id_seq
     OWNER TO postgres;
 	
 
+------------------------------------------
+CREATE SEQUENCE public.quinielas_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.quinielas_id_seq
+    OWNER TO postgres;
+
+-----------------------------------------
+CREATE SEQUENCE public.user_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.user_id_seq
+    OWNER TO postgres;
 ---------------------------------------------------------------------------------------------------------
 -- Table: public.Torneo
 
@@ -245,13 +266,13 @@ ALTER TABLE public."Partido"
 
 CREATE TABLE public."Ranking"
 (
-    "Id" bigint NOT NULL DEFAULT nextval('Ranking_id_seq'::regclass),
-    "Torneo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "Username" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Id" bigint NOT NULL DEFAULT nextval('ranking_id_seq'::regclass),
+    "id_Torneo" character varying COLLATE pg_catalog."default" NOT NULL,
+    "id_Usuario" bigint NOT NULL,
     "Puntaje" integer NOT NULL,
     CONSTRAINT id_ranking PRIMARY KEY ("Id"),
-    CONSTRAINT "Torneo_ranking" FOREIGN KEY ("Torneo")
-        REFERENCES public."Torneo" ("Nombre") MATCH SIMPLE
+    CONSTRAINT "Torneo_ranking" FOREIGN KEY ("id_Torneo")
+        REFERENCES public."Torneo" ("ID") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -326,4 +347,62 @@ CREATE TABLE public."Torneo_Sede"
 TABLESPACE pg_default;
 
 ALTER TABLE public."Torneo_Sede"
+    OWNER to postgres;
+
+-----------------------------------------------------------------
+CREATE TABLE public."Usuarios"
+(
+    "ID" bigint NOT NULL DEFAULT nextval('user_id_seq'::regclass),
+    "Fecha_Nacimiento" date NOT NULL,
+    "Nombre" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Apellido1" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Correo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Password" character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    "Rol" character varying(5) COLLATE pg_catalog."default" NOT NULL,
+    "Username" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "Pais" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_id_key PRIMARY KEY ("ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Usuarios"
+    OWNER to postgres;
+---------------------------------------------------------------
+CREATE TABLE public."Quinielas"
+(
+    "Id" bigint NOT NULL DEFAULT nextval('quinielas_id_seq'::regclass),
+    "id_Usuario" bigint NOT NULL,
+    "id_Partido" bigint NOT NULL,
+    "id_Jugadores_goles_Eq1" bigint[],
+    "id_Jugadores_asistencias_Eq1" bigint[],
+    "id_Jugador_GOAT" bigint NOT NULL,
+    "Goles_Eq1" integer NOT NULL,
+    "Goles_Eq2" integer NOT NULL,
+    "id_Jugadores_goles_Eq2" bigint[],
+    "id_Jugadores_asistencias_Eq2" bigint[],
+    "Autogoles" integer,
+    CONSTRAINT id_quiniela PRIMARY KEY ("Id"),
+    CONSTRAINT id_partido_quiniela FOREIGN KEY ("id_Partido")
+        REFERENCES public."Partido" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Quinielas"
+    OWNER to postgres;
+
+--------------------------------------------------------------------
+CREATE TABLE public."Paises_Fifa"
+(
+    "Nombre" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Paises_Fifa_pkey" PRIMARY KEY ("Nombre")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Paises_Fifa"
     OWNER to postgres;

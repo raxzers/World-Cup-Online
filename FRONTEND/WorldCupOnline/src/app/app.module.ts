@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './PAGES/login/login.component';
@@ -26,6 +27,8 @@ import { HttpClientModule} from '@angular/common/http';
 import { MatTableModule} from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
+import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
+import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 
 
 
@@ -37,7 +40,9 @@ import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.componen
     NewFootballGameComponent,
     ViewEventsComponent,
     NavbarComponent,
-    VRankingComponent
+    VRankingComponent,
+    VQuinielaComponent,
+    LlenarQuinielaComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,7 @@ import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.componen
     MatDatepickerModule,
     MatInputModule,
     MatTableModule,
+    MatCardModule,
     MatNativeDateModule,
     MatTabsModule,
     MatGridListModule,NgbModule,

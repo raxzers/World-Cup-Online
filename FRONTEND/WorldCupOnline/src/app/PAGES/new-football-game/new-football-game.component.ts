@@ -137,7 +137,7 @@ export class NewFootballGameComponent implements OnInit {
       this.nuevo_partido.Hora = hora_partido;
       this.send_partido(this.nuevo_partido);
     }else{
-      this.toastr.warning("La hora debe encontrarse en el rango valido entre 23:59:59 y 00:00:00");
+      this.toastr.warning("La hora debe encontrarse en el rango [00:00:00, 23:59:59]");
     }
    
     //this.to_view_events(); 
