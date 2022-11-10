@@ -29,7 +29,7 @@ const add = (req, res) => {
 const remove = (req, res) => {
     const id = parseInt(req.params.id);
     pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
+        const notFound = results.rows.length;
         if(notFound){
             res.send("No existe en la base de datos");
             return;
@@ -46,7 +46,7 @@ const update = (req, res) => {
     const { id_Torneo,id_Usuario,Puntaje } = req.body;
 
     pool.query(queries.getById, [Id], (error, results) => {
-        const notFound = !results.rows.length;
+        const notFound = results.rows.length;
         if(notFound){
             res.send("No existe en la base de datos");
             return;
