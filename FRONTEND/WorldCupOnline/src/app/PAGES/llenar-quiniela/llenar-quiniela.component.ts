@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { gameModel } from 'src/app/MODELS/gameModel';
+import { quinielaModel } from 'src/app/MODELS/quinielaModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { GameService } from 'src/app/SERVICES/game/game.service';
 
@@ -22,6 +23,11 @@ export class LlenarQuinielaComponent implements OnInit {
   ];
 
   jugadores: string[] = ['jugador 1', 'jugador 2', 'jugador 3'];
+
+  quiniela: quinielaModel[] = [
+    { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: 0, id_Jugadores_asistencia_Eq1: 0, id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: 0, id_Jugadores_asistencias_Eq2: 0, Autogoles: 0 }
+    
+  ];
 
   partidos:gameModel[];
   torneos:torneoModel[];

@@ -7,7 +7,7 @@
                 <td class="columnas">
                     Fecha: {{partido.Fecha}}
                 </td>
-                <span></span>
+                
                 <td class="columnas">
                     Hora: {{partido.Hora}}
                 </td>
@@ -15,7 +15,10 @@
             
             <div>
                 <td class="columnas">
-                    <input type="number" min="0" max="100" #goles_1 placeholder="Goles"> {{partido.Equipo_1}}  --- VS ---  {{partido.Equipo_2}} <input type="number" min="0" max="100" #goles_2 placeholder="Goles">  
+                    {{partido.Equipo_1}}  <input type="number" min="0" max="100" #goles_1 placeholder="Goles">   
+                </td>
+                <td class="columnas">
+                    {{partido.Equipo_2}} <input type="number" min="0" max="100" #goles_2 placeholder="Goles">  
                 </td>
             </div>
 
@@ -23,11 +26,12 @@
                 <td class="columnas">
                     Fase: {{partido.Fase}}
                 </td>
-                <span></span>
+                
                 <td class="columnas">
                     Estado del partido: {{partido.Estado_del_partido}}
-                </td>    
-                <span></span>      
+                </td>          
+            </div>
+            <div>
                 <td class="columnas">
                     Sede: {{partido.Sede}}
                 </td>           
