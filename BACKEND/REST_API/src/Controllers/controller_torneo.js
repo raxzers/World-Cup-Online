@@ -1,14 +1,10 @@
 const cadenaAleatoria = require("../../extra_f");
 const pool = require("../../database");
 const queries = require('../Queries/queries_torneo');
-<<<<<<< Updated upstream
-
-
-=======
 const queries_Equipos = require('../Queries/queries_torneo_equipos');
 const queries_fase = require('../Queries/queries_torneo_fase');
 const queries_ranking = require('../Queries/queries_ranking');
->>>>>>> Stashed changes
+
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -36,8 +32,6 @@ const add = (req, res) => {
         }
         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
             if(error) throw error;
-<<<<<<< Updated upstream
-=======
             console.log('Creo torneo');
             for(var i=0; i<listaEquipos.length;i++){
                 pool.query(queries_Equipos.add, [Nombre,listaEquipos[i]], (error, results) => {
@@ -58,7 +52,6 @@ const add = (req, res) => {
             pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
                 if(error) throw error;
             });
->>>>>>> Stashed changes
             res.status(201).send();
         });
     });
