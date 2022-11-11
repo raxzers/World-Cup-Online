@@ -28,7 +28,6 @@ export class ViewEventsComponent implements OnInit {
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data:gameModel[]) => {
       this.partidos=data
-      //this.listar_eventos(this.partidos)
     });
 
     this.partidoService.obtener_torneos().subscribe((data:torneoModel[]) => {
