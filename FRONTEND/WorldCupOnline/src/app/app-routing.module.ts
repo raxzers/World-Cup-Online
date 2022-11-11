@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoleGuardGuard } from './core/guards/role-guard.guard';
 import { HomeComponent } from './PAGES/home/home.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 import { LoginComponent } from './PAGES/login/login.component';
@@ -12,10 +13,10 @@ import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.componen
 const routes: Routes = [
   {path:'', redirectTo:'/login', pathMatch:'full'},
   { path: 'login', component: LoginComponent},
-  { path: 'home', component: HomeComponent},
-  { path: 'view_ranking', component: VRankingComponent},
-  { path: 'new_football_game', component: NewFootballGameComponent},
-  { path: 'view_events', component: ViewEventsComponent},
+  { path: 'home',component: HomeComponent,canActivate:[RoleGuardGuard]},
+  { path: 'view_ranking', component: VRankingComponent,canActivate:[RoleGuardGuard]},
+  { path: 'new_football_game', component: NewFootballGameComponent,canActivate:[RoleGuardGuard]},
+  { path: 'view_events', component: ViewEventsComponent,canActivate:[RoleGuardGuard]},
   { path: 'view_quiniela', component: VQuinielaComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'fill_quiniela', component: LlenarQuinielaComponent}

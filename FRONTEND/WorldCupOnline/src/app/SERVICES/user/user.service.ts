@@ -14,7 +14,13 @@ export class UserService {
 
   paises:paisModel[];
   constructor(private http: HttpClient) { }
+  IsLoggedIn(){
+    return JSON.parse(localStorage.getItem('rol'));
+  }
 
+  login(usuario :userModel){
+    return this.http.post<userModel>('http://localhost:3000/api/usuarios/login/', usuario);
+  }
   getUsers():Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
   } 

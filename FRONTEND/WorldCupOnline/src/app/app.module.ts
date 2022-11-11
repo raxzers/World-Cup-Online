@@ -31,6 +31,8 @@ import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 import { RegisterComponent } from './PAGES/register/register/register.component';
 import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
+import { UserService } from './SERVICES/user/user.service';
+import { RoleGuardGuard } from './core/guards/role-guard.guard';
 
 
 
@@ -68,7 +70,7 @@ import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client
     FormsModule,ReactiveFormsModule,HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [UserService,RoleGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
