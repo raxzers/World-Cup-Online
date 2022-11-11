@@ -32,10 +32,12 @@ export class LoginComponent implements OnInit {
     }
     this.userService.login(usuario).subscribe(data => {
       localStorage.setItem('rol',JSON.stringify(data));
-   
-    //  console.log(JSON.stringify(data));
-      this.router.navigate(['/home']);
-    ///  this.toastr.success('Iniciando Sesión...', 'Inicio de Sesión Exitoso');
+      if(this.userService.IsLoggedIn()=="admin"){
+        this.router.navigate(['/home']);
+      }else{
+        this.router.navigate(['/fill_quiniela']);
+      }
+      
     
     })
   
