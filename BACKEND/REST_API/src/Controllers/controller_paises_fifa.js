@@ -24,7 +24,6 @@ const remove = (req, res) => {
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
         if(notFound){
-    const id = req.params.id;
             res.send("No existe en la base de datos");
             return;
         } 

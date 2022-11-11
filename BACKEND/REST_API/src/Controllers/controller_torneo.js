@@ -14,7 +14,6 @@ const get = (req, res) => {
 };
 
 const getById = (req, res) => {
-    const id = parseInt(req.params.id);
     const id = req.params.id;
     pool.query(queries.getById, [id], (error, results) => {
         if(error) throw error;
@@ -51,7 +50,6 @@ const add = (req, res) => {
                         console.log('Agrego Fase');}
                 });
             }
-
             pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
                 if(error) throw error;
             });
@@ -87,13 +85,11 @@ const update = (req, res) => {
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
-        if(notFound){
         const notFound = results.rows.length;
         if(!notFound){
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas, id], (error, results) => {
         pool.query(queries.update, [id,Fecha_inicio,Fecha_fin,Equipos,Reglas, id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
