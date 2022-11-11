@@ -22,14 +22,15 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas } = req.body;
+    const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas,listaEquipos,Fase } = req.body;
     let ID= cadenaAleatoria();
     
     pool.query(queries.checkIdExists, [ID], (error, results) => {
         const found = results.rows.length;
         if(found) {
-            res.send("Intentelo de nuevo");
+            res.send();
         }
+        
         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
             if(error) throw error;
             console.log('Creo torneo');
@@ -54,6 +55,7 @@ const add = (req, res) => {
             });
             res.status(201).send();
         });
+        
     });
 };
 

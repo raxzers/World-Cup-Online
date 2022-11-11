@@ -4,4 +4,6 @@ export interface torneoModel {
     Fecha_fin: Date;
     Equipos: string;
     Reglas: string;
+    listaEquipos:any[];
+    Fase:any[];
 }

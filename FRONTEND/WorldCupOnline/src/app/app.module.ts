@@ -29,6 +29,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
 import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
+import { RegisterComponent } from './PAGES/register/register/register.component';
+import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
+import { UserService } from './SERVICES/user/user.service';
+import { RoleGuardGuard } from './core/guards/role-guard.guard';
 
 
 
@@ -42,7 +46,9 @@ import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela
     NavbarComponent,
     VRankingComponent,
     VQuinielaComponent,
-    LlenarQuinielaComponent
+    LlenarQuinielaComponent,
+    RegisterComponent,
+    ClientNavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +70,7 @@ import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela
     FormsModule,ReactiveFormsModule,HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [UserService,RoleGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
