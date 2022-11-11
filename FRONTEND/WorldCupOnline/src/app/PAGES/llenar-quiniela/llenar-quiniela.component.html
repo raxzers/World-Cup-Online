@@ -1,8 +1,13 @@
 <app-navbar></app-navbar>
 <mat-tab-group>
-    <mat-tab label="{{torneo}}" *ngFor="let torneo of torns"> 
-      <mat-grid-list cols="1" rowHeight="5:1" *ngFor="let partido of x">
+    <mat-tab label="{{torneo}}"  *ngFor="let torneo of nombre_torneos"> 
+      <mat-grid-list cols="1" rowHeight="5:1" *ngFor="let partido of partidos">
         <mat-card *ngIf="partido.Nombre_Torneo==torneo" class="card">
+            <mat-form-field style="width:20%">              
+                <mat-select>
+                  <mat-option value="partido" (click)="obtener_partidos_por_torneo(torneo)" *ngFor="let juego of partidos_por_torneo">{{juego.Equipo_1}} VS {{juego.Equipo_2}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <div>
                 <td class="columnas">
                     Fecha: {{partido.Fecha}}
@@ -50,6 +55,7 @@
                   <mat-option value="jugador" *ngFor="let jugador of jugadores">{{torneo}}</mat-option>
                 </mat-select>
             </mat-form-field>
+
         </mat-card>
       </mat-grid-list>
     </mat-tab>

@@ -47,7 +47,7 @@ export class GameService {
     return this.http.get<torneo_equipo_Model[]>(this.torneo_equipo_URL + torneo);
   }
 
-  obtener_partidos_por_torneo(torneo:string):Observable<gameModel[]> {
+  obtener_partidos_por_torneo(torneo:String):Observable<gameModel[]> {
     return this.http.get<gameModel[]>(this.partido_URL + torneo);
   }
 

@@ -30,6 +30,7 @@ export class LlenarQuinielaComponent implements OnInit {
   ];
 
   partidos:gameModel[];
+  partidos_por_torneo:gameModel[];
   torneos:torneoModel[];
   nombre_torneos:string[] = [];
 
@@ -48,4 +49,10 @@ export class LlenarQuinielaComponent implements OnInit {
     });  
   }
 
+  obtener_partidos_por_torneo(torneo: String){
+    this.partidoService.obtener_partidos_por_torneo(torneo).subscribe((data:gameModel[]) => {
+      this.partidos_por_torneo=data
+    });
+  }
+  
 }
