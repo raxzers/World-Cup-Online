@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatDividerModule } from '@angular/material/divider';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './PAGES/login/login.component';
 import { HomeComponent } from './PAGES/home/home.component';
@@ -66,6 +67,7 @@ import { RoleGuardGuard } from './core/guards/role-guard.guard';
     MatCardModule,
     MatNativeDateModule,
     MatTabsModule,
+    MatDividerModule,
     MatGridListModule,NgbModule,
     FormsModule,ReactiveFormsModule,HttpClientModule,
     ToastrModule.forRoot(),

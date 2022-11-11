@@ -7,8 +7,7 @@
         <td>
             <mat-form-field style="width:20%">              
                 <mat-select>
-                  <mat-option value="torneo" (click)="selected_tounament(torneo)" *ngFor="let torneo of nombre_torneos;let indice=index">{{torneo}}</mat-option>
-                  
+                  <mat-option value="torneo" (click)="selected_tounament(torneo)" *ngFor="let torneo of nombre_torneos">{{torneo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>

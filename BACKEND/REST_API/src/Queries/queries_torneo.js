@@ -11,5 +11,5 @@ module.exports = {
     checkIdExists,
     add,
     remove,
-    update,
+    update
 }
