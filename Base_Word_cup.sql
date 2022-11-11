@@ -382,6 +382,8 @@ CREATE TABLE public."Quinielas"
     "id_Jugadores_goles_Eq2" bigint[],
     "id_Jugadores_asistencias_Eq2" bigint[],
     "Autogoles" integer,
+    "Autogoles_eq1" integer,
+    "Autogoles_eq2" integer,
     CONSTRAINT id_quiniela PRIMARY KEY ("Id"),
     CONSTRAINT id_partido_quiniela FOREIGN KEY ("id_Partido")
         REFERENCES public."Partido" ("ID") MATCH SIMPLE

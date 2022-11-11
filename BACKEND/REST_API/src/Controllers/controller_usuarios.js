@@ -1,5 +1,6 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_usuarios');
+const encriptar = require("../../extra_f");
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -25,6 +26,8 @@ const add = (req, res) => {
         }
     });
         pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais], (error, results) => {
+    let n_Pass=encriptar(Password,"ghjlu568Shg");
+        pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
