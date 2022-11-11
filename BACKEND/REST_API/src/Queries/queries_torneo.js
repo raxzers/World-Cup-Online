@@ -12,5 +12,5 @@ module.exports = {
     add,
     remove,
     update,
-    checknameExists,
+    //checknameExists,
 }
