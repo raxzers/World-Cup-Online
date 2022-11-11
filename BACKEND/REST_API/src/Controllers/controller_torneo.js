@@ -25,9 +25,11 @@ const add = (req, res) => {
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas,listaEquipos,Fase } = req.body;
     let ID= cadenaAleatoria();
     
-    pool.query(queries.checkIdExists, [ID], (error, results) => {
-        const found = results.rows.length;
-        if(found) {
+    pool.query(queries.checkIdExists, [ID], (error, results1) => {
+        
+        
+        const found1 = results1.rows.length;
+        if(found1) {
             res.send();
         }
         
