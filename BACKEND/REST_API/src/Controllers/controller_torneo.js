@@ -62,7 +62,6 @@ const add = (req, res) => {
 };
 
 const remove = (req, res) => {
-    const id = parseInt(req.params.id);
     const id = req.params.id;
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -84,12 +83,10 @@ const remove = (req, res) => {
 };
 
 const update = (req, res) => {
-    const id = parseInt(req.params.id);
     const id = req.params.id;
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
         if(notFound){
         const notFound = results.rows.length;
         if(!notFound){

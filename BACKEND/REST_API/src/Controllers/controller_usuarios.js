@@ -19,13 +19,6 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais } = req.body;
-    pool.query(queries.getByusername, [Username], (error, results) => {
-        const found = results.rows.length;
-        if(found) {
-            res.send("Username no esta disponible, intente con otro");
-        }
-    });
-        pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais], (error, results) => {
     let n_Pass=encriptar(Password,"ghjlu568Shg");
         pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
             if(error) throw error;
