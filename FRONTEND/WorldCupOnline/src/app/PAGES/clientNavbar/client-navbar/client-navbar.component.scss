@@ -1,0 +1,51 @@
+
+.navbar{
+    max-height: 65px;
+    background-color: #004590;
+  }
+  
+  .navbar-brand {
+    width:350px;
+    font-size: 24px;
+  }
+  .navbar-brand img {
+    height: 50px;
+    /* put value of image height as your need */
+    float: right;
+    margin-right: 7px;
+  }
+  
+  .button1 {
+    background-color: #004590; /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;  
+    font-weight:bold;
+    color:white;
+  }
+  .nav-item1 {
+    background-color: #004590; /* Green */
+    border: none;
+    vertical-align: -20px;
+    color: rgb(0, 0, 0);
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;  
+    font-weight:bold;
+    color:white;
+  }
+  html,body{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: aqua;
+  }
+  

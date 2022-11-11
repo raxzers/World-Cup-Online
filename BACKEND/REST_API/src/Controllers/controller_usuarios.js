@@ -44,7 +44,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais  } = req.body;
+    const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Rol,Password,Username,Pais  } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -52,7 +52,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id,Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais , id], (error, results) => {
+        pool.query(queries.update, [id,Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Rol,Username,Pais , id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
@@ -61,15 +61,27 @@ const update = (req, res) => {
 
 const login = (req, res) => {
     const {Username,Password} = req.body;
-    
+    pool.query(queries.getByusername, [Username], (error, results) => {
+        const notFound = !results.rows.length;
+        if(notFound){
+            res.status(200).json(500);
+            return;
+        }
         pool.query(queries.getByusername, [Username], (error, results) => {
             if(error) throw error;
+
             console.log(results.rows[0].Rol);
             if(Password==results.rows[0].Password)
-                res.status(201).send(results.rows[0].Rol);
-            else res.send("Password incorrecta");
+                res.status(201).json(results.rows[0].Rol);
+            else {
+                console.log(results.rows[0].Rol);
+                let n_Pass=encriptar(Password,"ghjlu568Shg");
+                if(n_Pass==results.rows[0].Password)
+                    res.status(201).send(results.rows[0].Rol);
+                else res.send("Password incorrecta");
+            }
         });
-    
+    });
 };
 
 module.exports = {
