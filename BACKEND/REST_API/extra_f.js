@@ -20,8 +20,9 @@ function encriptar(pass,s_key) {
 };
 
 function Comparar_fechas_torneo(Fecha_inicio,Fecha_fin){
-    var valor=false;
-    pool.query("select now()", (error, results1) => {
+    
+    return pool.query("select now()", (error, results1) => {
+        
         var fecha_inicio = new Date(Fecha_inicio);
         var fecha_fin = new Date(Fecha_fin);
         if (fecha_inicio < fecha_fin){
@@ -31,20 +32,30 @@ function Comparar_fechas_torneo(Fecha_inicio,Fecha_fin){
         }
         else {
             valor= false;
-            }});
-    return false;
+            }
+    });
+    
 };
 
 function filterAlpha (str) {
     if (typeof str !== "string") return false;
-    return str.replace(/[A-Z]|[a-z]| [&\/\\#,+()$~%.'":*?<>{}]/g, "") === "";
+    return str.replace(/[A-Z]|[a-z]|[&\/\\#,+()$~%.'":*?<>{}]|[ ]/g, "") === "";
   }
 
-//module.exports = filterAlpha;
-//module.exports = Comparar_fechas_torneo;
-//module.exports = encriptar;
+  function validacion_correo_formato (str) {
+    var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+    //Se muestra un texto a modo de ejemplo, luego va a ser un icono
+    if (emailRegex.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 module.exports = {
     cadenaAleatoria , 
     filterAlpha,
     encriptar,
+    Comparar_fechas_torneo,
+    validacion_correo_formato,
 }
