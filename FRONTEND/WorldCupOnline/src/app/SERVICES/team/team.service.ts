@@ -5,6 +5,8 @@ import { teamModel } from 'src/app/MODELS/teamModel';
 import { HttpHeaders } from '@angular/common/http';
 import { seleccionModel } from 'src/app/MODELS/seleccionModel';
 import { faseModel } from 'src/app/MODELS/faseMode';
+import { jugador_club_Model } from 'src/app/MODELS/jugador_club_Model';
+import { jugador_seleccion_Model } from 'src/app/MODELS/jugador_seleccion_Model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +62,12 @@ export class TeamService {
       .toPromise()
       .then(data => this.list2 = data as seleccionModel[]);
   }
-  //getTeams():Observable<teamModel> {
-  // return this.http.get<teamModel>(this.APIurl);
-  //} 
+  
+  obtener_jugadores_por_club(equipo:String): Observable<jugador_club_Model>{
+    return this.http.get<jugador_club_Model>('http://localhost:3000/api/jugadores_club/'+equipo);
+  }
+
+  obtener_jugadores_por_seleccion(equipo:String): Observable<jugador_seleccion_Model[]>{
+    return this.http.get<jugador_seleccion_Model[]>('http://localhost:3000/api/jugadores_seleccion/'+equipo);
+  }
 }
