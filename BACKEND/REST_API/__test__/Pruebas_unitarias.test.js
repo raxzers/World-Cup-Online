@@ -16,8 +16,19 @@ describe("Pruebas unitarias", () =>{
     })
 
     test("Comprobacion alfanumerica del password",() => {
-        var val1 = filterAlpha.filterAlpha("aaaa1aaaaa,aaa");
+        var val1 = filterAlpha.filterAlpha("cosita linda 00");
         expect(val1).toBe(false)
     })
 
+    test("Comprobacion fecha torneo",() => {
+        var val1 = filterAlpha.Comparar_fechas_torneo("2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
+        expect(val1).toBe(false)
+    })
+    
+
+    test("Comprobacion formato correo",() => {
+        var val1 = filterAlpha.validacion_correo_formato("costena@gmail.com");
+        expect(val1).toBe(true)
+    })
 });
+

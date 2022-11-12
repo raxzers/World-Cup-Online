@@ -19,12 +19,37 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais } = req.body;
-    let n_Pass=encriptar.encriptar(Password,"ghjlu568Shg");
-        pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
-            if(error) throw error;
-            res.status(201).send();
+    if(encriptar.validacion_correo_formato(Correo)){   
+        pool.query(queries.getBycorreo, [Correo], (error, results) => {
+            const notFound = results.rows.length;
+            if(notFound){
+                res.send("Ya el correo en  existe en la base de datos");
+                return;
+            } 
+            else {
+                pool.query(queries.getByusername, [Username], (error, results) => {
+                    const notFound = results.rows.length;
+                    if(notFound){
+                        res.send("Ya username en  existe en la base de datos");
+                        return;
+                    } 
+                    else{
+                        let n_Pass=encriptar.encriptar(Password,"ghjlu568Shg");
+                        if(!encriptar.filterAlpha(Password)){
+                            pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
+                                if(error) throw error;
+                                res.status(201).send();
+                            });
+                        }
+                        else {
+                            res.status(201).send("Password con formato invalido");
+                        }
+                    }
+                });
+            }
         });
-    
+    }
+    else res.status(201).send("Correo con formato invalido");
 };
 
 const remove = (req, res) => {
