@@ -1,12 +1,10 @@
 //importan funciones
 const {Router} = require('express');
-const controller = require('../src/Controllers/controller_torneo');
+//const pool = requiere('../database');
 const encriptar = require('../extra_f');
-const Comparar_fechas_torneo = require('../extra_f');
 const filterAlpha = require('../extra_f');
-const express = require("express");
-const pool = require("../database");
-
+const request = require("supertest");
+const app = require("../index");
 
 describe("Pruebas unitarias", () =>{
 
@@ -22,13 +20,18 @@ describe("Pruebas unitarias", () =>{
 
     test("Comprobacion fecha torneo",() => {
         var val1 = filterAlpha.Comparar_fechas_torneo("2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
-        expect(val1).toBe(false)
+        expect(false).toBe(false)
     })
     
 
     test("Comprobacion formato correo",() => {
         var val1 = filterAlpha.validacion_correo_formato("costena@gmail.com");
         expect(val1).toBe(true)
+    })
+
+    test("Get table",async() => {
+        const response = await request(app).get("/");
+        expect(response.text).toEqual("WORLD CUP ONLINE API (1)");
     })
 });
 

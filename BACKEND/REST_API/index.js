@@ -51,3 +51,5 @@ app.listen(port, () => console.log(`listening on port ${port}`));
 app.get('/', (consulta, respuesta) => {
     respuesta.send('WORLD CUP ONLINE API (1)');
 });
+
+module.exports = app;
