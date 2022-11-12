@@ -76,7 +76,8 @@ export class RegisterComponent implements OnInit {
         Username: this.form.get('usuario').value,
       }
       this.userService.guardarUsuario(cliente).subscribe(data => {
-        this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
+        this.toastr.warning(JSON.stringify(data));
+        ///this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
         this.form.reset();
       })
 

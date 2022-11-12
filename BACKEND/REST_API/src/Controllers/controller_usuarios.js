@@ -23,14 +23,14 @@ const add = (req, res) => {
         pool.query(queries.getBycorreo, [Correo], (error, results) => {
             const notFound = results.rows.length;
             if(notFound){
-                res.send("Ya el correo en  existe en la base de datos");
+                res.json("Ya el correo en  existe en la base de datos");
                 return;
             } 
             else {
                 pool.query(queries.getByusername, [Username], (error, results) => {
                     const notFound = results.rows.length;
                     if(notFound){
-                        res.send("Ya username en  existe en la base de datos");
+                        res.json("Ya username en  existe en la base de datos");
                         return;
                     } 
                     else{
@@ -42,7 +42,7 @@ const add = (req, res) => {
                             });
                         }
                         else {
-                            res.status(201).send("Password con formato invalido");
+                            res.status(201).json("Password con formato invalido");
                         }
                     }
                 });
@@ -89,7 +89,7 @@ const login = (req, res) => {
     pool.query(queries.getByusername, [Username], (error, results) => {
         const notFound = !results.rows.length;
         if(notFound){
-            res.status(200).json(500);
+            res.status(200).json("El usuario ingresado es incorrecto");
             return;
         }
         pool.query(queries.getByusername, [Username], (error, results) => {
@@ -102,8 +102,8 @@ const login = (req, res) => {
                 console.log(results.rows[0].Rol);
                 let n_Pass=encriptar.encriptar(Password,"ghjlu568Shg");
                 if(n_Pass==results.rows[0].Password)
-                    res.status(201).send(results.rows[0].Rol);
-                else res.send("Password incorrecta");
+                    res.status(201).json(results.rows[0].Rol);
+                else res.json("Contraseña incorrecta");
             }
         });
     });
