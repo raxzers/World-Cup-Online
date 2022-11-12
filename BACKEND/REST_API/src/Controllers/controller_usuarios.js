@@ -19,7 +19,7 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais } = req.body;
-    let n_Pass=encriptar(Password,"ghjlu568Shg");
+    let n_Pass=encriptar.encriptar(Password,"ghjlu568Shg");
         pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
             if(error) throw error;
             res.status(201).send();
@@ -75,7 +75,7 @@ const login = (req, res) => {
                 res.status(201).json(results.rows[0].Rol);
             else {
                 console.log(results.rows[0].Rol);
-                let n_Pass=encriptar(Password,"ghjlu568Shg");
+                let n_Pass=encriptar.encriptar(Password,"ghjlu568Shg");
                 if(n_Pass==results.rows[0].Password)
                     res.status(201).send(results.rows[0].Rol);
                 else res.send("Password incorrecta");
