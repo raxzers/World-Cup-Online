@@ -34,7 +34,8 @@ import { RegisterComponent } from './PAGES/register/register/register.component'
 import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
 import { UserService } from './SERVICES/user/user.service';
 import { RoleGuardGuard } from './core/guards/role-guard.guard';
-
+import { PopUpComponent } from './PAGES/register/popUp/pop-up/pop-up.component';
+import {MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { RoleGuardGuard } from './core/guards/role-guard.guard';
     VQuinielaComponent,
     LlenarQuinielaComponent,
     RegisterComponent,
-    ClientNavbarComponent
+    ClientNavbarComponent,
+    PopUpComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,7 @@ import { RoleGuardGuard } from './core/guards/role-guard.guard';
     MatTableModule,
     MatCardModule,
     MatNativeDateModule,
-    MatTabsModule,
+    MatTabsModule,MatDialogModule,
     MatDividerModule,
     MatGridListModule,NgbModule,
     FormsModule,ReactiveFormsModule,HttpClientModule,
