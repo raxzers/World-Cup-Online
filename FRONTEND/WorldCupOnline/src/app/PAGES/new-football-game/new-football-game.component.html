@@ -5,25 +5,27 @@
             <h2 style="color: black; margin-left: 10%;" class="text-center">Torneo al que pertenece</h2>
         </td>
         <td>
-            <mat-form-field style="width:20%">              
+            <mat-form-field style="width:20%">
                 <mat-select>
-                  <mat-option value="torneo" (click)="selected_tounament(torneo)" *ngFor="let torneo of nombre_torneos">{{torneo}}</mat-option>
+                    <mat-option value="torneo" (click)="selected_tounament(torneo)"
+                        *ngFor="let torneo of nombre_torneos">{{torneo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Fecha de inicio</h2>
         </td>
         <td>
             <form [formGroup]="fechaInicioForm">
-                <input  style="width:20%;" (click)="verificarFechaActual()" type="date" id="date" class="form-control" formControlName="fechaInicioControl" placeholder="fechaInicio" required>
+                <input style="width:20%;" (click)="verificarFechaActual()" type="date" id="date" class="form-control"
+                    formControlName="fechaInicioControl" placeholder="fechaInicio" required>
             </form>
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Hora de inicio</h2>
         </td>
         <td>
@@ -33,48 +35,51 @@
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Fase del torneo</h2>
         </td>
         <td>
-            <mat-form-field  style="width:20%;">              
+            <mat-form-field style="width:20%;">
                 <mat-select>
-                  <mat-option value="fase" (click)="tounament_phases(fase)" *ngFor="let fase of nombre_fases">{{fase}}</mat-option>
+                    <mat-option value="fase" (click)="tounament_phases(fase)" *ngFor="let fase of nombre_fases">{{fase}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Equipo 1</h2>
         </td>
         <td>
-            <mat-form-field  style="width:20%;">              
+            <mat-form-field style="width:20%;">
                 <mat-select>
-                  <mat-option value="equipo" (click)="selected_team1(equipo)" *ngFor="let equipo of nombre_equipos">{{equipo}}</mat-option>
+                    <mat-option value="equipo" (click)="selected_team1(equipo)" *ngFor="let equipo of nombre_equipos">
+                        {{equipo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Equipo 2</h2>
         </td>
         <td>
-            <mat-form-field  style="width:20%;">              
+            <mat-form-field style="width:20%;">
                 <mat-select>
-                  <mat-option value="equipo" (click)="selected_team2(equipo)" *ngFor="let equipo of nombre_equipos">{{equipo}}</mat-option>
+                    <mat-option value="equipo" (click)="selected_team2(equipo)" *ngFor="let equipo of nombre_equipos">
+                        {{equipo}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </td>
     </tr>
     <tr>
-        <td  style="width:20%;">
+        <td style="width:20%;">
             <h2 style="color: black; margin-left: 10%;" class="text-center">Sede</h2>
         </td>
         <td>
-            <mat-form-field  style="width:20%;"> 
-                <input matInput (click)="selected_sede(sede.value)" #sede>  
+            <mat-form-field style="width:20%;">
+                <input matInput (click)="selected_sede(sede.value)" #sede>
             </mat-form-field>
         </td>
     </tr>
@@ -83,4 +88,7 @@
     <button mat-raised-button (click)="to_home()">Salir</button>
     <button mat-raised-button (click)="save(sede.value, hora.value, min.value, seg.value)">Guardar partido</button>
 </div>
-
+<!--test-->
+<div [formGroup]="testForm">
+    <input data-testid="input_test" formControlName="testControl" matInput #input_test>
+</div>

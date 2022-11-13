@@ -11,10 +11,10 @@ describe('NewFootballGameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewFootballGameComponent ],
-      imports:[HttpClientModule, ToastrModule.forRoot(),ReactiveFormsModule]
+      declarations: [NewFootballGameComponent],
+      imports: [HttpClientModule, ToastrModule.forRoot(), ReactiveFormsModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -26,4 +26,24 @@ describe('NewFootballGameComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+
+  it('tamaño de un array', () => {
+    const lista = component.listaTest;
+    expect(lista).toHaveSize(4);
+
+  });
+
+  it('validar un formControl', () => {
+    const email = component.testForm.controls['testControl']
+    email.setValue('usuario@correo.com')
+    expect(component.testForm.invalid).toBeTrue();
+  });
+
+  it('validar contenido(string) de un input(html)', () => {
+    const sede = fixture.debugElement.nativeElement.querySelector('[data-testid="input_test"]');
+    expect(sede.textContent).toBe('');
+  });
+
 });
