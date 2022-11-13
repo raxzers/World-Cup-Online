@@ -74,6 +74,20 @@ export class NewFootballGameComponent implements OnInit {
   }
   
   verificar_partido(partido:gameModel){
+
+    
+    /////////////////////////////////////
+/*
+    let aceptado:Boolean
+    this.partidoService.agregar_partido(partido).subscribe(data => {
+      if(data){
+        aceptado=true;
+    }});
+
+
+*/
+/////////////////////////////////////
+
     if(partido.Nombre_Torneo=='' || partido.Fecha==null || partido.Hora=='' || partido.Fase=='' || partido.Equipo_1=='' || partido.Equipo_2=='' || partido.Sede==''){
       this.toastr.warning("Debe completar todos los datos, verifique y vuelva a intentar");
       return false;

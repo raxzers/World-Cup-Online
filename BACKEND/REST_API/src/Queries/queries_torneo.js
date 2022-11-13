@@ -6,6 +6,7 @@ const add = "INSERT INTO public.\"Torneo\" (\"ID\",\"Nombre\",\"Fecha_inicio\",\
 const remove = "DELETE FROM public.\"Torneo\" WHERE \"ID\" = $1";
 const update = "UPDATE public.\"Torneo\" SET \"ID\"=$1,\"Fecha_inicio\"=$2,\"Fecha_fin\"=$3,\"Equipos\"=$4,\"Reglas\"=$5 WHERE \"ID\" = $6";
 
+
 module.exports = {
     get,
     getById,

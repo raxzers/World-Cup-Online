@@ -2,6 +2,8 @@ const pool = require("../../database");
 const queries = require('../Queries/queries_partido');
 const queries_torneo = require('../Queries/queries_torneo');
 
+const queries_torneo = require('../Queries/queries_torneo');
+
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
         if(error) throw error;

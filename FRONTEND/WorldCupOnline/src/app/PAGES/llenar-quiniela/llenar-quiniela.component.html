@@ -1,6 +1,7 @@
 <app-client-navbar></app-client-navbar>
 <mat-tab-group >
     <mat-tab label="{{torneo}}"  *ngFor="let torneo of nombre_torneos" (click)="limpiar_lista();"> 
+        <h1> Nombre del usuario </h1>
         <mat-card class="card" >
             <div>
                 <label><h2>Elija el partido que desea pronosticar </h2></label>
@@ -30,14 +31,14 @@
                     {{Equipo_1}}: {{Goles_Equipo_1}}
                     <br>
                     <label>Autogoles</label>
-                    <input (change)="sumar_goles_2(autogoles1.value)" type="number" min="0" max="99" #autogoles1>   
+                    <input (change)="auto_goles_1(autogoles1.value)" type="number" min="0" max="99" #autogoles1>   
                 </td>
                 <td class="columnas">
                     <label>Cantidad de goles para </label>
                     {{Equipo_2}}: {{Goles_Equipo_2}}
                     <br>
                     <label>Autogoles</label>
-                    <input (change)="sumar_goles_1(autogoles2.value)" type="number" min="0" max="99" #autogoles2>
+                    <input (change)="auto_goles_2(autogoles2.value)" type="number" min="0" max="99" #autogoles2>
                 </td>
             </div>
             <br>
@@ -59,6 +60,11 @@
             <button mat-raised-button color="primary" (click)="guardar_quiniela();">Guardar pronostico</button>
 
         </mat-card>
+
+        <div>
+            <button mat-raised-button color="primary" (click)="confirmar_goleadores();">Confirmar goleadores</button>
+        </div>
+        
         <td style="float: left;">
             <h1>{{Equipo_1}}</h1>
             <table mat-table [dataSource]="jugadores_equipo_1" class="mat-elevation-z8">
@@ -70,7 +76,7 @@
               
                 <ng-container matColumnDef="goles">
                   <th mat-header-cell *matHeaderCellDef> Goles </th>
-                  <td mat-cell *matCellDef="let element"> <input (change)="sumar_goles_1(goles.value)" type="number" min="0" max="99" #goles> </td>
+                  <td mat-cell *matCellDef="let element"> <input (change)="sumar_goleadores_1(element.ID, goles.value)" type="number" min="0" max="99" #goles> </td>
                 </ng-container>
               
                 <ng-container matColumnDef="asistencias">
@@ -94,7 +100,7 @@
               
                 <ng-container matColumnDef="goles">
                   <th mat-header-cell *matHeaderCellDef> Goles </th>
-                  <td mat-cell *matCellDef="let element"> <input (change)="sumar_goles_2(goles.value)" type="number" min="0" max="99" #goles> </td>
+                  <td mat-cell *matCellDef="let element"> <input (change)="sumar_goleadores_2(element.Nombre_Jugador, goles.value)" type="number" min="0" max="99" #goles> </td>
                 </ng-container>
               
                 <ng-container matColumnDef="asistencias">

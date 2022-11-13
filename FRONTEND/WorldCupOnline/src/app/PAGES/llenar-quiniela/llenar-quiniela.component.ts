@@ -6,6 +6,7 @@ import { GameService } from 'src/app/SERVICES/game/game.service';
 import { TeamService } from 'src/app/SERVICES/team/team.service';
 import { jugador_club_Model } from 'src/app/MODELS/jugador_club_Model';
 import { jugador_seleccion_Model } from 'src/app/MODELS/jugador_seleccion_Model';
+import { jugador_goles_Model } from 'src/app/MODELS/jugador_goles_Model';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -23,23 +24,26 @@ export class LlenarQuinielaComponent implements OnInit {
 
   displayedColumns: string[] = ['goleador', 'goles', 'asistencias'];
   
+  jugadores_goles_1:jugador_goles_Model[]=[];
+  jugadores_goles_2:jugador_goles_Model[]=[];
   
-  torns:string[]=['Torneo 1','Torneo 2','Torneo 3','Torneo 4'];
+  Id:number; 
+  id_usuario:number; 
+  id_Partido:number; 
+  id_Jugadores_goles_Eq1:number[]; 
+  id_Jugadores_asistencia_Eq1:number[]; 
+  id_Jugador_GOAT:number; 
+  Goles_Eq1:number; 
+  Goles_Eq2:number; 
+  id_Jugadores_goles_Eq2:number[]; 
+  id_Jugadores_asistencias_Eq2:number[]; 
+  Autogoles_eq1:number; 
+  Autogoles_eq2:number; 
+  
 
-  x: gameModel[] = [
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 1', Fase: 'fase', Equipo_1: 'Heredia', Goles_Equipo_1: 0, Equipo_2: 'Oslo', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'},
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 1', Fase: 'fase', Equipo_1: 'Juventus', Goles_Equipo_1: 0, Equipo_2: 'Saprisa', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'},
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 1', Fase: 'fase', Equipo_1: 'Alemania', Goles_Equipo_1: 0, Equipo_2: 'Belgica', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'},
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 2', Fase: 'fase', Equipo_1: 'FC Barcelona', Goles_Equipo_1: 0, Equipo_2: 'Monterrey', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'},
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 2', Fase: 'fase', Equipo_1: 'Milan', Goles_Equipo_1: 0, Equipo_2: 'Liga', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'},
-    { Fecha: null, Hora: 'hora', Nombre_Torneo: 'Torneo 3', Fase: 'fase', Equipo_1: 'Escocia', Goles_Equipo_1: 0, Equipo_2: 'Nicaragua', Goles_Equipo_2: 0, Sede: 'sede', Estado_del_partido: 'estado'} 
-  ];
 
-
-  quiniela: quinielaModel[] = [
-    { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: 0, id_Jugadores_asistencia_Eq1: 0, id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: 0, id_Jugadores_asistencias_Eq2: 0, Autogoles: 0 }
-    
-  ];
+  quiniela: quinielaModel;
+  // = { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 };
 
   Fecha: Date;
   Hora: string;
@@ -52,8 +56,8 @@ export class LlenarQuinielaComponent implements OnInit {
   Sede: string;
   Estado_del_partido: string;
 
-  gol_aux:number;
-  goles:any[]=[];
+
+  //goles:any[]=[];
 
   partidos:gameModel[];
   partidos_por_torneo:gameModel[];
@@ -97,6 +101,8 @@ export class LlenarQuinielaComponent implements OnInit {
     this.jugadores_por_equipo_1(this.Equipo_1);
 
     this.jugadores_por_equipo_2(this.Equipo_2);
+
+    this.id_Partido=juego.ID;
   }
 
   jugadores_por_equipo_1(equipo:String){
@@ -125,24 +131,68 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2=null;
     this.Sede=null;
     this.Estado_del_partido=null;
+  }
 
+  llenar_quiniela(){
+
+  }
+
+  sumar_goleadores_1(ID:string, goles:string){
+  
+    for(let jugador of this.jugadores_goles_1){
+      
+      if(this.jugadores_goles_1.length==0){
+        let nuevo_goleador:jugador_goles_Model;
+        nuevo_goleador.ID=+ID;
+        nuevo_goleador.goles=+goles;
+        this.jugadores_goles_1.push(nuevo_goleador);
+      }
+      else if(jugador.ID==+ID){
+        jugador.goles=+goles;
+      }
+      else{
+        let nuevo_goleador:jugador_goles_Model;
+        nuevo_goleador.ID=+ID;
+        nuevo_goleador.goles=+goles;
+        this.jugadores_goles_1.push(nuevo_goleador);
+      }
+    }
+  }
+
+  sumar_goleadores_2(ID:string, goles:string){
+    for(let jugador of this.jugadores_goles_2){
+      if(jugador.ID==+ID){
+        jugador.goles=+goles;
+      }
+      else{
+        let nuevo_goleador:jugador_goles_Model;
+        nuevo_goleador.ID=+ID;
+        nuevo_goleador.goles=+goles;
+        this.jugadores_goles_2.push(nuevo_goleador);
+      }
+    }
+  }
+
+  confirmar_goleadores(){
+    for(let jugador of this.jugadores_goles_1){
+      if(jugador.goles>0){
+        this.Goles_Eq1+=jugador.goles;
+        this.id_Jugadores_goles_Eq1.push(jugador.ID)
+      }
+    }
+    console.log(this.Goles_Eq1);
+    console.log(this.id_Jugadores_goles_Eq1);
   }
 
   guardar_quiniela(){
 
   }
 
-  sumar_goles_1(goles:any){
+  auto_goles_1(autogoles:string){
 
-    console.log(goles);
-    
-    
-    this.gol_aux=+goles;
-
-    this.Goles_Equipo_1=(this.gol_aux);
   }
 
-  sumar_goles_2(goles:string){
-    this.Goles_Equipo_2=(+goles);
+  auto_goles_2(autogoles:string){
+
   }
 }
