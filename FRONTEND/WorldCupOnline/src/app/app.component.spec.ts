@@ -24,6 +24,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { RouterModule } from '@angular/router';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -31,7 +32,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule, HttpClientModule,
         BrowserModule,
-        AppRoutingModule,MatDialogModule
+        AppRoutingModule,MatDialogModule,MatTabsModule, MatFormFieldModule,MatGridListModule,MatToolbarModule,RouterModule
        
       ],
       declarations: [
