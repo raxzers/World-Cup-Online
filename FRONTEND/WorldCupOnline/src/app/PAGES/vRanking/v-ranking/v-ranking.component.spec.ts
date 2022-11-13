@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ToastrModule } from 'ngx-toastr';
 
 import { VRankingComponent } from './v-ranking.component';
 
@@ -8,7 +10,8 @@ describe('VRankingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VRankingComponent ]
+      declarations: [ VRankingComponent ],
+      imports:[HttpClientModule, ToastrModule.forRoot()]
     })
     .compileComponents();
 

@@ -1,4 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 import { NewFootballGameComponent } from './new-football-game.component';
 
@@ -8,7 +11,8 @@ describe('NewFootballGameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewFootballGameComponent ]
+      declarations: [ NewFootballGameComponent ],
+      imports:[HttpClientModule, ToastrModule.forRoot(),ReactiveFormsModule]
     })
     .compileComponents();
   });

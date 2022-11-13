@@ -51,7 +51,7 @@ import {MatDialogModule } from '@angular/material/dialog';
     LlenarQuinielaComponent,
     RegisterComponent,
     ClientNavbarComponent,
-    PopUpComponent
+    PopUpComponent,
   ],
   imports: [
     BrowserModule,
