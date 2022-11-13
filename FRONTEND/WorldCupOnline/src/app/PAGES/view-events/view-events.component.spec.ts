@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ToastrModule } from 'ngx-toastr';
 
 import { ViewEventsComponent } from './view-events.component';
 
@@ -8,7 +10,11 @@ describe('ViewEventsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewEventsComponent ]
+      declarations: [ ViewEventsComponent ],
+      imports:[
+        HttpClientModule,
+        ToastrModule.forRoot()
+      ]
     })
     .compileComponents();
   });
