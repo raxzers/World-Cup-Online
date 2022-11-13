@@ -41,8 +41,8 @@
         <div>
         <mat-form-field  class="fadeIn third">
             <mat-label style="color: white;">Ingrese su contraseña</mat-label>
-            <input id="inputPassword" formControlName="password" style="color: white;" name="password" #password ngModel matInput [type]="hide ? 'password' : 'text'">
-            <button style="color: white;" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <input id="inputPassword" formControlName="password" style="color: white;" minlength="6" maxlength="8" name="password" #password ngModel matInput [type]="hide ? 'password' : 'text'">
+            <button type="button" style="color: white;" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"  [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
         </mat-form-field>

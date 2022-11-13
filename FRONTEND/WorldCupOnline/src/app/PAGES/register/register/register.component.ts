@@ -26,9 +26,12 @@ export class RegisterComponent implements OnInit {
   nombreCondicion: boolean = false;
   apellidoCondicion: boolean = false;
   usuarioCondicion: boolean = false;
+  nacimientoCondicion: boolean = false;
+
   numlength: any;
   numlength2: any;
   numlength3: any;
+
   btnState: boolean = false;
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   ngOnInit(): void {
@@ -65,6 +68,7 @@ export class RegisterComponent implements OnInit {
     this.verificarFechas();
     this.verificarCorreo();
     this.verificarTerminos();
+    this.verificarEdad();
     if (this.verificarCondiciones()) {
       const cliente: clientsModel = {
         Fecha_Nacimiento: this.form.get('fechaNacimiento').value,
@@ -76,8 +80,11 @@ export class RegisterComponent implements OnInit {
         Username: this.form.get('usuario').value,
       }
       this.userService.guardarUsuario(cliente).subscribe(data => {
+        console.log("ACACACACA",JSON.stringify(data))
         this.toastr.warning(JSON.stringify(data));
-        ///this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
+        if(JSON.stringify(data)=='null'){
+          this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
+        }
         this.form.reset();
       })
 
@@ -98,11 +105,23 @@ export class RegisterComponent implements OnInit {
     });
   }
   verificarFechas() {
-    if (this.form.get('fechaNacimiento').value == "") {
+    
+    if (this.form.get('fechaNacimiento').value == '') {
       this.fechaCondicion = true;
     } else {
       this.fechaCondicion = false;
     }
+  }
+  verificarEdad(){
+    var time = new Date().getTime() - new Date(this.form.get('fechaNacimiento').value).getTime();
+    var edad =time*(3.107098*Math.pow(10,-11));
+    if(edad<18){
+      this.nacimientoCondicion=true;
+      
+    }else{
+      this.nacimientoCondicion=false;
+    }
+    console.log("edad",time*(3.107098*Math.pow(10,-11)));
   }
   verificarTipoEquipo() {
     var nombres = (document.getElementById("paises")) as HTMLSelectElement;
@@ -161,7 +180,7 @@ export class RegisterComponent implements OnInit {
       this.terminosCondicion,
       this.nombreCondicion,
       this.apellidoCondicion,
-      this.usuarioCondicion,
+      this.usuarioCondicion,this.nacimientoCondicion
     ]
     console.log(this.condiciones)
     if (this.condiciones.includes(true)) {
@@ -184,6 +203,9 @@ export class RegisterComponent implements OnInit {
       }
       if (this.condiciones[6] == true) {
         this.toastr.warning("Se necesita un usuario para continuar")
+      }
+      if (this.condiciones[7] == true) {
+        this.toastr.warning("Necesita tener mas de 18 años")
       }
       return false
     } else {

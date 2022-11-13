@@ -23,7 +23,7 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas,listaEquipos,Fase } = req.body;
-    let ID= cadenaAleatoria();
+    let ID= cadenaAleatoria.cadenaAleatoria();
 
     pool.query("select now()", (error, results1) => {
         var fecha_inicio = new Date(Fecha_inicio);
@@ -37,7 +37,7 @@ const add = (req, res) => {
                 pool.query(queries.checknameExists, [Nombre], (error, results2) => {    
                     const found2 = results2.rows.length;
                     if(found2==1) {
-                        res.send("nombre repetidoS");
+                        res.json("El nombre del torneo ya existe, favor ingresar otro");
                     } 
                     else {
                     pool.query(queries.checkIdExists, [ID], (error, results1) => {
@@ -45,7 +45,7 @@ const add = (req, res) => {
                         
                         const found1 = results1.rows.length;
                         if(found1) {
-                            res.send("id repetido");
+                            res.send("Intentelo de Nuevo");
                         }
                         
                         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
@@ -70,18 +70,18 @@ const add = (req, res) => {
                             pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
                                 if(error) throw error;
                             });
-                            res.status(201).send("agrego ranking");
+                            res.status(201).json("Torneo Agregado Exitosamente");
                         });
                     
                     });}
                 });
                 console.log(true);}
             else {console.log(false)
-                res.send("Fecha inicio en menor a la actual");};
+                res.json("Fecha inicio es menor a la actual");};
         }
         else {
             console.log(false);
-            res.send("Fecha inicio en mayor a la fecha fin");}});
+            res.json("Fecha inicio es mayor a la fecha fin");}});
 
     
     

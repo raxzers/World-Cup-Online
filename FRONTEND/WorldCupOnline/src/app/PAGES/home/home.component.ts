@@ -303,8 +303,8 @@ export class HomeComponent implements OnInit {
     this.verificarNombre();
     this.verificarFechas();
     this.verificarTipoEquipo();
-    this.verificarFechaActual();
-    this.verificarFechaActual2();
+   // this.verificarFechaActual();
+   // this.verificarFechaActual2();
     if (this.verificarCondiciones()) {
       if (this.equiposTorneo.length >= 2) {
         console.log(this.categoriaForm.get('categoriaControl').value);
@@ -319,11 +319,10 @@ export class HomeComponent implements OnInit {
         }
         console.log(torneo)
         this.torneoService.guardarTorneo(torneo).subscribe(data => {
+          this.toastr.warning(JSON.stringify(data));
           this.toastr.success('Torneo agregado exitosamente', 'Torneo Guardado')
         })
-       // setTimeout(() => { this.guardarEquipos(); }, 500);
-        //setTimeout(() => { this.guardarFaseFinal(); }, 600);
-        //  setTimeout(() => { this.crearRanking(); }, 700);
+     
 
       }
       else { this.toastr.error('Se necesitan 2 o más equipos para crear el torneo', 'Favor Agregar más equipos') }
@@ -331,17 +330,7 @@ export class HomeComponent implements OnInit {
       this.toastr.error('Faltan datos o no cumplen con los requesitos necesarios', 'Favor Completar Datos')
     }
   }
-//  crearRanking() {
-//    const ranking: rankingModel = {
-//      Torneo: this.nombreTorneoForm.get('nombreTorneo').value,
-//      Username: "Carlos",
-//      Puntaje: 800,
-//    }
 
-//    this.torneoService.crearRanking(ranking).subscribe(data => {
-//    this.toastr.success('Ranking PAPUlince')
-//    })
-//  }
   guardarEquipos() {
     for (let i = 0; i < this.equiposTorneo.length; i++) {
       const torneoEquipo: torneoEquipoModel = {
