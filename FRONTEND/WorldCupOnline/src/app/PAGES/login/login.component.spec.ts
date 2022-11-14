@@ -1,7 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
+import { Observable, observable } from 'rxjs';
+import { userModel } from 'src/app/MODELS/userModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
 
 import { LoginComponent } from './login.component';
@@ -9,7 +11,8 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-
+  let userService: UserService
+  let user:userModel;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
@@ -17,24 +20,39 @@ describe('LoginComponent', () => {
       providers:[UserService]
     })
     .compileComponents();
+    userService = TestBed.inject(UserService);
+   
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    
+    
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('validar correo', () => {
+  it('validar inicio de sesion', () => {
+    const testBedService = TestBed.get(UserService);
     const loginComponent =fixture.componentInstance;
-    let correo= loginComponent.enter('Traznar','papugod');
-    let debugElement= fixture.debugElement;
-    let authService= debugElement.injector.get(UserService);
-    let loginSpy = spyOn(authService, 'login').and.callThrough();
-    let loginSpy2 = spyOn(authService, 'IsLoggedIn').and.callThrough();
-    expect(loginComponent.enter('Traznar','papugod')).toBe();
+    
+    user={
+      Username: 'Traznar',
+      Password: 'papugod',
+  }
+   userService.login(user).subscribe(data => { 
+      expect(JSON.stringify(data)).toBe(JSON.stringify('admin'));
+   //   expect(userService.IsLoggedIn()).toBe("admin");
+    });  
+    loginComponent.enter('Traznar','papugod');
+    localStorage.setItem('rol','admin')
+    expect(localStorage.getItem('rol')).toBe('admin')
+    
+   
   });
+  
 });

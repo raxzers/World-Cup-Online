@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
     this.obtenerSeleccion()
   }
   onInput() {
-    if (this.numlength.length < 5) {
+    if (this.numlength.length < 2) {
       this.toastr.warning("El nombre debe ser entre 5 y 30 caracteres")
       this.btnState = true;
     }
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
     }
   }
   onInput2() {
-    if (this.numlength2.length < 5) {
+    if (this.numlength2.length < 2) {
       this.toastr.warning("El nombre debe ser entre 5 y 30 caracteres")
       this.btnStateFase = true;
     }
@@ -149,7 +149,7 @@ export class HomeComponent implements OnInit {
       this.tipoEquipoCondicion = false;
     }
   }
-  verificarFechaActual(){
+  /*verificarFechaActual(){
     const fechaInicioComp = new Date(this.fechaInicioForm.get('fechaInicioControl').value);
     const fechaFinalComp = new Date(this.fechaFinalForm.get('fechaFinalControl').value);
     
@@ -164,8 +164,8 @@ export class HomeComponent implements OnInit {
       this.fechaInicioActualCondicion=false;
      }
    
-  }
-  verificarFechaActual2(){
+  }*/
+ /* verificarFechaActual2(){
     const fechaInicioComp = new Date(this.fechaInicioForm.get('fechaInicioControl').value);
     const fechaFinalComp = new Date(this.fechaFinalForm.get('fechaFinalControl').value);
     if(fechaInicioComp > fechaFinalComp){
@@ -174,7 +174,7 @@ export class HomeComponent implements OnInit {
     }else{
       this.fechaCalzanCondicion=false;
     }
-  }
+  }*/
   verificarCondiciones() {
     this.condiciones = [
       this.faseCondicion,
@@ -295,9 +295,9 @@ export class HomeComponent implements OnInit {
     }
     // console.log(nombreSeleccionado);
   }
-  getValue() {
-    console.log(this.equiposForm.value)
-  }
+  //getValue() {
+   // console.log(this.equiposForm.value)
+  //}
   guardarTorneo() {
     this.verificarFases();
     this.verificarNombre();
@@ -331,7 +331,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  guardarEquipos() {
+ /* guardarEquipos() {
     for (let i = 0; i < this.equiposTorneo.length; i++) {
       const torneoEquipo: torneoEquipoModel = {
         Torneo: this.nombreTorneoForm.get('nombreTorneo').value,
@@ -342,13 +342,13 @@ export class HomeComponent implements OnInit {
        // this.toastr.success('Torneo y Equipo ADDED')
       })
     }
-  }
+  }*/
   guardarFase() {
     var nombreFase = this.faseForm.get('faseControl').value;
     this.fases.push(nombreFase);
     // console.log(this.fases)
   }
-  guardarFaseFinal() {
+  /*guardarFaseFinal() {
     for (let i = 0; i < this.fases.length; i++) {
       const fase: faseModel = {
         Torneo: this.nombreTorneoForm.get('nombreTorneo').value,
@@ -360,10 +360,10 @@ export class HomeComponent implements OnInit {
       })
 
     }
-  }
-  to_new_football_game() {
-    this.router.navigate(['/new_football_game']);
-  }
+  }*/
+  //to_new_football_game() {
+   // this.router.navigate(['/new_football_game']);
+  //}
 
 }
 
