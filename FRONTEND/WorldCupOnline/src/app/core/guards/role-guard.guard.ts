@@ -10,19 +10,19 @@ export class RoleGuardGuard implements CanActivate {
   Role: string;
   constructor(private auth: UserService, private router: Router) { }
   canActivate(): boolean {
-    /*
-      this.Role=this.auth.IsLoggedIn();
-      if (this.Role == "admin") {
-      
-        return true;
-      }
-      else {
-        this.router.navigate(['/login']);
-        
-        return false;
-      }
-      */
-    return true;
+
+    this.Role = this.auth.IsLoggedIn();
+    if (this.Role == "admin") {
+
+      return true;
+    }
+    else {
+      this.router.navigate(['/login']);
+
+      return false;
+    }
+
+    //return true;
   }
 
 }

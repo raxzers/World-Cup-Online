@@ -85,6 +85,7 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   partido_a_pronosticar(juego: gameModel) {
+    this.id_Partido = juego.ID;
     this.Fecha = juego.Fecha;
     this.Hora = juego.Hora;
     this.Nombre_Torneo = juego.Nombre_Torneo;
@@ -100,7 +101,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
     this.jugadores_por_equipo_2(this.Equipo_2);
 
-    this.id_Partido = juego.ID;
+
   }
 
   jugadores_por_equipo_1(equipo: String) {
@@ -132,7 +133,8 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   llenar_quiniela() {
-
+    this.quiniela = { Id: this.Id, id_usuario: this.id_usuario, id_Partido: this.id_Partido, id_Jugadores_goles_Eq1: this.id_Jugadores_goles_Eq1, id_Jugadores_asistencia_Eq1: this.id_Jugadores_asistencia_Eq1, id_Jugador_GOAT: this.id_Jugador_GOAT, Goles_Eq1: this.Goles_Eq1, Goles_Eq2: this.Goles_Eq2, id_Jugadores_goles_Eq2: this.id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: this.id_Jugadores_asistencias_Eq2, Autogoles_eq1: this.Autogoles_eq1, Autogoles_eq2: this.Autogoles_eq2 };
+    return this.quiniela;
   }
 
   sumar_goleadores_1(ID: string, goles: string) {
@@ -199,19 +201,13 @@ export class LlenarQuinielaComponent implements OnInit {
       }
     }
     this.Goles_Eq1 = goles_1;
+    this.Goles_Equipo_1 = goles_1 + this.Autogoles_eq2;
     this.Goles_Eq1 += this.Autogoles_eq2;
 
     this.Goles_Eq2 = goles_2;
+    this.Goles_Equipo_2 = goles_2 + this.Autogoles_eq1;
     this.Goles_Eq2 += this.Autogoles_eq1;
 
-    console.log("equipo 1")
-    console.log(this.Goles_Eq1);
-    console.log(this.id_Jugadores_goles_Eq1);
-    console.log(this.jugadores_goles_1);
-    console.log("equipo 2")
-    console.log(this.Goles_Eq2);
-    console.log(this.id_Jugadores_goles_Eq2);
-    console.log(this.jugadores_goles_2);
   }
 
   guardar_quiniela() {
@@ -224,5 +220,10 @@ export class LlenarQuinielaComponent implements OnInit {
 
   auto_goles_2(autogoles: string) {
     this.Autogoles_eq2 = +autogoles;
+  }
+
+  y: number;
+  x() {
+    this.y = Math.random();
   }
 }

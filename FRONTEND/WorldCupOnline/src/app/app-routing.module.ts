@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'fill_quiniela', component: LlenarQuinielaComponent, canActivate: [RoleGuard2Guard] }
   */
+
   { path: 'home', component: HomeComponent },
   { path: 'view_ranking', component: VRankingComponent },
   { path: 'new_football_game', component: NewFootballGameComponent },

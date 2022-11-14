@@ -8,10 +8,10 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RoleGuard2Guard implements CanActivate {
-  Role:string;
+  Role: string;
   constructor(private auth: UserService, private router: Router) { }
-  canActivate() :boolean {
-  
+  canActivate(): boolean {
+    /*
     this.Role=this.auth.IsLoggedIn();
     if (this.Role == "user") {
     
@@ -22,6 +22,8 @@ export class RoleGuard2Guard implements CanActivate {
       
       return false;
     }
+    */
+    return true;
   }
-  
+
 }
