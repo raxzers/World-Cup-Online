@@ -28,13 +28,13 @@
         <h3 style="color: white;"> Seleccionar País:</h3>
         <div class="column">
           <select formControlName="paisControl" id="paises">
-            <option [value]='pais' *ngFor="let pais of nombrePaises">{{pais}}</option>
+            <option data-testid="paisTest" [value]='pais' *ngFor="let pais of nombrePaises">{{pais}}</option>
           </select>
         </div>
 
         <a style="color: white;">Correo</a>
         <label for="inputCorreo" class="visually-hidden">Correo</label>
-        <input type="email" id="inputCorreo" class="form-control" [class.is-invalid]="form.get('correo').invalid && form.get('correo').touched" formControlName="correo" placeholder="Ingrese su correo" 
+        <input data-testid="correoTest" type="email" id="inputCorreo" class="form-control" [class.is-invalid]="form.get('correo').invalid && form.get('correo').touched" formControlName="correo" placeholder="Ingrese su correo" 
         maxlength="30" required [pattern]="emailPattern">
 
         <a style="color: white;">Contraseña </a>
