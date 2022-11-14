@@ -62,8 +62,8 @@
         <form [formGroup]="categoriaForm" class="select">
           <h2> Tipo de Equipos:</h2>
           <select id="tipoEquipos" (click)="getTipoEquipo()" formControlName="categoriaControl" required>
-            <option value="0">Seleccion</option>
-            <option value="1">Club</option>
+            <option id="valorSeleccion" value="0">Seleccion</option>
+            <option id="valorClub" value="1">Club</option>
           </select>
         </form>
         <form [formGroup]="reglasForm" class="select">
