@@ -16,12 +16,14 @@ import { GameService } from 'src/app/SERVICES/game/game.service';
 export class NewFootballGameComponent implements OnInit {
 
   /////////////////////////////////////////////////////
-  listaTest: string[] = ["a", "b", "c", "d"];
+  torneox: string[] = ["Torneo 1", "Torneo 2", "Torneo 3", "Torneo 4"];
 
   testForm: FormGroup = this.formBuilder.group({
     testControl: ['', [Validators.maxLength(10)]]
   });
 
+  sede: string = "Rayyan"
+  es_string: boolean = typeof this.sede === 'string';
 
   /////////////////////////////////////////////////////
 
@@ -45,8 +47,8 @@ export class NewFootballGameComponent implements OnInit {
 
   constructor(private router: Router, public partidoService: GameService, private formBuilder: FormBuilder, private toastr: ToastrService) { }
 
-  verificarFechasx() {
-    if (this.fechaInicioForm.get('fechaInicioControl').value == "") {
+  verificarFechasx(fecha: string) {
+    if (this.fechaInicioForm.get('fechaInicioControl').value == fecha) {
       this.fechaInicioCondicion = true;
     } else {
       this.fechaInicioCondicion = false;
