@@ -13,9 +13,9 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ],imports:[HttpClientModule, ToastrModule.forRoot(),MatDialogModule,ReactiveFormsModule,MatIconModule]
+      declarations: [RegisterComponent], imports: [HttpClientModule, ToastrModule.forRoot(), MatDialogModule, ReactiveFormsModule, MatIconModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
