@@ -29,10 +29,14 @@ describe('NewFootballGameComponent', () => {
 
 
 
-  it('tamaño de un array', () => {
-    const lista = component.listaTest;
+  it('validar la cantidad de torneos', () => {
+    const lista = component.torneox;
     expect(lista).toHaveSize(4);
+  });
 
+  it('validar que la cantidad de torneos sea mayor a cero', () => {
+    const lista = component.torneox;
+    expect(Boolean(lista.length)).toBe(true);
   });
 
   it('validar un formControl', () => {
@@ -41,9 +45,36 @@ describe('NewFootballGameComponent', () => {
     expect(component.testForm.invalid).toBeTrue();
   });
 
-  it('validar contenido(string) de un input(html)', () => {
-    const sede = fixture.debugElement.nativeElement.querySelector('[data-testid="input_test"]');
+  it('validar que la sede sea un string vacio', () => {
+    const sede = fixture.debugElement.nativeElement.querySelector('[data-testid="sedeTest"]');
     expect(sede.textContent).toBe('');
+  });
+
+  it('validar una sede especifica', () => {
+    const NewFootballGameComponent = fixture.componentInstance;
+    let estadio = NewFootballGameComponent.sede
+    expect(estadio).toBe('Rayyan');
+  });
+
+  it('validar que la sede sea un string', () => {
+    const NewFootballGameComponent = fixture.componentInstance;
+    let sede_string = NewFootballGameComponent.es_string
+    expect(sede_string).toBe(true);
+  });
+
+  it('validar fecha del partido', () => {
+    const nombre = fixture.debugElement.nativeElement.querySelector('[data-testid="fechaTest"]');
+    const NewFootballGameComponent = fixture.componentInstance;
+    let fecha = NewFootballGameComponent.fechaInicioForm.controls['fechaInicioControl'];
+    fecha.setValue('31/10/1349');
+    NewFootballGameComponent.verificarFechasx(fecha.value);
+    expect(NewFootballGameComponent.fechaInicioCondicion).toBe(true);
+  });
+
+  it('validar longitud del nombre de la sede', () => {
+    const NewFootballGameComponent = fixture.componentInstance;
+    let sede = NewFootballGameComponent.sede;
+    expect(sede.length).toBe(6);
   });
 
 });
