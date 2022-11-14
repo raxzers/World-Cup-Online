@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ToastrModule } from 'ngx-toastr';
 
 import { LlenarQuinielaComponent } from './llenar-quiniela.component';
 
@@ -8,7 +10,8 @@ describe('LlenarQuinielaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LlenarQuinielaComponent ]
+      declarations: [ LlenarQuinielaComponent ],
+      imports:[HttpClientModule, ToastrModule.forRoot()]
     })
     .compileComponents();
 

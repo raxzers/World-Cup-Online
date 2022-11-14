@@ -1,6 +1,7 @@
 <app-client-navbar></app-client-navbar>
 <mat-tab-group >
     <mat-tab label="{{torneo}}"  *ngFor="let torneo of nombre_torneos" > 
+        <h1> Nombre del usuario </h1>
         <mat-card class="card" >
             <div>
                 <label><h2>Elija el partido al que pertenece la quiniela</h2></label>
@@ -13,7 +14,7 @@
             </div>
             
             <div>
-                <h2>Datos del evento</h2>
+                <h2>Pronostico del evento</h2>
                 <td class="columnas">
                     
                     Fecha: {{Fecha}}

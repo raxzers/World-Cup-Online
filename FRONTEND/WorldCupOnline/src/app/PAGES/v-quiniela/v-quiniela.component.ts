@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { gameModel } from 'src/app/MODELS/gameModel';
+import { quinielaModel } from 'src/app/MODELS/quinielaModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { GameService } from 'src/app/SERVICES/game/game.service';
+import { QuinielaService } from 'src/app/SERVICES/quiniela/quiniela.service';
 import { TeamService } from 'src/app/SERVICES/team/team.service';
 
 @Component({
@@ -30,7 +32,12 @@ export class VQuinielaComponent implements OnInit {
   torneos:torneoModel[];
   nombre_torneos:string[] = [];
 
-  constructor(public partidoService:GameService, public equipoService:TeamService) { }
+  quinielas_usuario: quinielaModel[] = [
+    { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 },
+    { Id: 1, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 } 
+  ];
+
+  constructor(public partidoService:GameService, public equipoService:TeamService, public quinielaService:QuinielaService) { }
 
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data:gameModel[]) => {

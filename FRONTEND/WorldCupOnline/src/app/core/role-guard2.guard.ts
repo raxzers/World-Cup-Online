@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from 'src/app/SERVICES/user/user.service';
+import { UserService } from '../SERVICES/user/user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuardGuard implements CanActivate {
+export class RoleGuard2Guard implements CanActivate {
   Role: string;
   constructor(private auth: UserService, private router: Router) { }
   canActivate(): boolean {
-
     this.Role = this.auth.IsLoggedIn();
-    if (this.Role == "admin") {
+    if (this.Role == "user") {
 
       return true;
     }
@@ -21,8 +21,6 @@ export class RoleGuardGuard implements CanActivate {
 
       return false;
     }
-
-    //return true;
   }
 
 }
