@@ -1,5 +1,5 @@
 const get = "SELECT * FROM public.\"Jugadores_Club\"";
-const getById = "SELECT \"ID\",\"Club\",\"Nombre_Jugador\",\"Apellido1_Jugador\" ,\"Apellido2_Jugador\" FROM public.\"Jugadores_Club\" WHERE \"ID\" = $1";
+const getById = "SELECT \"ID\",\"Club\",\"Nombre_Jugador\",\"Apellido1_Jugador\" ,\"Apellido2_Jugador\" FROM public.\"Jugadores_Club\" WHERE \"Club\" = $1";
 const checkIdExists = "SELECT * FROM public.\"Jugadores_Club\" WHERE \"ID\" = $1";
 const add = "INSERT INTO public.\"Jugadores_Club\" (\"Club\",\"Nombre_Jugador\",\"Apellido1_Jugador\" ,\"Apellido2_Jugador\") VALUES ($1, $2, $3,$4)";
 const remove = "DELETE FROM public.\"Jugadores_Club\" WHERE \"ID\" = $1";

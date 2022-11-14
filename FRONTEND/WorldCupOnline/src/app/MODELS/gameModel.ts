@@ -1,5 +1,5 @@
 export interface gameModel {
-    //ID?: string;
+    ID?: number;
     Fecha: Date;
     Hora: string;
     Nombre_Torneo: string;

@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatDividerModule } from '@angular/material/divider';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './PAGES/login/login.component';
 import { HomeComponent } from './PAGES/home/home.component';
@@ -29,7 +30,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
 import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
-
+import { RegisterComponent } from './PAGES/register/register/register.component';
+import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
+import { UserService } from './SERVICES/user/user.service';
+import { RoleGuardGuard } from './core/guards/role-guard.guard';
+import { PopUpComponent } from './PAGES/register/popUp/pop-up/pop-up.component';
+import {MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -42,7 +48,10 @@ import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela
     NavbarComponent,
     VRankingComponent,
     VQuinielaComponent,
-    LlenarQuinielaComponent
+    LlenarQuinielaComponent,
+    RegisterComponent,
+    ClientNavbarComponent,
+    PopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,12 +68,13 @@ import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela
     MatTableModule,
     MatCardModule,
     MatNativeDateModule,
-    MatTabsModule,
+    MatTabsModule,MatDialogModule,
+    MatDividerModule,
     MatGridListModule,NgbModule,
     FormsModule,ReactiveFormsModule,HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [UserService,RoleGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,62 @@
+<app-client-navbar></app-client-navbar>
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+
+
+  </head>
+  <body class="text-center">
+
+    <main class="form">
+      <form [formGroup]="form" (ngSubmit)="guardarCliente()">
+        <h1 class="h3 mb-3 fw-normal" style="color: white;">Registro</h1>
+
+        <a style="color: white;">Nombre</a>
+        <label for="inputName" class="visually-hidden">Primer nombre</label>
+        <input data-testid="nombreTest" id="inputName" class="form-control" [(ngModel)]="numlength"  minlength="1" formControlName="Nombre" placeholder="Ingrese su nombre"  maxlength="30"required>
+
+        <a style="color: white;">Apellido</a>
+        <label for="inputApellido" class="visually-hidden">Segundo nombre</label>
+        <input data-testid="apellidoTest" id="inputApellido" class="form-control"  [(ngModel)]="numlength2"  minlength="1" formControlName="Apellido1" placeholder="Ingrese su apellido" maxlength="30" required>
+
+        <a style="color: white;">Fecha de nacimiento</a>
+        <label for="inputFecha" class="visually-hidden">Fecha nacimiento</label>
+        <input data-testid="nacimientoTest" type="date" id="inputFecha" class="form-control" formControlName="fechaNacimiento" required>
+      
+        <h3 style="color: white;"> Seleccionar País:</h3>
+        <div class="column">
+          <select formControlName="paisControl" id="paises">
+            <option data-testid="paisTest" [value]='pais' *ngFor="let pais of nombrePaises">{{pais}}</option>
+          </select>
+        </div>
+
+        <a style="color: white;">Correo</a>
+        <label for="inputCorreo" class="visually-hidden">Correo</label>
+        <input data-testid="correoTest" type="email" id="inputCorreo" class="form-control" [class.is-invalid]="form.get('correo').invalid && form.get('correo').touched" formControlName="correo" placeholder="Ingrese su correo" 
+        maxlength="30" required [pattern]="emailPattern">
+
+        <a style="color: white;">Contraseña </a>
+        <div>
+        <mat-form-field  class="fadeIn third">
+            <mat-label style="color: white;">Ingrese su contraseña</mat-label>
+            <input id="inputPassword" formControlName="password" style="color: white;" minlength="6" maxlength="8" name="password" #password ngModel matInput [type]="hide ? 'password' : 'text'">
+            <button type="button" style="color: white;" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"  [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+        
+        <a style="color: white;">Nombre de Usuario</a>
+        <label for="inputUser" class="visually-hidden">Usuario</label>
+        <input id="inputUser" class="form-control" formControlName="usuario"   [(ngModel)]="numlength3" minlength="1" placeholder="Ingrese su nombre de usuario" maxlength="30" required autofocus>
+
+        <input type="checkbox" id="terminos" class="checkBox" >
+        <label class="form-check-label" for="flexCheckDefault" (click)="openModal()" style="color: white;">Aceptar Terminos y Condiciones</label>
+        <button class="button1 btn-sucess btn-lg btn-block" type="submit"  style="color: white;"> Registrar</button>
+      </form>
+    </main>
+
+  </body>
+</html>

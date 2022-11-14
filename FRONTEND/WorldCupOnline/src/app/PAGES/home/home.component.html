@@ -12,20 +12,6 @@
 </head>
 
 <body>
-  <!-- <h1></h1>
-      <form [formGroup]="seleccionesForm">
-        <label>Seleccione Sucursal:</label>
-        <select formControlName="sucursalControl" id="sucursales" (click)="getValue()">
-            <option [value]='sucursal' *ngFor="let sucursal of lugares">{{sucursal}}</option>
-        </select>
-    </form>
-    <form [formGroup]="salasForm">
-        <label>Seleccione Sala:</label>
-        <select formControlName="salaControl" id="salas" >
-            <option [value]='sala' *ngFor="let sala of salasDeBranch">{{sala}}</option>
-        </select>
-    </form>-->
-
   <div class="row">
 
     <div class="column">
@@ -51,7 +37,7 @@
           <div class="form-group">
             <div class="input-group">
               <!--(click)="getValueDate()-->
-              <input  (click)="verificarFechaActual()" type="date" id="date" class="form-control" formControlName="fechaInicioControl"
+              <input   type="date" id="date" class="form-control" formControlName="fechaInicioControl"
                 placeholder="fechaInicio" required>
             </div>
           </div>
@@ -76,8 +62,8 @@
         <form [formGroup]="categoriaForm" class="select">
           <h2> Tipo de Equipos:</h2>
           <select id="tipoEquipos" (click)="getTipoEquipo()" formControlName="categoriaControl" required>
-            <option value="0">Seleccion</option>
-            <option value="1">Club</option>
+            <option id="valorSeleccion" value="0">Seleccion</option>
+            <option id="valorClub" value="1">Club</option>
           </select>
         </form>
         <form [formGroup]="reglasForm" class="select">

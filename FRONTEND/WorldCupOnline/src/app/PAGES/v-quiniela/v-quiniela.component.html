@@ -1,1 +1,64 @@
-<p>v-quiniela works!</p>
+<app-client-navbar></app-client-navbar>
+<mat-tab-group >
+    <mat-tab label="{{torneo}}"  *ngFor="let torneo of nombre_torneos" > 
+        <h1> Nombre del usuario </h1>
+        <mat-card class="card" >
+            <div>
+                <label><h2>Elija el partido al que pertenece la quiniela</h2></label>
+                
+                <mat-form-field style="width:20%">              
+                    <mat-select (click)="obtener_partidos_por_torneo(torneo)">
+                        <mat-option value="partido" (click)="quiniela_del_partido(partido);" *ngFor="let partido of partidos_por_torneo">{{partido.Equipo_1}} VS {{partido.Equipo_2}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+            <div>
+                <h2>Pronostico del evento</h2>
+                <td class="columnas">
+                    
+                    Fecha: {{Fecha}}
+                </td>
+                
+                <td class="columnas">
+                    Hora: {{Hora}}
+                </td>
+            </div>
+            
+            <div>
+                <td class="columnas">
+                    <label>Cantidad de goles para </label>
+                    {{Equipo_1}}: {{Goles_Equipo_1}}
+                    <br>
+                    <label>Autogoles</label>
+                    {{autogoles1}}  
+                </td>
+                <td class="columnas">
+                    <label>Cantidad de goles para </label>
+                    {{Equipo_2}}: {{Goles_Equipo_2}}
+                    <br>
+                    <label>Autogoles</label>
+                    {{autogoles2}}
+                </td>
+            </div>
+            <br>
+            <div>
+                <td class="columnas">
+                    Fase: {{Fase}}
+                </td>
+                
+                <td class="columnas">
+                    Estado del partido: {{Estado_del_partido}}
+                </td>          
+            </div>
+            <div>
+                <td class="columnas">
+                    Sede: {{Sede}}
+                </td>           
+            </div>
+            
+        </mat-card>
+    
+    </mat-tab>
+</mat-tab-group>
+
