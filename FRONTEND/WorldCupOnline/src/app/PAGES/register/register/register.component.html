@@ -15,15 +15,15 @@
 
         <a style="color: white;">Nombre</a>
         <label for="inputName" class="visually-hidden">Primer nombre</label>
-        <input id="inputName" class="form-control" [(ngModel)]="numlength"  minlength="1" formControlName="Nombre" placeholder="Ingrese su nombre"  maxlength="30"required>
+        <input data-testid="nombreTest" id="inputName" class="form-control" [(ngModel)]="numlength"  minlength="1" formControlName="Nombre" placeholder="Ingrese su nombre"  maxlength="30"required>
 
         <a style="color: white;">Apellido</a>
         <label for="inputApellido" class="visually-hidden">Segundo nombre</label>
-        <input id="inputApellido" class="form-control"  [(ngModel)]="numlength2"  minlength="1" formControlName="Apellido1" placeholder="Ingrese su apellido" maxlength="30" required>
+        <input data-testid="apellidoTest" id="inputApellido" class="form-control"  [(ngModel)]="numlength2"  minlength="1" formControlName="Apellido1" placeholder="Ingrese su apellido" maxlength="30" required>
 
         <a style="color: white;">Fecha de nacimiento</a>
         <label for="inputFecha" class="visually-hidden">Fecha nacimiento</label>
-        <input type="date" id="inputFecha" class="form-control" formControlName="fechaNacimiento" required>
+        <input data-testid="nacimientoTest" type="date" id="inputFecha" class="form-control" formControlName="fechaNacimiento" required>
       
         <h3 style="color: white;"> Seleccionar País:</h3>
         <div class="column">

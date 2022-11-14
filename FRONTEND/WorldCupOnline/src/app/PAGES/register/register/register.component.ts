@@ -115,6 +115,7 @@ export class RegisterComponent implements OnInit {
   verificarEdad(){
     var time = new Date().getTime() - new Date(this.form.get('fechaNacimiento').value).getTime();
     var edad =time*(3.107098*Math.pow(10,-11));
+    console.log(edad);
     if(edad<18){
       this.nacimientoCondicion=true;
       
