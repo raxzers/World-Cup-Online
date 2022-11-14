@@ -1,4 +1,4 @@
 export interface jugador_goles_Model {
-    ID:number;
+    ID: number;
     goles: number;
 }

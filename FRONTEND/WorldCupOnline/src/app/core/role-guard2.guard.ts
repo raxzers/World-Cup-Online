@@ -11,19 +11,16 @@ export class RoleGuard2Guard implements CanActivate {
   Role: string;
   constructor(private auth: UserService, private router: Router) { }
   canActivate(): boolean {
-    /*
-    this.Role=this.auth.IsLoggedIn();
+    this.Role = this.auth.IsLoggedIn();
     if (this.Role == "user") {
-    
+
       return true;
     }
     else {
       this.router.navigate(['/login']);
-      
+
       return false;
     }
-    */
-    return true;
   }
 
 }

@@ -19,8 +19,8 @@
         </td>
         <td>
             <form [formGroup]="fechaInicioForm">
-                <input style="width:20%;" (click)="verificarFechaActual()" type="date" id="date" class="form-control"
-                    formControlName="fechaInicioControl" placeholder="fechaInicio" required>
+                <input data-testid="fechaTest" style="width:20%;" (click)="verificarFechaActual()" type="date" id="date"
+                    class="form-control" formControlName="fechaInicioControl" placeholder="fechaInicio" required>
             </form>
         </td>
     </tr>
