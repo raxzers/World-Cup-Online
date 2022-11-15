@@ -357,7 +357,7 @@ CREATE TABLE public."Usuarios"
     "Nombre" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Apellido1" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Correo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "Password" character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    "Password" character varying(70) COLLATE pg_catalog."default" NOT NULL,
     "Rol" character varying(5) COLLATE pg_catalog."default" NOT NULL,
     "Username" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Pais" character varying COLLATE pg_catalog."default" NOT NULL,
