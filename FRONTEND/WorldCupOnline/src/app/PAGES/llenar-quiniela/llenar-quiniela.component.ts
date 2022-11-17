@@ -234,6 +234,10 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   confirmar_goleadores_asistencias() {
+
+    this.goleadores = [];
+    this.asistencias = [];
+
     let goles_1: number = 0;
     let goles_2: number = 0;
 
@@ -243,6 +247,7 @@ export class LlenarQuinielaComponent implements OnInit {
       else if (jugador.goles > 0) {
         goles_1 += jugador.goles;
         this.id_Jugadores_goles_Eq1.push(jugador.ID)
+        this.goleadores.push(jugador);
       }
     }
 
@@ -251,6 +256,7 @@ export class LlenarQuinielaComponent implements OnInit {
       }
       else if (jugador.asistencias > 0) {
         this.id_Jugadores_asistencia_Eq1.push(jugador.ID)
+        this.asistencias.push(jugador);
       }
     }
 
@@ -260,6 +266,7 @@ export class LlenarQuinielaComponent implements OnInit {
       else if (jugador.goles > 0) {
         goles_2 += jugador.goles;
         this.id_Jugadores_goles_Eq2.push(jugador.ID)
+        this.goleadores.push(jugador);
       }
     }
 
@@ -268,6 +275,7 @@ export class LlenarQuinielaComponent implements OnInit {
       }
       else if (jugador.asistencias > 0) {
         this.id_Jugadores_asistencias_Eq2.push(jugador.ID)
+        this.asistencias.push(jugador);
       }
     }
 
@@ -279,8 +287,8 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Eq2 += this.Autogoles_eq1;
 
-    this.goleadores = this.goleadores.concat(this.jugadores_goles_1, this.jugadores_goles_2);
-    this.asistencias = this.asistencias.concat(this.jugadores_asistencias_1, this.jugadores_asistencias_2);
+    //this.goleadores = this.goleadores.concat(this.jugadores_goles_1, this.jugadores_goles_2);
+    //this.asistencias = this.asistencias.concat(this.jugadores_asistencias_1, this.jugadores_asistencias_2);
   }
 
   guardar_quiniela() {
