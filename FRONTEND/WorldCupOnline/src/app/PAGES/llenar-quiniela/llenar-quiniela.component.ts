@@ -8,6 +8,8 @@ import { jugador_club_Model } from 'src/app/MODELS/jugador_club_Model';
 import { jugador_seleccion_Model } from 'src/app/MODELS/jugador_seleccion_Model';
 import { jugador_goles_Model } from 'src/app/MODELS/jugador_goles_Model';
 import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Model';
+import { LlenarDatosPartido } from 'src/app/LOGIC/llenar_datos_partido';
+import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -18,7 +20,18 @@ import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Mo
 
 export class LlenarQuinielaComponent implements OnInit {
 
-  jugadores: string[] = ['jugador 1', 'jugador 2', 'jugador 3'];
+  datos = new LlenarDatosPartido(this.partidoService, this.equipoService, this.torneoService);
+
+  tipo_torneo: string = '';
+
+  jugadores_seleccion_1: jugador_seleccion_Model[] = [];
+  jugadores_seleccion_2: jugador_seleccion_Model[] = [];
+
+  jugadores_club_1: jugador_club_Model[] = [];
+  jugadores_club_2: jugador_club_Model[] = [];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //jugadores: string[] = ['jugador 1', 'jugador 2', 'jugador 3'];
 
   jugadores_equipo_1: jugador_seleccion_Model[] = [];
   jugadores_equipo_2: jugador_seleccion_Model[] = [];
@@ -69,7 +82,7 @@ export class LlenarQuinielaComponent implements OnInit {
   torneos: torneoModel[];
   nombre_torneos: string[] = [];
 
-  constructor(public partidoService: GameService, public equipoService: TeamService) { }
+  constructor(public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService) { }
 
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {
@@ -85,11 +98,43 @@ export class LlenarQuinielaComponent implements OnInit {
 
   }
 
+  obtener_datos_torneo(torneo: String) {
+    this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(torneo);
+    this.tipo_torneo = this.datos.tipo_torneo(torneo);
+  }
+
+  obtener_datos_partido(partido: gameModel, tipo: String) {
+    this.jugadores_seleccion_1 = [];
+    this.jugadores_seleccion_2 = [];
+    this.jugadores_club_1 = [];
+    this.jugadores_club_2 = [];
+
+    if (tipo == 'Seleccion') {
+      this.jugadores_seleccion_1 = this.datos.jugadores_por_seleccion(partido.Equipo_1)
+      this.jugadores_seleccion_2 = this.datos.jugadores_por_seleccion(partido.Equipo_2)
+    }
+    else if (tipo == 'Seleccion') {
+      this.jugadores_club_1 = this.datos.jugadores_por_club(partido.Equipo_1)
+      this.jugadores_club_2 = this.datos.jugadores_por_club(partido.Equipo_2)
+    }
+    else {
+      console.log('tipo de torneo incorrecto')
+    }
+
+
+  }
+
   obtener_partidos_por_torneo(torneo: String) {
+    /*
     this.partidoService.obtener_partidos_por_torneo(torneo).subscribe((data: gameModel[]) => {
       this.partidos_por_torneo = data
     });
     return this.partidos_por_torneo;
+    */
+    this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(torneo)
+
+    return this.partidos_por_torneo;
+
   }
 
   partido_a_pronosticar(juego: gameModel) {
@@ -296,16 +341,24 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   auto_goles_1(autogoles: string) {
-    this.Autogoles_eq1 = +autogoles;
+    if (+autogoles > 0) {
+      this.Autogoles_eq1 = +autogoles;
+    }
   }
 
   auto_goles_2(autogoles: string) {
-    this.Autogoles_eq2 = +autogoles;
+    if (+autogoles > 0) {
+      this.Autogoles_eq2 = +autogoles;
+    }
   }
 
-  x(input: string) {
-    console.log(input);
+  /*
+  x() {
+    let ldp = new LlenarDatosPartido(this.partidoService, this.equipoService)
+    let result: gameModel[];
+    result = ldp.obtener_partidos_por_torneo('Torneo 2')
+    console.log(result)
   }
-
+  */
 
 }

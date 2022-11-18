@@ -17,16 +17,21 @@ export class TorneoServiceService {
   guardarTorneo(torneo: torneoModel): Observable<torneoModel> {
     return this.http.post<torneoModel>('http://localhost:3000/api/torneo/', torneo);
   }
- // guardarTorneoEquipos(torneoEquipo: torneoEquipoModel): Observable<torneoEquipoModel> {
-  //  return this.http.post<torneoEquipoModel>('http://localhost:3000/api/torneo_equipo/', torneoEquipo);
-  //}
+
   actualizar(torneo) {
     this.actualizarForm.next(torneo);
   }
- // guardarFase(fase: faseModel): Observable<faseModel> {
- //   return this.http.post<faseModel>('http://localhost:3000/api/torneo_fase/', fase);
- // }
+
+  getTorneo(torneo: String) {
+    return this.http.get<torneoModel>('http://localhost:3000/api/torneo/' + torneo);
+  }
+  // guardarFase(fase: faseModel): Observable<faseModel> {
+  //   return this.http.post<faseModel>('http://localhost:3000/api/torneo_fase/', fase);
+  // }
   //crearRanking(fase: rankingModel): Observable<rankingModel> {
   //  return this.http.post<rankingModel>('http://localhost:3000/api/ranking/', fase);
+  //}
+  // guardarTorneoEquipos(torneoEquipo: torneoEquipoModel): Observable<torneoEquipoModel> {
+  //  return this.http.post<torneoEquipoModel>('http://localhost:3000/api/torneo_equipo/', torneoEquipo);
   //}
 }

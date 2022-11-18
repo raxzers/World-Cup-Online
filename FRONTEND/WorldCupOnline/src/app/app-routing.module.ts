@@ -4,6 +4,7 @@ import { RoleGuardGuard } from './core/guards/role-guard.guard';
 import { RoleGuard2Guard } from './core/role-guard2.guard';
 import { HomeComponent } from './PAGES/home/home.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
+import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-resultado.component';
 import { LoginComponent } from './PAGES/login/login.component';
 import { NewFootballGameComponent } from './PAGES/new-football-game/new-football-game.component';
 import { RegisterComponent } from './PAGES/register/register/register.component';
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'view_events', component: ViewEventsComponent },
   { path: 'view_quiniela', component: VQuinielaComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'fill_quiniela', component: LlenarQuinielaComponent }
+  { path: 'fill_quiniela', component: LlenarQuinielaComponent },
+  { path: 'fill_result', component: LlenarResultadoComponent }
 ];
 
 @NgModule({
