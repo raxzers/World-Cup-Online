@@ -14,6 +14,7 @@ export class TorneoServiceService {
   actualizarForm = new BehaviorSubject<torneoModel>({} as any);
 
   constructor(private http: HttpClient) { }
+
   guardarTorneo(torneo: torneoModel): Observable<torneoModel> {
     return this.http.post<torneoModel>('http://localhost:3000/api/torneo/', torneo);
   }

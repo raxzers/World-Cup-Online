@@ -10,6 +10,10 @@ import { jugador_goles_Model } from 'src/app/MODELS/jugador_goles_Model';
 import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Model';
 import { LlenarDatosPartido } from 'src/app/LOGIC/llenar_datos_partido';
 import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
+import { jugador_quiniela_Model } from 'src/app/MODELS/jugador_quiniela_Model';
+import { QuinielaService } from 'src/app/SERVICES/quiniela/quiniela.service';
+import { ThisReceiver } from '@angular/compiler';
+import { jugadorModel } from 'src/app/MODELS/jugadorModel';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -22,49 +26,23 @@ export class LlenarQuinielaComponent implements OnInit {
 
   datos = new LlenarDatosPartido(this.partidoService, this.equipoService, this.torneoService);
 
-  tipo_torneo: string = '';
+  tipo_torneo: String = '';
+  jugador_GOAT: jugadorModel;
+  todos_los_jugadores: jugadorModel[] = [];
 
+  jugadores_1: jugador_quiniela_Model[] = [];
+  jugadores_2: jugador_quiniela_Model[] = [];
+
+  displayedColumns: string[] = ['nombre', 'goles', 'asistencias'];
+  goleadoresColumns: string[] = ['nombre', 'goles'];
+  asistenciasColumns: string[] = ['nombre', 'asistencias'];
+
+
+  //variables y estructuras para manejar los datos del partido actual
   jugadores_seleccion_1: jugador_seleccion_Model[] = [];
   jugadores_seleccion_2: jugador_seleccion_Model[] = [];
-
   jugadores_club_1: jugador_club_Model[] = [];
   jugadores_club_2: jugador_club_Model[] = [];
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  //jugadores: string[] = ['jugador 1', 'jugador 2', 'jugador 3'];
-
-  jugadores_equipo_1: jugador_seleccion_Model[] = [];
-  jugadores_equipo_2: jugador_seleccion_Model[] = [];
-
-  displayedColumns: string[] = ['goleador', 'goles', 'asistencias'];
-  goleadoresColumns: string[] = ['goleador', 'goles'];
-  asistenciasColumns: string[] = ['asiste', 'asistencias'];
-
-  jugadores_goles_1: jugador_goles_Model[] = [{ ID: 0, goles: 0 }];
-  jugadores_goles_2: jugador_goles_Model[] = [{ ID: 0, goles: 0 }];
-  goleadores: jugador_goles_Model[] = [];
-
-  jugadores_asistencias_1: jugador_asistencias_Model[] = [{ ID: 0, asistencias: 0 }];
-  jugadores_asistencias_2: jugador_asistencias_Model[] = [{ ID: 0, asistencias: 0 }];
-  asistencias: jugador_asistencias_Model[] = [];
-
-  Id: number;
-  id_usuario: number;
-  id_Partido: number;
-  id_Jugadores_goles_Eq1: number[] = [];
-  id_Jugadores_asistencia_Eq1: number[] = [];
-  id_Jugador_GOAT: number;
-  Goles_Eq1: number = 0;
-  Goles_Eq2: number = 0;
-  id_Jugadores_goles_Eq2: number[] = [];
-  id_Jugadores_asistencias_Eq2: number[] = [];
-  Autogoles_eq1: number = 0;
-  Autogoles_eq2: number = 0;
-
-
-
-  quiniela: quinielaModel;
-  // = { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 };
 
   Fecha: Date;
   Hora: string;
@@ -77,12 +55,40 @@ export class LlenarQuinielaComponent implements OnInit {
   Sede: string;
   Estado_del_partido: string;
 
+
+
+  jugadores_goles_1: jugador_goles_Model[] = [{ ID: 0, nombre: '', goles: 0 }];
+  jugadores_goles_2: jugador_goles_Model[] = [{ ID: 0, nombre: '', goles: 0 }];
+  goleadores: jugador_goles_Model[] = [];
+
+  jugadores_asistencias_1: jugador_asistencias_Model[] = [{ ID: 0, nombre: '', asistencias: 0 }];
+  jugadores_asistencias_2: jugador_asistencias_Model[] = [{ ID: 0, nombre: '', asistencias: 0 }];
+  asistencias: jugador_asistencias_Model[] = [];
+
+
+  //variables y estructuras para manejar los datos de la quiniela
+  Id: number;
+  id_Usuario: number;
+  id_Partido: number;
+  id_Jugadores_goles_Eq1: number[] = [];
+  id_Jugadores_asistencias_Eq1: number[] = [];
+  id_Jugador_GOAT: number;
+  Goles_Eq1: number = 0;
+  Goles_Eq2: number = 0;
+  id_Jugadores_goles_Eq2: number[] = [];
+  id_Jugadores_asistencias_Eq2: number[] = [];
+  Autogoles_eq1: number = 0;
+  Autogoles_eq2: number = 0;
+
+
+  quiniela: quinielaModel = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
+
   partidos: gameModel[];
   partidos_por_torneo: gameModel[];
   torneos: torneoModel[];
-  nombre_torneos: string[] = [];
+  //nombre_torneos: string[] = [];
 
-  constructor(public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService) { }
+  constructor(public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
 
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {
@@ -91,53 +97,32 @@ export class LlenarQuinielaComponent implements OnInit {
 
     this.partidoService.obtener_torneos().subscribe((data: torneoModel[]) => {
       this.torneos = data
+      /*
       for (let torn of this.torneos) {
         this.nombre_torneos.push(torn.Nombre)
       }
+      */
     });
 
   }
 
-  obtener_datos_torneo(torneo: String) {
-    this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(torneo);
-    this.tipo_torneo = this.datos.tipo_torneo(torneo);
+  obtener_datos_torneo(nombre_torneo: String, tipo_torneo: String) {
+
+    this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(nombre_torneo);
+    this.tipo_torneo = tipo_torneo;
   }
-
-  obtener_datos_partido(partido: gameModel, tipo: String) {
-    this.jugadores_seleccion_1 = [];
-    this.jugadores_seleccion_2 = [];
-    this.jugadores_club_1 = [];
-    this.jugadores_club_2 = [];
-
-    if (tipo == 'Seleccion') {
-      this.jugadores_seleccion_1 = this.datos.jugadores_por_seleccion(partido.Equipo_1)
-      this.jugadores_seleccion_2 = this.datos.jugadores_por_seleccion(partido.Equipo_2)
+  /*
+    obtener_jugadores(partido: gameModel, tipo_torneo: String) {
+      this.jugadores_1 = this.datos.jugadores_quiniela_seleccion(partido.Equipo_1)
+      this.jugadores_2 = this.datos.jugadores_quiniela_seleccion(partido.Equipo_2)
     }
-    else if (tipo == 'Seleccion') {
-      this.jugadores_club_1 = this.datos.jugadores_por_club(partido.Equipo_1)
-      this.jugadores_club_2 = this.datos.jugadores_por_club(partido.Equipo_2)
+  
+    obtener_partidos_por_torneo(torneo: String) {
+      this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(torneo)
+      return this.partidos_por_torneo;
     }
-    else {
-      console.log('tipo de torneo incorrecto')
-    }
-
-
-  }
-
-  obtener_partidos_por_torneo(torneo: String) {
-    /*
-    this.partidoService.obtener_partidos_por_torneo(torneo).subscribe((data: gameModel[]) => {
-      this.partidos_por_torneo = data
-    });
-    return this.partidos_por_torneo;
-    */
-    this.partidos_por_torneo = this.datos.obtener_partidos_por_torneo(torneo)
-
-    return this.partidos_por_torneo;
-
-  }
-
-  partido_a_pronosticar(juego: gameModel) {
+  */
+  partido_a_pronosticar(juego: gameModel, tipo_torneo: String) {
     this.id_Partido = juego.ID;
     this.Fecha = juego.Fecha;
     this.Hora = juego.Hora;
@@ -149,30 +134,77 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2 = juego.Goles_Equipo_2;
     this.Sede = juego.Sede;
     this.Estado_del_partido = juego.Estado_del_partido;
-
-    this.jugadores_por_equipo_1(this.Equipo_1);
-
-    this.jugadores_por_equipo_2(this.Equipo_2);
-
-
+    this.todos_los_jugadores = [];
+    if (tipo_torneo === 'Seleccion') {
+      this.jugadores_por_seleccion_1(this.Equipo_1);
+      this.jugadores_por_seleccion_2(this.Equipo_2);
+    }
+    else if (tipo_torneo === 'Club') {
+      this.jugadores_por_club_1(this.Equipo_1);
+      this.jugadores_por_club_2(this.Equipo_2);
+    }
   }
 
-  jugadores_por_equipo_1(equipo: String) {
+
+  jugadores_por_seleccion_1(equipo: String) {
+    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_seleccion(equipo).subscribe((data: jugador_seleccion_Model[]) => {
-      this.jugadores_equipo_1 = data
+      this.jugadores_seleccion_1 = data
+      for (let jugador of this.jugadores_seleccion_1) {
+        jugador_aux.ID = jugador.ID;
+        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
+        this.todos_los_jugadores.push(jugador_aux);
+      }
     });
   }
 
-  jugadores_por_equipo_2(equipo: String) {
+  jugadores_por_seleccion_2(equipo: String) {
+    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_seleccion(equipo).subscribe((data: jugador_seleccion_Model[]) => {
-      this.jugadores_equipo_2 = data
+      this.jugadores_seleccion_2 = data
+      for (let jugador of this.jugadores_seleccion_2) {
+        jugador_aux.ID = jugador.ID;
+        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
+        this.todos_los_jugadores.push(jugador_aux);
+      }
     });
   }
 
-  limpiar_lista() {
-    this.jugadores_equipo_1 = [];
-    this.jugadores_equipo_2 = [];
+  jugadores_por_club_1(equipo: String) {
+    let jugador_aux: jugadorModel;
+    this.equipoService.obtener_jugadores_por_club(equipo).subscribe((data: jugador_club_Model[]) => {
+      this.jugadores_club_1 = data
+      for (let jugador of this.jugadores_club_1) {
+        jugador_aux.ID = jugador.ID;
+        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
+        this.todos_los_jugadores.push(jugador_aux);
+      }
+    });
+  }
 
+  jugadores_por_club_2(equipo: String) {
+    let jugador_aux: jugadorModel;
+    this.equipoService.obtener_jugadores_por_club(equipo).subscribe((data: jugador_club_Model[]) => {
+      this.jugadores_club_2 = data
+      for (let jugador of this.jugadores_club_2) {
+        jugador_aux.ID = jugador.ID;
+        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
+        this.todos_los_jugadores.push(jugador_aux);
+      }
+    });
+  }
+
+  mejor_jugador(jugador: jugadorModel) {
+    this.jugador_GOAT = jugador;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  limpiar() {
+    this.jugadores_seleccion_1 = [];
+    this.jugadores_seleccion_2 = [];
+    this.jugadores_club_1 = [];
+    this.jugadores_club_2 = [];
     this.Fecha = null;
     this.Hora = null;
     this.Nombre_Torneo = null;
@@ -183,17 +215,41 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2 = null;
     this.Sede = null;
     this.Estado_del_partido = null;
+
+    this.jugadores_goles_1 = [{ ID: null, nombre: null, goles: null }];
+    this.jugadores_goles_2 = [{ ID: null, nombre: null, goles: null }];
+    this.goleadores = [];
+    this.jugadores_asistencias_1 = [{ ID: null, nombre: null, asistencias: null }];
+    this.jugadores_asistencias_2 = [{ ID: null, nombre: null, asistencias: null }];
+    this.asistencias = [];
+
+    this.Autogoles_eq1 = null;
+    this.Autogoles_eq2 = null;
+    this.partidos_por_torneo = [];
+    this.quiniela = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
   }
 
-  llenar_quiniela() {
-    this.quiniela = { Id: this.Id, id_usuario: this.id_usuario, id_Partido: this.id_Partido, id_Jugadores_goles_Eq1: this.id_Jugadores_goles_Eq1, id_Jugadores_asistencia_Eq1: this.id_Jugadores_asistencia_Eq1, id_Jugador_GOAT: this.id_Jugador_GOAT, Goles_Eq1: this.Goles_Eq1, Goles_Eq2: this.Goles_Eq2, id_Jugadores_goles_Eq2: this.id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: this.id_Jugadores_asistencias_Eq2, Autogoles_eq1: this.Autogoles_eq1, Autogoles_eq2: this.Autogoles_eq2 };
+  guardar_quiniela() {
+    let quiniela = this.quiniela;
+    if (quiniela.id_Usuario == null || quiniela.id_Partido == null || quiniela.id_Jugadores_goles_Eq1 == null || quiniela.id_Jugadores_asistencias_Eq1 == null || quiniela.id_Jugadores_goles_Eq2 == null || quiniela.id_Jugadores_asistencias_Eq2 == null || quiniela.Goles_Eq1 == null || quiniela.Goles_Eq2 == null || quiniela.Autogoles_eq1 == null || quiniela.Autogoles_eq2 == null || quiniela.id_Jugador_GOAT == null) {
+      console.log('quiniela incompleta')
+    }
+    else {
+      this.quinielaService.guardarQuiniela(quiniela).subscribe(data => { })
+    }
+
+    this.limpiar();
+  }
+
+  llenar_quiniela(id_Usuario: number, id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
+    this.quiniela = { id_Usuario: id_Usuario, id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_asistencias_Eq1, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq1, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.quiniela;
   }
 
-  sumar_goleadores_1(ID: string, goles: string) {
+  sumar_goleadores_1(ID: string, nombre: string, apellido: string, goles: string) {
 
     let existe_id = false;
-    let nuevo_goleador: jugador_goles_Model = { ID: +ID, goles: +goles };
+    let nuevo_goleador: jugador_goles_Model = { ID: +ID, nombre: nombre + ' ' + apellido, goles: +goles };
 
     for (let jugador of this.jugadores_goles_1) {
       if (jugador.ID == +ID) {
@@ -212,10 +268,10 @@ export class LlenarQuinielaComponent implements OnInit {
     }
   }
 
-  sumar_asistencias_1(ID: string, asistencias: string) {
+  sumar_asistencias_1(ID: string, nombre: string, apellido: string, asistencias: string) {
 
     let existe_id = false;
-    let nueva_asistencia: jugador_asistencias_Model = { ID: +ID, asistencias: +asistencias };
+    let nueva_asistencia: jugador_asistencias_Model = { ID: +ID, nombre: nombre + ' ' + apellido, asistencias: +asistencias };
 
     for (let jugador of this.jugadores_asistencias_1) {
       if (jugador.ID == +ID) {
@@ -235,9 +291,9 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
 
-  sumar_goleadores_2(ID: string, goles: string) {
+  sumar_goleadores_2(ID: string, nombre: string, apellido: string, goles: string) {
     let existe_id = false;
-    let nuevo_goleador: jugador_goles_Model = { ID: +ID, goles: +goles };
+    let nuevo_goleador: jugador_goles_Model = { ID: +ID, nombre: nombre + ' ' + apellido, goles: +goles };
 
     for (let jugador of this.jugadores_goles_2) {
       if (jugador.ID == +ID) {
@@ -256,10 +312,10 @@ export class LlenarQuinielaComponent implements OnInit {
     }
   }
 
-  sumar_asistencias_2(ID: string, asistencias: string) {
+  sumar_asistencias_2(ID: string, nombre: string, apellido: string, asistencias: string) {
 
     let existe_id = false;
-    let nueva_asistencia: jugador_asistencias_Model = { ID: +ID, asistencias: +asistencias };
+    let nueva_asistencia: jugador_asistencias_Model = { ID: +ID, nombre: nombre + ' ' + apellido, asistencias: +asistencias };
 
     for (let jugador of this.jugadores_asistencias_2) {
       if (jugador.ID == +ID) {
@@ -282,6 +338,8 @@ export class LlenarQuinielaComponent implements OnInit {
 
     this.goleadores = [];
     this.asistencias = [];
+    this.Goles_Eq2 = 0;
+    this.Goles_Equipo_2 = 0;
 
     let goles_1: number = 0;
     let goles_2: number = 0;
@@ -300,7 +358,7 @@ export class LlenarQuinielaComponent implements OnInit {
       if (jugador.asistencias <= 0) {
       }
       else if (jugador.asistencias > 0) {
-        this.id_Jugadores_asistencia_Eq1.push(jugador.ID)
+        this.id_Jugadores_asistencias_Eq1.push(jugador.ID)
         this.asistencias.push(jugador);
       }
     }
@@ -324,20 +382,13 @@ export class LlenarQuinielaComponent implements OnInit {
       }
     }
 
-    this.Goles_Eq1 = goles_1;
-    this.Goles_Equipo_1 = goles_1 + this.Autogoles_eq1;
-    this.Goles_Eq1 += this.Autogoles_eq2;
+    this.Goles_Eq1 = goles_1 + this.Autogoles_eq1;
+    this.Goles_Equipo_1 = this.Goles_Eq1;
 
-    this.Goles_Eq2 = goles_2;
-    this.Goles_Equipo_2 = goles_2 + this.Autogoles_eq2;
-    this.Goles_Eq2 += this.Autogoles_eq1;
+    this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
+    this.Goles_Equipo_2 = this.Goles_Eq2;
 
-    //this.goleadores = this.goleadores.concat(this.jugadores_goles_1, this.jugadores_goles_2);
-    //this.asistencias = this.asistencias.concat(this.jugadores_asistencias_1, this.jugadores_asistencias_2);
-  }
-
-  guardar_quiniela() {
-
+    this.llenar_quiniela(1, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, 666)
   }
 
   auto_goles_1(autogoles: string) {
@@ -351,14 +402,4 @@ export class LlenarQuinielaComponent implements OnInit {
       this.Autogoles_eq2 = +autogoles;
     }
   }
-
-  /*
-  x() {
-    let ldp = new LlenarDatosPartido(this.partidoService, this.equipoService)
-    let result: gameModel[];
-    result = ldp.obtener_partidos_por_torneo('Torneo 2')
-    console.log(result)
-  }
-  */
-
 }
