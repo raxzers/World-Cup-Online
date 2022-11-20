@@ -27,8 +27,8 @@ export class LlenarQuinielaComponent implements OnInit {
   datos = new LlenarDatosPartido(this.partidoService, this.equipoService, this.torneoService);
 
   tipo_torneo: String = '';
-  jugador_GOAT: jugadorModel;
-  todos_los_jugadores: jugadorModel[] = [];
+  todos_los_jugadores_club: jugador_club_Model[] = [];
+  todos_los_jugadores_seleccion: jugador_seleccion_Model[] = [];
 
   jugadores_1: jugador_quiniela_Model[] = [];
   jugadores_2: jugador_quiniela_Model[] = [];
@@ -68,7 +68,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
   //variables y estructuras para manejar los datos de la quiniela
   Id: number;
-  id_Usuario: number;
+  id_Usuario: number = 0;
   id_Partido: number;
   id_Jugadores_goles_Eq1: number[] = [];
   id_Jugadores_asistencias_Eq1: number[] = [];
@@ -134,7 +134,6 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2 = juego.Goles_Equipo_2;
     this.Sede = juego.Sede;
     this.Estado_del_partido = juego.Estado_del_partido;
-    this.todos_los_jugadores = [];
     if (tipo_torneo === 'Seleccion') {
       this.jugadores_por_seleccion_1(this.Equipo_1);
       this.jugadores_por_seleccion_2(this.Equipo_2);
@@ -147,58 +146,59 @@ export class LlenarQuinielaComponent implements OnInit {
 
 
   jugadores_por_seleccion_1(equipo: String) {
-    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_seleccion(equipo).subscribe((data: jugador_seleccion_Model[]) => {
       this.jugadores_seleccion_1 = data
-      for (let jugador of this.jugadores_seleccion_1) {
-        jugador_aux.ID = jugador.ID;
-        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
-        this.todos_los_jugadores.push(jugador_aux);
-      }
     });
   }
 
   jugadores_por_seleccion_2(equipo: String) {
-    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_seleccion(equipo).subscribe((data: jugador_seleccion_Model[]) => {
       this.jugadores_seleccion_2 = data
-      for (let jugador of this.jugadores_seleccion_2) {
-        jugador_aux.ID = jugador.ID;
-        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
-        this.todos_los_jugadores.push(jugador_aux);
-      }
     });
   }
 
   jugadores_por_club_1(equipo: String) {
-    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_club(equipo).subscribe((data: jugador_club_Model[]) => {
       this.jugadores_club_1 = data
-      for (let jugador of this.jugadores_club_1) {
-        jugador_aux.ID = jugador.ID;
-        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
-        this.todos_los_jugadores.push(jugador_aux);
-      }
     });
   }
 
   jugadores_por_club_2(equipo: String) {
-    let jugador_aux: jugadorModel;
     this.equipoService.obtener_jugadores_por_club(equipo).subscribe((data: jugador_club_Model[]) => {
       this.jugadores_club_2 = data
-      for (let jugador of this.jugadores_club_2) {
-        jugador_aux.ID = jugador.ID;
-        jugador_aux.nombre = jugador.Nombre_Jugador + jugador.Apellido1_Jugador;
-        this.todos_los_jugadores.push(jugador_aux);
-      }
     });
   }
 
-  mejor_jugador(jugador: jugadorModel) {
-    this.jugador_GOAT = jugador;
+  mejor_jugador(jugador_ID: number) {
+    this.id_Jugador_GOAT = jugador_ID;
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  listar_jugadores(tipo_torneo: String) {
+    this.todos_los_jugadores_seleccion = [];
+    this.todos_los_jugadores_club = [];
+    let jugador_aux: jugadorModel = { ID: null, nombre: null };
+
+    if (tipo_torneo == 'Seleccion') {
+      for (let j1 of this.jugadores_seleccion_1) {
+        this.todos_los_jugadores_seleccion.push(j1);
+      }
+
+      for (let j2 of this.jugadores_seleccion_2) {
+        this.todos_los_jugadores_seleccion.push(j2);
+      }
+    }
+    else if (tipo_torneo == 'Club') {
+
+      for (let j1 of this.jugadores_club_1) {
+        this.todos_los_jugadores_club.push(j1);
+      }
+
+      for (let j2 of this.jugadores_club_2) {
+        this.todos_los_jugadores_club.push(j2);
+      }
+    }
+  }
+
 
   limpiar() {
     this.jugadores_seleccion_1 = [];
@@ -226,6 +226,8 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Autogoles_eq1 = null;
     this.Autogoles_eq2 = null;
     this.partidos_por_torneo = [];
+    this.todos_los_jugadores_seleccion = [];
+    this.todos_los_jugadores_club = [];
     this.quiniela = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
   }
 
@@ -388,18 +390,24 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Equipo_2 = this.Goles_Eq2;
 
-    this.llenar_quiniela(1, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, 666)
+    this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, 666)
   }
 
   auto_goles_1(autogoles: string) {
     if (+autogoles > 0) {
       this.Autogoles_eq1 = +autogoles;
     }
+    else {
+      this.Autogoles_eq1 = 0;
+    }
   }
 
   auto_goles_2(autogoles: string) {
     if (+autogoles > 0) {
       this.Autogoles_eq2 = +autogoles;
+    }
+    else {
+      this.Autogoles_eq2 = 0;
     }
   }
 }
