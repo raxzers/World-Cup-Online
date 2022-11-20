@@ -13,3 +13,11 @@ module.exports = {
     remove,
     update,
 }
+
+/*
+SELECT CP.\"Nombre\",U.\"Username\",R.\"Puntaje\"
+	FROM public.\"Ranking_privado\" AS RP
+	JOIN public.\"Comunidad_Privada\" AS CP ON CP.\"ID\" = RP.\"Id_comunidad\"
+	JOIN public.\"Usuarios\" AS U ON U.\"ID\" = RP.\"Id_usuario\"
+	JOIN public.\"Ranking\" AS R on R.\"id_Usuario\" =U.\"ID\" ;
+*/

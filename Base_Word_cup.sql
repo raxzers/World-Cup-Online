@@ -122,7 +122,7 @@ CREATE SEQUENCE public.user_id_seq
 
 ALTER SEQUENCE public.user_id_seq
     OWNER TO postgres;
-
+-------------------------------------------------------------------------------
 
 CREATE SEQUENCE IF NOT EXISTS public.comunidad_privada_id_seq
     INCREMENT 1
@@ -134,7 +134,17 @@ CREATE SEQUENCE IF NOT EXISTS public.comunidad_privada_id_seq
 
 ALTER SEQUENCE public.comunidad_privada_id_seq
     OWNER TO postgres;
+------------------------------------------------------------------------
 
+CREATE SEQUENCE IF NOT EXISTS public.resultados_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.resultados_id_seq
+    OWNER TO postgres;
 
 
 ---------------------------------------------------------------------------------------------------------
@@ -459,4 +469,29 @@ CREATE TABLE IF NOT EXISTS public."Ranking_privado"
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."Ranking_privado"
+    OWNER to postgres;
+-------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public."Resultados"
+(
+    "Id" bigint NOT NULL DEFAULT nextval('resultados_id_seq'::regclass),
+    "id_Usuario" bigint NOT NULL,
+    "id_Partido" bigint NOT NULL,
+    "id_Jugadores_goles_Eq1" bigint[],
+    "id_Jugadores_asistencias_Eq1" bigint[],
+    "id_Jugador_GOAT" bigint NOT NULL,
+    "Goles_Eq1" integer NOT NULL,
+    "Goles_Eq2" integer NOT NULL,
+    "id_Jugadores_goles_Eq2" bigint[],
+    "id_Jugadores_asistencias_Eq2" bigint[],
+    "Autogoles" integer,
+    CONSTRAINT id_quiniela PRIMARY KEY ("Id"),
+    CONSTRAINT id_partido_quiniela FOREIGN KEY ("id_Partido")
+        REFERENCES public."Partido" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Resultados"
     OWNER to postgres;
