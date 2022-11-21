@@ -48,12 +48,17 @@ export class UserService {
     return JSON.parse(localStorage.getItem('rol'));
   }
 
+  getUsername(): string {
+    return JSON.parse(localStorage.getItem('username'));
+  }
+
   login(usuario: userModel) {
     return this.http.post<userModel>('http://localhost:3000/api/usuarios/login/', usuario);
   }
   getUsers(): Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
   }
+
   obtenerPaises() {
     this.http.get('http://localhost:3000/api/paises_fifa/').toPromise().then(data => { this.paises = data as paisModel[]; });
   }
@@ -64,5 +69,9 @@ export class UserService {
   }
   guardarUsuario(usuario: clientsModel): Observable<clientsModel> {
     return this.http.post<clientsModel>('http://localhost:3000/api/usuarios/', usuario);
+  }
+
+  setAdmin(usuario: userModel): Observable<userModel> {
+    return this.http.post<userModel>('http://localhost:3000/api/usuarios/', usuario);
   }
 }

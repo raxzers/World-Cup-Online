@@ -14,7 +14,7 @@ import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.componen
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  /*
+
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [RoleGuardGuard] },
   { path: 'view_ranking', component: VRankingComponent, canActivate: [RoleGuardGuard] },
@@ -23,16 +23,6 @@ const routes: Routes = [
   { path: 'view_quiniela', component: VQuinielaComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'fill_quiniela', component: LlenarQuinielaComponent, canActivate: [RoleGuard2Guard] }
-  */
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'view_ranking', component: VRankingComponent },
-  { path: 'new_football_game', component: NewFootballGameComponent },
-  { path: 'view_events', component: ViewEventsComponent },
-  { path: 'view_quiniela', component: VQuinielaComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'fill_quiniela', component: LlenarQuinielaComponent },
-  { path: 'fill_result', component: LlenarResultadoComponent }
 ];
 
 @NgModule({

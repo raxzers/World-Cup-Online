@@ -1,7 +1,7 @@
-<app-client-navbar></app-client-navbar>
+<app-navbar></app-navbar>
 <mat-tab-group>
     <mat-tab (change)="limpiar();" label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
-        <h1 (click)="limpiar();"> Nombre del usuario </h1>
+        <h1 (click)="limpiar();"> {{rol}} </h1>
         <mat-card class="card">
             <div>
                 <td class="columnas">
@@ -131,7 +131,7 @@
             </div>
             <br style="height: 15px;">
             <div>
-                <button mat-raised-button color="primary" (click)="guardar_quiniela();">Guardar pronostico</button>
+                <button mat-raised-button color="primary" (click)="enviar_datos();">Confirmar y enviar</button>
             </div>
         </mat-card>
         <br>

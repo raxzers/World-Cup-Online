@@ -14,6 +14,7 @@ import { jugador_quiniela_Model } from 'src/app/MODELS/jugador_quiniela_Model';
 import { QuinielaService } from 'src/app/SERVICES/quiniela/quiniela.service';
 import { ThisReceiver } from '@angular/compiler';
 import { jugadorModel } from 'src/app/MODELS/jugadorModel';
+import { UserService } from 'src/app/SERVICES/user/user.service';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -25,6 +26,8 @@ import { jugadorModel } from 'src/app/MODELS/jugadorModel';
 export class LlenarQuinielaComponent implements OnInit {
 
   tipo_torneo: String = '';
+  username: string = '';
+  rol: string = '';
   todos_los_jugadores_club: jugador_club_Model[] = [];
   todos_los_jugadores_seleccion: jugador_seleccion_Model[] = [];
 
@@ -86,7 +89,7 @@ export class LlenarQuinielaComponent implements OnInit {
   torneos: torneoModel[];
 
 
-  constructor(public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
+  constructor(public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
 
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {
@@ -96,6 +99,14 @@ export class LlenarQuinielaComponent implements OnInit {
     this.partidoService.obtener_torneos().subscribe((data: torneoModel[]) => {
       this.torneos = data
     });
+
+    this.username = this.userService.getUsername();
+
+    if (this.userService.IsLoggedIn() == "admin") {
+      this.rol = 'admin'
+    } else {
+      this.rol = 'user'
+    }
 
   }
 
@@ -306,6 +317,24 @@ export class LlenarQuinielaComponent implements OnInit {
     }
   }
 
+  auto_goles_1(autogoles: string) {
+    if (+autogoles > 0) {
+      this.Autogoles_eq1 = +autogoles;
+    }
+    else {
+      this.Autogoles_eq1 = 0;
+    }
+  }
+
+  auto_goles_2(autogoles: string) {
+    if (+autogoles > 0) {
+      this.Autogoles_eq2 = +autogoles;
+    }
+    else {
+      this.Autogoles_eq2 = 0;
+    }
+  }
+
   confirmar_goleadores_asistencias() {
     this.goleadores = [];
     this.asistencias = [];
@@ -358,40 +387,37 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Equipo_2 = this.Goles_Eq2;
 
+    if (this.rol == "admin") {
+      this.llenar_resultado
+    }
+
     this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, 666)
   }
 
-  auto_goles_1(autogoles: string) {
-    if (+autogoles > 0) {
-      this.Autogoles_eq1 = +autogoles;
-    }
-    else {
-      this.Autogoles_eq1 = 0;
-    }
-  }
+  enviar_datos() {
+    this.confirmar_goleadores_asistencias();
 
-  auto_goles_2(autogoles: string) {
-    if (+autogoles > 0) {
-      this.Autogoles_eq2 = +autogoles;
+    if (this.rol == "admin") {
+      console.log("ENVIAR RESULTADO");
     }
     else {
-      this.Autogoles_eq2 = 0;
+      let quiniela = this.quiniela;
+      if (quiniela.id_Usuario == null || quiniela.id_Partido == null || quiniela.id_Jugadores_goles_Eq1 == null || quiniela.id_Jugadores_asistencias_Eq1 == null || quiniela.id_Jugadores_goles_Eq2 == null || quiniela.id_Jugadores_asistencias_Eq2 == null || quiniela.Goles_Eq1 == null || quiniela.Goles_Eq2 == null || quiniela.Autogoles_eq1 == null || quiniela.Autogoles_eq2 == null || quiniela.id_Jugador_GOAT == null) {
+        console.log('quiniela incompleta')
+      }
+      else {
+        this.quinielaService.guardarQuiniela(quiniela).subscribe(data => { })
+      }
+      this.limpiar();
     }
-  }
-
-  guardar_quiniela() {
-    let quiniela = this.quiniela;
-    if (quiniela.id_Usuario == null || quiniela.id_Partido == null || quiniela.id_Jugadores_goles_Eq1 == null || quiniela.id_Jugadores_asistencias_Eq1 == null || quiniela.id_Jugadores_goles_Eq2 == null || quiniela.id_Jugadores_asistencias_Eq2 == null || quiniela.Goles_Eq1 == null || quiniela.Goles_Eq2 == null || quiniela.Autogoles_eq1 == null || quiniela.Autogoles_eq2 == null || quiniela.id_Jugador_GOAT == null) {
-      console.log('quiniela incompleta')
-    }
-    else {
-      this.quinielaService.guardarQuiniela(quiniela).subscribe(data => { })
-    }
-    this.limpiar();
   }
 
   llenar_quiniela(id_Usuario: number, id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
     this.quiniela = { id_Usuario: id_Usuario, id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_asistencias_Eq1, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq1, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.quiniela;
+  }
+
+  llenar_resultado() {
+    console.log('LLENAR RESULTADO');
   }
 }
