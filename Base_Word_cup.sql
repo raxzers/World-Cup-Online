@@ -474,7 +474,6 @@ ALTER TABLE IF EXISTS public."Ranking_privado"
 CREATE TABLE IF NOT EXISTS public."Resultados"
 (
     "Id" bigint NOT NULL DEFAULT nextval('resultados_id_seq'::regclass),
-    "id_Usuario" bigint NOT NULL,
     "id_Partido" bigint NOT NULL,
     "id_Jugadores_goles_Eq1" bigint[],
     "id_Jugadores_asistencias_Eq1" bigint[],
