@@ -129,8 +129,7 @@ CREATE SEQUENCE IF NOT EXISTS public.comunidad_privada_id_seq
     START 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
-    CACHE 1
-    OWNED BY "Comunidad_Privada"."ID";
+    CACHE 1;
 
 ALTER SEQUENCE public.comunidad_privada_id_seq
     OWNER TO postgres;
@@ -483,8 +482,8 @@ CREATE TABLE IF NOT EXISTS public."Resultados"
     "id_Jugadores_goles_Eq2" bigint[],
     "id_Jugadores_asistencias_Eq2" bigint[],
     "Autogoles" integer,
-    CONSTRAINT id_quiniela PRIMARY KEY ("Id"),
-    CONSTRAINT id_partido_quiniela FOREIGN KEY ("id_Partido")
+    CONSTRAINT id_resultado PRIMARY KEY ("Id"),
+    CONSTRAINT id_partido_resultado FOREIGN KEY ("id_Partido")
         REFERENCES public."Partido" ("ID") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
