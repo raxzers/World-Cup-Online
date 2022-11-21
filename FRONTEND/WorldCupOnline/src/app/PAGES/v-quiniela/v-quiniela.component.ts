@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { gameModel } from 'src/app/MODELS/gameModel';
+import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Model';
+import { jugador_goles_Model } from 'src/app/MODELS/jugador_goles_Model';
 import { quinielaModel } from 'src/app/MODELS/quinielaModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { GameService } from 'src/app/SERVICES/game/game.service';
@@ -12,6 +14,12 @@ import { TeamService } from 'src/app/SERVICES/team/team.service';
   styleUrls: ['./v-quiniela.component.scss']
 })
 export class VQuinielaComponent implements OnInit {
+
+  goleadoresColumns: string[] = ['nombre', 'goles'];
+  asistenciasColumns: string[] = ['nombre', 'asistencias'];
+
+  goleadores: jugador_goles_Model[] = [];
+  asistencias: jugador_asistencias_Model[] = [];
 
   Fecha: Date;
   Hora: string;
@@ -34,10 +42,11 @@ export class VQuinielaComponent implements OnInit {
 
   /*
   quinielas_usuario: quinielaModel[] = [
-    { Id: 0, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 },
-    { Id: 1, id_usuario: 0, id_Partido: 0, id_Jugadores_goles_Eq1: [], id_Jugadores_asistencia_Eq1: [], id_Jugador_GOAT: 0, Goles_Eq1: 0, Goles_Eq2: 0, id_Jugadores_goles_Eq2: [], id_Jugadores_asistencias_Eq2: [], Autogoles_eq1: 0, Autogoles_eq2: 0 } 
+    { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null },
+    { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null }
   ];
   */
+
 
   constructor(public partidoService: GameService, public equipoService: TeamService, public quinielaService: QuinielaService) { }
 
@@ -59,6 +68,19 @@ export class VQuinielaComponent implements OnInit {
       this.partidos_por_torneo = data
     });
     return this.partidos_por_torneo;
+  }
+
+  obtener_quiniela_por_usuario(id_Usuario: string) {
+    let q_aux: quinielaModel[] = [];
+    let q: quinielaModel[] = [];
+
+    this.quinielaService.getQuinielasUsuario(id_Usuario).subscribe((data: quinielaModel[]) => {
+      q_aux = data
+      for (let x of q_aux) {
+        q.push(x);
+      }
+    });
+    return q
   }
 
   quiniela_del_partido(juego: gameModel) {

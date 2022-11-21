@@ -17,6 +17,10 @@ export class QuinielaService {
     this.http.get('http://localhost:3000/api/quinielas/').toPromise().then(data => { this.quinielas = data as quinielaModel[]; });
   }
 
+  getQuinielasUsuario(usuario: string): Observable<quinielaModel[]> {
+    return this.http.get<quinielaModel[]>('http://localhost:3000/api/quinielas/' + usuario);
+  }
+
   guardarQuiniela(quiniela: quinielaModel): Observable<quinielaModel> {
     return this.http.post<quinielaModel>('http://localhost:3000/api/quinielas/', quiniela);
   }
