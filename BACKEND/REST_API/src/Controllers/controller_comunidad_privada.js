@@ -1,6 +1,7 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_comunidad_privada');
 const queryran= require('../Queries/queries_ranking_privado');
+const cadenaAleatoria = require("../../extra_f");
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -19,7 +20,8 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { NombreComunidad,COD_Invita,NombreTorneo,Usuario } = req.body;
+    const { NombreComunidad,NombreTorneo,Usuario } = req.body;
+    const COD_Invita=cadenaAleatoria.cadenaAleatoria();
         pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
             if(error) throw error;
             pool.query(queryran.add,[Usuario,NombreComunidad], (error, results) => {
