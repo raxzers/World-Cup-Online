@@ -1,6 +1,6 @@
 <app-client-navbar></app-client-navbar>
 <mat-tab-group>
-    <mat-tab label="{{torneo}}" *ngFor="let torneo of nombre_torneos">
+    <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
         <h1> Nombre del usuario </h1>
         <mat-card class="card">
             <div>
@@ -9,7 +9,7 @@
                 </label>
 
                 <mat-form-field style="width:20%">
-                    <mat-select (click)="obtener_partidos_por_torneo(torneo)">
+                    <mat-select (click)="obtener_partidos_por_torneo(torneo.Nombre)">
                         <mat-option value="partido" (click)="quiniela_del_partido(partido);"
                             *ngFor="let partido of partidos_por_torneo">{{partido.Equipo_1}} VS {{partido.Equipo_2}}
                         </mat-option>

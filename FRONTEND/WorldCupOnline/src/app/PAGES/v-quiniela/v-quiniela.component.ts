@@ -38,7 +38,6 @@ export class VQuinielaComponent implements OnInit {
   partidos: gameModel[];
   partidos_por_torneo: gameModel[];
   torneos: torneoModel[];
-  nombre_torneos: string[] = [];
 
   /*
   quinielas_usuario: quinielaModel[] = [
@@ -57,9 +56,6 @@ export class VQuinielaComponent implements OnInit {
 
     this.partidoService.obtener_torneos().subscribe((data: torneoModel[]) => {
       this.torneos = data
-      for (let torn of this.torneos) {
-        this.nombre_torneos.push(torn.Nombre)
-      }
     });
   }
 

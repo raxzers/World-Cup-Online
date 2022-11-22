@@ -48,8 +48,12 @@ export class UserService {
     return JSON.parse(localStorage.getItem('rol'));
   }
 
-  getUsername(): string {
-    return JSON.parse(localStorage.getItem('username'));
+  getRol() {
+    return localStorage.getItem('rol');
+  }
+
+  getUsername() {
+    return localStorage.getItem('username');
   }
 
   login(usuario: userModel) {

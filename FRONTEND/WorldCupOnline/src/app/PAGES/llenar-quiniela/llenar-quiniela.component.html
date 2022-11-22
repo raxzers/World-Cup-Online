@@ -1,7 +1,13 @@
-<app-navbar></app-navbar>
+<div *ngIf="rol=='admin'">
+    <app-navbar></app-navbar>
+</div>
+<div *ngIf="rol=='user'">
+    <app-client-navbar></app-client-navbar>
+</div>
+
 <mat-tab-group>
     <mat-tab (change)="limpiar();" label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
-        <h1 (click)="limpiar();"> {{rol}} </h1>
+        <h1 (click)="limpiar();"> {{username}} </h1>
         <mat-card class="card">
             <div>
                 <td class="columnas">

@@ -15,6 +15,7 @@ import { QuinielaService } from 'src/app/SERVICES/quiniela/quiniela.service';
 import { ThisReceiver } from '@angular/compiler';
 import { jugadorModel } from 'src/app/MODELS/jugadorModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
+import { resultadoModel } from 'src/app/MODELS/resultadoModel';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -83,6 +84,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
 
   quiniela: quinielaModel = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
+  resultado: resultadoModel = { id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
 
   partidos: gameModel[];
   partidos_por_torneo: gameModel[];
@@ -101,8 +103,9 @@ export class LlenarQuinielaComponent implements OnInit {
     });
 
     this.username = this.userService.getUsername();
+    //this.id_Usuario =
 
-    if (this.userService.IsLoggedIn() == "admin") {
+    if (this.userService.getRol() == "admin") {
       this.rol = 'admin'
     } else {
       this.rol = 'user'
@@ -388,36 +391,48 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Equipo_2 = this.Goles_Eq2;
 
     if (this.rol == "admin") {
-      this.llenar_resultado
+      this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
+    }
+    else if (this.rol == "user") {
+      this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
 
-    this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, 666)
   }
 
   enviar_datos() {
     this.confirmar_goleadores_asistencias();
 
     if (this.rol == "admin") {
-      console.log("ENVIAR RESULTADO");
+      let resultado_ = this.resultado;
+      if (resultado_.id_Partido == null || resultado_.id_Jugadores_goles_Eq1 == null || resultado_.id_Jugadores_asistencias_Eq1 == null || resultado_.id_Jugadores_goles_Eq2 == null || resultado_.id_Jugadores_asistencias_Eq2 == null || resultado_.Goles_Eq1 == null || resultado_.Goles_Eq2 == null || resultado_.Autogoles_eq1 == null || resultado_.Autogoles_eq2 == null || resultado_.id_Jugador_GOAT == null) {
+        console.log('resultado incompleto')
+      }
+      else {
+        this.quinielaService.guardarResultado(resultado_).subscribe(data => { })
+      }
     }
-    else {
-      let quiniela = this.quiniela;
-      if (quiniela.id_Usuario == null || quiniela.id_Partido == null || quiniela.id_Jugadores_goles_Eq1 == null || quiniela.id_Jugadores_asistencias_Eq1 == null || quiniela.id_Jugadores_goles_Eq2 == null || quiniela.id_Jugadores_asistencias_Eq2 == null || quiniela.Goles_Eq1 == null || quiniela.Goles_Eq2 == null || quiniela.Autogoles_eq1 == null || quiniela.Autogoles_eq2 == null || quiniela.id_Jugador_GOAT == null) {
+    else if (this.rol == "user") {
+      let quiniela_ = this.quiniela;
+      if (quiniela_.id_Usuario == null || quiniela_.id_Partido == null || quiniela_.id_Jugadores_goles_Eq1 == null || quiniela_.id_Jugadores_asistencias_Eq1 == null || quiniela_.id_Jugadores_goles_Eq2 == null || quiniela_.id_Jugadores_asistencias_Eq2 == null || quiniela_.Goles_Eq1 == null || quiniela_.Goles_Eq2 == null || quiniela_.Autogoles_eq1 == null || quiniela_.Autogoles_eq2 == null || quiniela_.id_Jugador_GOAT == null) {
         console.log('quiniela incompleta')
       }
       else {
-        this.quinielaService.guardarQuiniela(quiniela).subscribe(data => { })
+        this.quinielaService.guardarQuiniela(quiniela_).subscribe(data => { })
       }
-      this.limpiar();
     }
+    else {
+      console.log('No se conoce el rol del usuario')
+    }
+    this.limpiar();
   }
 
   llenar_quiniela(id_Usuario: number, id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
-    this.quiniela = { id_Usuario: id_Usuario, id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_asistencias_Eq1, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq1, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
+    this.quiniela = { id_Usuario: id_Usuario, id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq2, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.quiniela;
   }
 
-  llenar_resultado() {
-    console.log('LLENAR RESULTADO');
+  llenar_resultado(id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
+    this.resultado = { id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq2, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
+    return this.resultado;
   }
 }
