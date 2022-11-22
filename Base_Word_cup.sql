@@ -481,7 +481,8 @@ CREATE TABLE IF NOT EXISTS public."Resultados"
     "Goles_Eq2" integer NOT NULL,
     "id_Jugadores_goles_Eq2" bigint[],
     "id_Jugadores_asistencias_Eq2" bigint[],
-    "Autogoles" integer,
+    "Autogoles_eq1" integer,
+    "Autogoles_eq2" integer,
     CONSTRAINT id_resultado PRIMARY KEY ("Id"),
     CONSTRAINT id_partido_resultado FOREIGN KEY ("id_Partido")
         REFERENCES public."Partido" ("ID") MATCH SIMPLE
