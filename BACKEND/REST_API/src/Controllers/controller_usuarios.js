@@ -17,6 +17,14 @@ const getById = (req, res) => {
     });
 };
 
+const getByusername = (req, res) => {
+    const Username = req.params.Username;
+    pool.query(queries.getByusername, [Username], (error, results) => {
+        if(error) throw error;
+        res.status(200).json(results.rows);
+    });
+};
+
 const add = (req, res) => {
     const { Fecha_Nacimiento,Nombre,Apellido1,Correo,Password,Username,Pais } = req.body;
     if(encriptar.validacion_correo_formato(Correo)){   
@@ -112,6 +120,7 @@ const login = (req, res) => {
 module.exports = {
     get,
     getById,
+    getByusername,
     add,
     remove,
     update,
