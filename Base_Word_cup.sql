@@ -122,6 +122,30 @@ CREATE SEQUENCE public.user_id_seq
 
 ALTER SEQUENCE public.user_id_seq
     OWNER TO postgres;
+-------------------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS public.comunidad_privada_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.comunidad_privada_id_seq
+    OWNER TO postgres;
+------------------------------------------------------------------------
+
+CREATE SEQUENCE IF NOT EXISTS public.resultados_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE public.resultados_id_seq
+    OWNER TO postgres;
+
+
 ---------------------------------------------------------------------------------------------------------
 -- Table: public.Torneo
 
@@ -405,4 +429,67 @@ CREATE TABLE public."Paises_Fifa"
 TABLESPACE pg_default;
 
 ALTER TABLE public."Paises_Fifa"
+    OWNER to postgres;
+
+-----------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public."Comunidad_Privada"
+(
+    "ID" bigint NOT NULL DEFAULT nextval('comunidad_privada_id_seq'::regclass),
+    "Nombre" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    "COD_Invita" character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    "id_Torneo" character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Comunidad_Privada_pkey" PRIMARY KEY ("ID"),
+    CONSTRAINT "id_torneoXID_FK" FOREIGN KEY ("id_Torneo")
+        REFERENCES public."Torneo" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Comunidad_Privada"
+    OWNER to postgres;
+-------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public."Ranking_privado"
+(
+    "Id_comunidad" bigint NOT NULL,
+    "Id_usuario" bigint NOT NULL,
+    CONSTRAINT "Comunidad_ranking_P_FK" FOREIGN KEY ("Id_comunidad")
+        REFERENCES public."Comunidad_Privada" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "Ususario_ranking_P_FK" FOREIGN KEY ("Id_usuario")
+        REFERENCES public."Usuarios" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Ranking_privado"
+    OWNER to postgres;
+-------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public."Resultados"
+(
+    "Id" bigint NOT NULL DEFAULT nextval('resultados_id_seq'::regclass),
+    "id_Partido" bigint NOT NULL,
+    "id_Jugadores_goles_Eq1" bigint[],
+    "id_Jugadores_asistencias_Eq1" bigint[],
+    "id_Jugador_GOAT" bigint NOT NULL,
+    "Goles_Eq1" integer NOT NULL,
+    "Goles_Eq2" integer NOT NULL,
+    "id_Jugadores_goles_Eq2" bigint[],
+    "id_Jugadores_asistencias_Eq2" bigint[],
+    "Autogoles" integer,
+    CONSTRAINT id_resultado PRIMARY KEY ("Id"),
+    CONSTRAINT id_partido_resultado FOREIGN KEY ("id_Partido")
+        REFERENCES public."Partido" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Resultados"
     OWNER to postgres;
