@@ -23,7 +23,8 @@ const add = (req, res) => {
     const { NombreComunidad,NombreTorneo,Usuario } = req.body;
     const COD_Invita=cadenaAleatoria.cadenaAleatoria();
         pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
-            if(error) throw error;
+            //if(error) {throw error;}
+            
             pool.query(queryran.add,[Usuario,NombreComunidad], (error, results) => {
                 if(error) throw error; 
                 res.status(201).send();
