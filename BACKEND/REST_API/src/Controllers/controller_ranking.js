@@ -15,7 +15,12 @@ const getById = (req, res) => {
         res.status(200).json(results.rows);
     });
 };
-
+const getXNombres = (req, res) => {
+    pool.query(queries.getXNombres, (error, results) => {
+        if(error) throw error;
+        res.status(200).json(results.rows);
+    });
+};
 const add = (req, res) => {
     const {id_Torneo,id_Usuario,Puntaje} = req.body;
     
@@ -61,6 +66,7 @@ const update = (req, res) => {
 module.exports = {
     get,
     getById,
+    getXNombres,
     add,
     remove,
     update,

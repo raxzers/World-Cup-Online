@@ -1,5 +1,7 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_comunidad_privada');
+const queryran= require('../Queries/queries_ranking_privado');
+const cadenaAleatoria = require("../../extra_f");
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -18,9 +20,15 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { Comunidad } = req.body;
-        pool.query(queries.add, [Comunidad], (error, results) => {
-            if(error) throw error;
+    const { NombreComunidad,NombreTorneo,Usuario } = req.body;
+    const COD_Invita=cadenaAleatoria.cadenaAleatoria();
+        pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
+            //if(error) {throw error;}
+            
+            pool.query(queryran.add,[Usuario,COD_Invita], (error, results) => {
+                if(error) throw error; 
+                res.status(201).send();
+            });
             res.status(201).send();
         });
     
@@ -42,7 +50,7 @@ const remove = (req, res) => {
 };
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const {  Comunidad } = req.body;
+    const {  NombreComunidad,COD_Invita,NombreTorneo } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -50,7 +58,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id, Comunidad,id], (error, results) => {
+        pool.query(queries.update, [id, NombreComunidad,COD_Invita,NombreTorneo,id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
