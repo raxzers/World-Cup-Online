@@ -20,5 +20,5 @@ SELECT CP.\"Nombre\",U.\"Username\",R.\"Puntaje\"
 	JOIN public.\"Comunidad_Privada\" AS CP ON CP.\"ID\" = RP.\"Id_comunidad\"
 	JOIN public.\"Usuarios\" AS U ON U.\"ID\" = RP.\"Id_usuario\"
 	JOIN public.\"Ranking\" AS R on R.\"id_Usuario\" =U.\"ID\" 
-    WHERE CP.\"Nombre\"= $1 ORDER BY R.\"Puntaje\" ASC;
+    WHERE CP.\"Nombre\"= $1 ORDER BY R.\"Puntaje\" DESC;
 */
