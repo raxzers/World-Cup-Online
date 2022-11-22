@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { comunidadModel } from 'src/app/MODELS/comunidadModel';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
@@ -34,6 +35,15 @@ export class CommunityComponent implements OnInit {
       }
 
     });
+   
+  }
+  guardarComunidad(){
+    const comunidad:comunidadModel={
+      NombreComunidad:this.guardarLiga.get('nombreComunidad').value,
+      Usuario:this.guardarLiga.get('nombreComunidad').value,
+      Torneo:this.guardarLiga.get('nombreComunidad').value,
+      
+    }
   }
 
 }
