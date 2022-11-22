@@ -18,8 +18,8 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { rankingP } = req.body;
-        pool.query(queries.add, [rankingP], (error, results) => {
+    const {Usuario,NombreTorneo } = req.body;
+        pool.query(queries.add, [Usuario,NombreTorneo], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
@@ -42,7 +42,7 @@ const remove = (req, res) => {
 };
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const {  rankingP } = req.body;
+    const {  Usuario,NombreTorneo } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -50,7 +50,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id, rankingP,id], (error, results) => {
+        pool.query(queries.update, [ Usuario,NombreTorneo,id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });

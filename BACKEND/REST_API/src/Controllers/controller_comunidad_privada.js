@@ -1,5 +1,6 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_comunidad_privada');
+const queryran= require('../Queries/queries_ranking_privado');
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -18,9 +19,13 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { Comunidad } = req.body;
-        pool.query(queries.add, [Comunidad], (error, results) => {
+    const { NombreComunidad,COD_Invita,NombreTorneo,Usuario } = req.body;
+        pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
             if(error) throw error;
+            pool.query(queryran.add,[Usuario,NombreTorneo], (error, results) => {
+                if(error) throw error; 
+                res.status(201).send();
+            });
             res.status(201).send();
         });
     
