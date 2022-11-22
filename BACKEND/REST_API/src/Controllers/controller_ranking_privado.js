@@ -18,8 +18,8 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const {Usuario,NombreTorneo } = req.body;
-        pool.query(queries.add, [Usuario,NombreTorneo], (error, results) => {
+    const {Usuario,NombreComunidad } = req.body;
+        pool.query(queries.add, [Usuario,NombreComunidad], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });
@@ -42,7 +42,7 @@ const remove = (req, res) => {
 };
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const {  Usuario,NombreTorneo } = req.body;
+    const {  Usuario,NombreComunidad } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -50,7 +50,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [ Usuario,NombreTorneo,id], (error, results) => {
+        pool.query(queries.update, [ Usuario,NombreComunidad,id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
