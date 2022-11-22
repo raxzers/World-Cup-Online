@@ -18,8 +18,8 @@ const getById = (req, res) => {
 };
 
 const add = (req, res) => {
-    const {Usuario,NombreComunidad } = req.body;
-        pool.query(queries.add, [Usuario,NombreComunidad], (error, results) => {
+    const {Usuario,COD_Invita } = req.body;
+        pool.query(queries.add, [Usuario,COD_Invita], (error, results) => {
             if(error) throw error;
             res.status(201).send();
         });

@@ -25,7 +25,7 @@ const add = (req, res) => {
         pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
             //if(error) {throw error;}
             
-            pool.query(queryran.add,[Usuario,NombreComunidad], (error, results) => {
+            pool.query(queryran.add,[Usuario,COD_Invita], (error, results) => {
                 if(error) throw error; 
                 res.status(201).send();
             });
