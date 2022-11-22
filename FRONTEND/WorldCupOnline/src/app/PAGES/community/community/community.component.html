@@ -43,9 +43,23 @@
             <h2 style="color: black;" class="text-center">
                 Comunidades
             </h2>
+            <form [formGroup]="ingresarComunidad" class="select">
+
+                <div class="column">
+                    <div class="input-group">
+                        <input class="text" type="text" class="form-control" formControlName="codigoControl"
+                            placeholder="Nombre Comunidad" maxlength="30" required>
+                    </div>
+                </div>
+                <div class="column">
+                    <div>
+                        <button class="button1 btn-sucess btn-lg btn-block">Crear Comunidad</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="centeredButton">
-            <button class="button1 btn-sucess btn-lg btn-block">Guardar
+            <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarComunidad()">Guardar
                 Torneo</button>
         </div>
 

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { comunidadModel } from 'src/app/MODELS/comunidadModel';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
+import { ComunidadService } from 'src/app/SERVICES/comunidad/comunidad.service';
 import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
 
 @Component({
@@ -12,9 +14,10 @@ import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.ser
 })
 export class CommunityComponent implements OnInit {
   guardarLiga:FormGroup;
+  ingresarComunidad:FormGroup;
   arrayEquipos: any[];
   torneos:any[];
-  constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService) { }
+  constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService, private comunidadService:ComunidadService, private toastr:ToastrService) { }
   
   ngOnInit(): void {
     this.torneos=[];
@@ -38,12 +41,21 @@ export class CommunityComponent implements OnInit {
    
   }
   guardarComunidad(){
+    var usuario=localStorage.getItem('usuario');
+    var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
+    console.log(usuario);
     const comunidad:comunidadModel={
       NombreComunidad:this.guardarLiga.get('nombreComunidad').value,
-      Usuario:this.guardarLiga.get('nombreComunidad').value,
-      Torneo:this.guardarLiga.get('nombreComunidad').value,
-      
+      Usuario:localStorage.getItem('usuario'),
+      Torneo:torneo.value,
     }
+    this.comunidadService.guardarComunidad(comunidad).subscribe(data => {
+      this.toastr.warning(JSON.stringify(data));
+      if(JSON.stringify(data)=='null'){
+        this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
+      }
+    })
+
   }
 
 }
