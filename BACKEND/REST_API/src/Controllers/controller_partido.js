@@ -18,6 +18,14 @@ const getById = (req, res) => {
     });
 };
 
+const getByPartido = (req, res) => {
+    const id = req.params.id;
+    pool.query(queries.getPartido, [id], (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results.rows);
+    });
+};
+
 const add = (req, res) => {
     //const id = (req.params.id);
     const { Fecha, Hora, Nombre_Torneo, Fase, Equipo_1, Equipo_2, Sede, Estado_del_partido } = req.body;
@@ -89,6 +97,7 @@ const update = (req, res) => {
 module.exports = {
     get,
     getById,
+    getByPartido,
     add,
     remove,
     update,
