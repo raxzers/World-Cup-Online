@@ -31,16 +31,17 @@ export class VRankingComponent implements OnInit {
   }
   obtenerClub() {
     this.rankingNames = [];
-    this.rankingService.obtenerClubs1().then(data => {
+    this.rankingService.obtenerRankings().then(data => {
+      console.log(data);
       this.arrayRankTorneos as rankingModel[];
       this.arrayRankTorneos = data as rankingModel[];
       for (let equipo of this.arrayRankTorneos) {
         var nombreEquipo = equipo.Torneo;
         this.rankingNames.push(nombreEquipo);
       }
-
+      console.log(this.rankingNames); 
     });
-    console.log(this.rankingNames);
+    
   }
 
 }

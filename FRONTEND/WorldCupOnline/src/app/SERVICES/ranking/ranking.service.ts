@@ -15,8 +15,8 @@ export class RankingService {
   obtenerClubs() {
     this.http.get('http://localhost:3000/api/ranking/').toPromise().then(data => { this.list = data as rankingModel[]; });
   }
-  obtenerClubs1(): Promise<rankingModel[]> {
-    return this.http.get('http://localhost:3000/api/ranking/')
+  obtenerRankings(): Promise<rankingModel[]> {
+    return this.http.get('http://localhost:3000/api/ranking/nombres/')
       .toPromise()
       .then(data => this.list = data as rankingModel[]);
   }

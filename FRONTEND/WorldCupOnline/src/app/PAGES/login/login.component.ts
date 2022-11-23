@@ -31,8 +31,9 @@ export class LoginComponent implements OnInit {
       Password: password,
     }
     this.userService.login(usuario).subscribe(data => {
-      localStorage.setItem('rol', JSON.stringify(data));
-      localStorage.setItem('username', user); //***********************//
+      localStorage.setItem('usuario',JSON.stringify(usuario.Username));
+      localStorage.setItem('rol',JSON.stringify(data));
+     
       this.toastr.warning(JSON.stringify(data));
       if (this.userService.IsLoggedIn() == "admin") {
         this.router.navigate(['/home']);

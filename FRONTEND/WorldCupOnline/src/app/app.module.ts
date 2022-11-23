@@ -32,6 +32,8 @@ import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
 import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 import { RegisterComponent } from './PAGES/register/register/register.component';
 import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
+import { CommunityComponent } from './PAGES/community/community/community.component';
+
 import { UserService } from './SERVICES/user/user.service';
 import { RoleGuardGuard } from './core/guards/role-guard.guard';
 import { PopUpComponent } from './PAGES/register/popUp/pop-up/pop-up.component';
@@ -42,7 +44,7 @@ import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-result
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     LoginComponent,
     HomeComponent,
     NewFootballGameComponent,
@@ -54,7 +56,7 @@ import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-result
     RegisterComponent,
     ClientNavbarComponent,
     PopUpComponent,
-    LlenarResultadoComponent
+    CommunityComponent,
   ],
   imports: [
     BrowserModule,
