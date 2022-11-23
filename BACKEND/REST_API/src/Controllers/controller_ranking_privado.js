@@ -9,9 +9,8 @@ const get = (req, res) => {
 };
 
 const getById = (req, res) => {
-    const id = req.params.id;
-    console.log(id);
-    pool.query(queries.getById, [id], (error, results) => {
+    const username = req.params.id;
+    pool.query(queries.getById, [username], (error, results) => {
         if(error) throw error;
         res.status(200).json(results.rows);
     });

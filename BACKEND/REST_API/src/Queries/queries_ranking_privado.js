@@ -1,5 +1,5 @@
 const get = "SELECT * FROM public.\"Ranking_privado\"";
-const getById = "SELECT \"Id_comunidad\",\"Id_usuario\" FROM public.\"Ranking_privado\" WHERE \"Id_comunidad\" = $1";
+const getById = "SELECT CP.\"Nombre\"	FROM public.\"Ranking_privado\" AS RP	JOIN public.\"Comunidad_Privada\" AS CP ON CP.\"ID\" = RP.\"Id_comunidad\"	JOIN public.\"Usuarios\" AS U ON U.\"ID\" = RP.\"Id_usuario\"    WHERE U.\"Username\"= $1;";
 const checkIdExists = "SELECT \"Id_usuario\" FROM public.\"Ranking_privado\" WHERE \"Id_usuario\" = $1";/*revisar */
 const add = "INSERT INTO public.\"Ranking_privado\" (\"Id_usuario\",\"Id_comunidad\") VALUES ((select \"ID\" from public.\"Usuarios\" WHERE public.\"Usuarios\".\"Username\" = $1),(select \"ID\" from public.\"Comunidad_Privada\"  cp where cp.\"COD_Invita\" = $2))";
 const remove = "DELETE FROM public.\"Ranking\" WHERE \"Id\" = $1";
