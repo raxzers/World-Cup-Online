@@ -1,6 +1,6 @@
 const get = "SELECT * FROM public.\"Usuarios\"";
 const getById = "SELECT * FROM public.\"Usuarios\" WHERE \"ID\" = $1";
-const getByusername = "SELECT * FROM public.\"Usuarios\" WHERE \"Username\" = $1";
+const getByusername = "SELECT \"ID\" FROM public.\"Usuarios\" WHERE \"Username\" = $1";
 const getBycorreo = "SELECT * FROM public.\"Usuarios\" WHERE \"Correo\" = $1";
 const checkIdExists = "SELECT * FROM public.\"Usuarios\"  WHERE \"ID\" = $1";
 const add = "INSERT INTO public.\"Usuarios\" ( \"Fecha_Nacimiento\",\"Nombre\",\"Apellido1\",\"Correo\",\"Password\",\"Rol\",\"Username\",\"Pais\") VALUES ($1,$2,$3,$4,$5,'user',$6,$7)";
