@@ -10,7 +10,7 @@ import { RankingService } from 'src/app/SERVICES/ranking/ranking.service';
 export class VRankingComponent implements OnInit {
   rankingNames: any[];
   arrayRankTorneos:any[];
-
+  torneosBueno:any[];
   torneos:string[]=['Torneo 1','Torneo 2','Torneo 3','Torneo 4'];
 
   x: rankingModel[] = [
@@ -27,21 +27,20 @@ export class VRankingComponent implements OnInit {
 
   ngOnInit(): void {
     this.rankingNames=[];
+    this.torneosBueno=[];
     this.obtenerClub();
   }
   obtenerClub() {
     this.rankingNames = [];
     this.rankingService.obtenerRankings().then(data => {
-      console.log(data);
+      this.torneosBueno=(data) as rankingModel[];
       this.arrayRankTorneos as rankingModel[];
       this.arrayRankTorneos = data as rankingModel[];
-      for (let equipo of this.arrayRankTorneos) {
-        var nombreEquipo = equipo.Torneo;
-        this.rankingNames.push(nombreEquipo);
-      }
-      console.log(this.rankingNames); 
+      console.log(this.torneos)
+      //console.log(this.rankingNames); 
     });
     
+  console.log(this.torneosBueno)
   }
 
 }

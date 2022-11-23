@@ -25,6 +25,9 @@ export class CommunityComponent implements OnInit {
     this.guardarLiga= this.formBuilder.group({
       nombreComunidad: ['', [Validators.required]]
     })
+    this.ingresarComunidad= this.formBuilder.group({
+      codigoControl: ['', [Validators.required]]
+    })
     this.obtenerNombresTorneos();
   }
   obtenerNombresTorneos() {
@@ -46,9 +49,10 @@ export class CommunityComponent implements OnInit {
     console.log(usuario);
     const comunidad:comunidadModel={
       NombreComunidad:this.guardarLiga.get('nombreComunidad').value,
-      Usuario:localStorage.getItem('usuario'),
-      Torneo:torneo.value,
+      Usuario:usuario,
+      NombreTorneo:torneo.value,
     }
+    console.log(comunidad);
     this.comunidadService.guardarComunidad(comunidad).subscribe(data => {
       this.toastr.warning(JSON.stringify(data));
       if(JSON.stringify(data)=='null'){

@@ -1,16 +1,16 @@
 <app-navbar></app-navbar>
 <mat-tab-group>
-    <mat-tab label="{{torneo}}" *ngFor="let torneo of torneos"> 
-      <mat-grid-list cols="3" rowHeight="3:1" *ngFor="let ranking of x; let index = index">
-        <mat-card *ngIf="ranking.Torneo==torneo" class="card">
+    <mat-tab  *ngFor="let item of torneosBueno; let i=index" label="{{item.Nombre}}" > 
+      <mat-grid-list cols="3" rowHeight="3:1" >
+        <mat-card class="card">
           <td class="columnas">
-            {{index+1}}
+            {{i+1}}
           </td>
           <td class="columnas">
-            {{ranking.Username}}
+            {{item.Username}}
           </td>
           <td class="columnas">
-            {{ranking.Puntaje}}
+            {{item.Puntaje}}
           </td>
         </mat-card>
         
