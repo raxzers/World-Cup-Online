@@ -1,37 +1,25 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_paises_fifa');
+const funciones = require("../Funtion_queries/Funtion_queries_paises_fifa");
 
-const get = (req, res) => {
-    pool.query(queries.get, (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+const get = async (req, res) => {
+    res.status(200).json(await funciones.get_paises_fifa());
 };
 
 
-const add = (req, res) => {
+const add = async (req, res) => {
     const { Nombre} = req.body;
     
-        pool.query(queries.add, [Nombre], (error, results) => {
-            if(error) throw error;
-            res.status(201).send();
-        });
+    var get_var = await funciones.add_paises_fifa(Nombre);
+    res.status(get_var).json(get_var);
     
 };
 
-const remove = (req, res) => {
-    const id = parseInt(req.params.id);
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        } 
-        pool.query(queries.remove, [id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });    
-    });  
+const remove = async (req, res) => {
+    const id = req.params.id;
+    
+    var get_var2 = await funciones.remove_paises_fifa(id); 
+    res.status(get_var2).json(get_var2);  
 };
 
 

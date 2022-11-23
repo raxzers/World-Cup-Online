@@ -1,31 +1,26 @@
 const cadenaAleatoria = require("../../extra_f");
 const pool = require("../../database");
-const queries = require('../Queries/queries_torneo');
-const queries_Equipos = require('../Queries/queries_torneo_equipos');
-const queries_fase = require('../Queries/queries_torneo_fase');
-const queries_ranking = require('../Queries/queries_ranking');
-const Comparar_fechas_torneo = require('../../extra_f');
+const funciones = require("../Funtion_queries/Funtion_queries_torneo");
+const funciones_equipos = require("../Funtion_queries/Funtion_queries_torneo_equipos");
+const funciones_fases = require("../Funtion_queries/Funtion_queries_torneo_fase");
+const funciones_ranking = require("../Funtion_queries/Funtion_queries_ranking");
+const funciones_quniniela = require("../Funtion_queries/Funtion_queries_quinielas");
+const funciones_partido = require("../Funtion_queries/Funtion_queries_partidos");
 
-const get = (req, res) => {
-    pool.query(queries.get, (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+const get = async (req, res) => {
+    res.status(200).json(await funciones.get_torneo());
 };
 
-const getById = (req, res) => {
+const getById = async (req, res) => {
     const id = req.params.id;
-    pool.query(queries.getById, [id], (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+    res.status(200).json(await funciones.getById_torneo(id));
 };
 
-const add = (req, res) => {
+const add = async (req, res) => {
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas,listaEquipos,Fase } = req.body;
     let ID= cadenaAleatoria.cadenaAleatoria();
 
-    pool.query("select now()", (error, results1) => {
+    pool.query("select now()", async (error, results1) => {
         var fecha_inicio = new Date(Fecha_inicio);
         var fecha_fin = new Date(Fecha_fin);
         console.log(fecha_inicio);
@@ -34,47 +29,43 @@ const add = (req, res) => {
         if (fecha_inicio < fecha_fin){
             
             if (results1.rows[0].now < fecha_inicio) {
-                pool.query(queries.checknameExists, [Nombre], (error, results2) => {    
-                    const found2 = results2.rows.length;
-                    if(found2==1) {
-                        res.json("El nombre del torneo ya existe, favor ingresar otro");
-                    } 
-                    else {
-                    pool.query(queries.checkIdExists, [ID], (error, results1) => {
-                        
-                        
-                        const found1 = results1.rows.length;
-                        if(found1) {
-                            res.send("Intentelo de Nuevo");
+
+                var get_var = await funciones.getByname_torneo(Nombre);
+                const notFound = !get_var.length;
+                if(!notFound){
+                    res.send("El nombre del torneo ya existe, favor ingresar otro");
+                    return;
+                } 
+                else {
+                    var get_var2 = await funciones.getById_torneo(ID);
+                    const notFound2 = !get_var2.length;
+                    if(!notFound2){
+                        res.send("Intentelo de nuevo");
+                        return;
+                    }
+                    else { 
+                        var get_var2 = await funciones.add_torneo(ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas);
+                        console.log('Creo torneo');
+                        console.log(get_var2);
+                        for(var i=0; i<listaEquipos.length;i++){
+                            var get_var4 = await funciones_equipos.add_torneo_equipos(Nombre,listaEquipos[i]);
+                            console.log('Creo equipos');
+                            console.log(get_var4);
                         }
                         
-                        pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
-                            if(error) throw error;
-                            console.log('Creo torneo');
-                            for(var i=0; i<listaEquipos.length;i++){
-                                pool.query(queries_Equipos.add, [Nombre,listaEquipos[i]], (error, results) => {
-                                    if(error) {
-                                        pool.query(queries_Equipos.remove, [ID], (error, results) => {}); 
-                                        throw error;}
-                                    else {
-                                        console.log('Agrego Equipos');}
-                                });
-                            }
-                            for(var i=0; i<Fase.length;i++){
-                                pool.query(queries_fase.add, [Nombre,Fase[i]], (error, results) => {
-                                    if(error) {pool.query(queries_fase.remove, [ID], (error, results) => {}); pool.query(queries_Equipos.remove, [ID], (error, results) => {}); throw error;}
-                                    else {
-                                        console.log('Agrego Fase');}
-                                });
-                            }
-                            pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
-                                if(error) throw error;
-                            });
-                            res.status(201).json("Torneo Agregado Exitosamente");
-                        });
-                    
-                    });}
-                });
+                        for(var i=0; i<Fase.length;i++){
+                            var get_var5 = await funciones_fases.add_torneo_fase(Nombre,Fase[i]);
+                            console.log('Creo fases');
+                            console.log(get_var5);
+                        }
+                        
+                        var get_var6 = await funciones_ranking.add_ranking(ID,0,0);
+                        console.log('Creo ranking');
+                        console.log(get_var6);
+                        res.status(200).json(200);
+                    }
+                }
+                
                 console.log(true);}
             else {console.log(false)
                 res.json("Fecha inicio es menor a la actual");};
@@ -88,42 +79,47 @@ const add = (req, res) => {
     
 };
 
-const remove = (req, res) => {
+const remove = async (req, res) => {
     const id = req.params.id;
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        } 
-        pool.query(queries_Equipos.remove_por_torneo, [id], (error, results) => {
-            if(error) throw error;
-        });
-        pool.query(queries_fase.remove_por_torneo_fase, [id], (error, results) => {
-            if(error) throw error;
-        });
-        pool.query(queries.remove, [id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });    
-    });  
+    var get_var = await funciones.getById_torneo(id);
+    const notFound = !get_var.length;
+    console.log(get_var);
+    if(notFound){
+        res.send("No existe en la base de datos");
+        return;
+    } 
+    var get_var1 = await funciones_equipos.remove_torneo_equipos_por_torneo(id);
+    console.log(get_var1);
+    var get_var2 = await funciones_fases.remove_torneo_fase_por_troneo(id);
+    console.log(get_var2);
+    var get_var4 = await funciones_ranking.remove_ranking(id);
+    console.log(get_var4);
+    var get_var5 = await funciones_quniniela.getBytorneo_quinielas(get_var[0].Nombre);
+    console.log(get_var[0].Nombre);
+    console.log(get_var5);
+    var get_var6 = await funciones_partido.getBytorneo_quinielas(id);
+    console.log(get_var[0].ID);
+    console.log(get_var6);
+    var get_var3 = await funciones.remove_torneo(id);
+    console.log(get_var3);
+  
+    if (get_var1 == get_var2 && get_var2 == get_var3 && get_var3 == get_var4)  res.status(200).json(200);
+    res.status(401).json(401);
 };
 
-const update = (req, res) => {
+const update = async (req, res) => {
     const id = req.params.id;
     const { Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas } = req.body;
 
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = results.rows.length;
-        if(!notFound){
-            res.send("No existe en la base de datos");
-            return;
-        }
-        pool.query(queries.update, [id,Fecha_inicio,Fecha_fin,Equipos,Reglas, id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });
-    });
+    var get_var = await funciones.getById_torneo(id);
+    const notFound = !get_var.length;
+    if(notFound){
+        res.send("No existe en la base de datos");
+        return;
+    } 
+    var get_var2 = await funciones.update_torneo(id,Fecha_inicio,Fecha_fin,Equipos,Reglas,id); 
+    
+    res.status(get_var2).json(get_var2);
 };
 
 module.exports = {

@@ -1,4 +1,5 @@
 const pool = require("./database");
+const funciones = require("./src/Funtion_queries/Funtion_queries_partidos");
 
 function cadenaAleatoria() { 
     const banco = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -19,23 +20,27 @@ function encriptar(pass,s_key) {
         return hash;
 };
 
-function Comparar_fechas_torneo(Fecha_inicio,Fecha_fin){
+
+async function Comparar_fechas_partido(Fecha,Fecha_inicio,Fecha_fin){
+  const now1 = funciones.get_fecha_now();
+  var fecha_inicio = new Date(Fecha_inicio);
+  var fecha_fin = new Date(Fecha_fin);
+  var fecha_partido = new Date(Fecha);
+  var fecha_now = new Date(now1.rows[0].now);
+  if (fecha_inicio < fecha_partido && fecha_partido < fecha_fin) {
     
-    return pool.query("select now()", (error, results1) => {
-        
-        var fecha_inicio = new Date(Fecha_inicio);
-        var fecha_fin = new Date(Fecha_fin);
-        if (fecha_inicio < fecha_fin){
-            
-            if (results1.rows[0].now < fecha_inicio) valor= true;
-            else valor= false;
-        }
-        else {
-            valor= false;
-            }
-    });
-    
-};
+    if (fecha_now < fecha_partido) {
+        return ("si")
+    }
+
+    else { return ("Fecha del partido es menor a la actual") }
+
+  }
+  else {
+      return ("Fecha del partido  no esta entre el rango del torneo")
+  }
+  
+}
 
 function filterAlpha (str) {
     if (typeof str !== "string") return false;
@@ -56,6 +61,6 @@ module.exports = {
     cadenaAleatoria , 
     filterAlpha,
     encriptar,
-    Comparar_fechas_torneo,
+    Comparar_fechas_partido,
     validacion_correo_formato,
 }

@@ -1,61 +1,48 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_ranking');
+const funciones = require("../Funtion_queries/Funtion_queries_ranking");
 
-const get = (req, res) => {
-    pool.query(queries.get, (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+const get = async (req, res) => {
+    res.status(200).json(await funciones.get_ranking());
 };
 
-const getById = (req, res) => {
+const getById = async (req, res) => {
     const Id = req.params.id;
-    pool.query(queries.getById, [Id], (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+    res.status(200).json(await funciones.getByname_ranking(Id));
 };
 
-const add = (req, res) => {
+const add = async (req, res) => {
     const {id_Torneo,id_Usuario,Puntaje} = req.body;
     
-        pool.query(queries.add, [id_Torneo,id_Usuario,Puntaje], (error, results) => {
-            if(error) throw error;
-            res.status(201).send();
-        });
+    var get_var = await funciones.add_ranking(id_Torneo,id_Usuario,Puntaje);
+    res.status(get_var).json(get_var);
     
 };
 
-const remove = (req, res) => {
+const remove = async (req, res) => {
     const id = parseInt(req.params.id);
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        } 
-        pool.query(queries.remove, [id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });    
-    });  
+    var get_var = await funciones.getById_ranking(id);
+    const notFound = !get_var.length;
+    if(notFound){
+        res.send("No existe en la base de datos");
+        return;
+    } 
+    var get_var2 = await funciones.remove_ranking(id); 
+    res.status(get_var2).json(get_var2);   
 };
 
-const update = (req, res) => {
+const update = async (req, res) => {
     const Id = req.params.id;
     const { id_Torneo,id_Usuario,Puntaje } = req.body;
 
-    pool.query(queries.getById, [Id], (error, results) => {
-        const notFound = results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        }
-        pool.query(queries.update, [Id,id_Torneo,id_Usuario,Puntaje, Id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });
-    });
+    var get_var = await funciones.getById_ranking(Id);
+    const notFound = !get_var.length;
+    if(notFound){
+        res.send("No existe en la base de datos");
+        return;
+    } 
+    var get_var2 = await funciones.update_ranking(Id,id_Torneo,id_Usuario,Puntaje,Id); 
+    res.status(get_var2).json(get_var2);
 };
 
 module.exports = {

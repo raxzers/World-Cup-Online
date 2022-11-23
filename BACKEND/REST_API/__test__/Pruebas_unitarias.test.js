@@ -6,6 +6,7 @@ const filterAlpha = require('../extra_f');
 const request = require("supertest");
 const app = require("../index");
 
+
 describe("Pruebas unitarias", () =>{
 
     test("Encriptacion password",() => {
@@ -19,8 +20,8 @@ describe("Pruebas unitarias", () =>{
     })
 
     test("Comprobacion fecha torneo",() => {
-        var val1 = filterAlpha.Comparar_fechas_torneo("2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
-        expect(false).toBe(false)
+        var val1 = filterAlpha.Comparar_fechas_partido("2022-12-03T06:00:00.000Z","2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
+        expect(val1).toBe("si")
     })
     
 
