@@ -44,7 +44,7 @@ import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-result
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     LoginComponent,
     HomeComponent,
     NewFootballGameComponent,
@@ -53,6 +53,7 @@ import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-result
     VRankingComponent,
     VQuinielaComponent,
     LlenarQuinielaComponent,
+    LlenarResultadoComponent,
     RegisterComponent,
     ClientNavbarComponent,
     PopUpComponent,

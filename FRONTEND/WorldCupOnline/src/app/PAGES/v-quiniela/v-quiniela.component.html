@@ -1,17 +1,17 @@
 <app-client-navbar></app-client-navbar>
 <mat-tab-group>
     <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
-        <h1> Nombre del usuario </h1>
+        <h1> {{username}} </h1>
         <mat-card class="card">
             <div>
                 <label>
                     <h3>Elija el partido al que pertenece la quiniela</h3>
                 </label>
 
-                <mat-form-field style="width:20%">
-                    <mat-select (click)="obtener_partidos_por_torneo(torneo.Nombre)">
-                        <mat-option value="partido" (click)="quiniela_del_partido(partido);"
-                            *ngFor="let partido of partidos_por_torneo">{{partido.Equipo_1}} VS {{partido.Equipo_2}}
+                <mat-form-field style="width:20%" (click)="quinielas_por_torneo(torneo.Nombre)">
+                    <mat-select (click)="quinielas_por_torneo(torneo.Nombre)">
+                        <mat-option value="quiniela" (click)="mostrar_quiniela(quiniela)"
+                            *ngFor="let quiniela of quinielas_torneo_usuario">{{Equipo_1}} VS {{Equipo_2}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -23,12 +23,12 @@
                 <br>
                 <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_1}}: {{Goles_Equipo_1}}
+                    {{Equipo_1}}: {{Goles_Eq1}}
                 </div>
                 <br>
                 <div>
                     <label>Autogoles</label>
-                    {{autogoles1}}
+                    {{Autogoles_eq1}}
                 </div>
                 <br>
                 <div>
@@ -43,12 +43,12 @@
                 <br>
                 <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_2}}: {{Goles_Equipo_2}}
+                    {{Equipo_2}}: {{Goles_Eq2}}
                 </div>
                 <br>
                 <div>
                     <label>Autogoles</label>
-                    {{autogoles2}}
+                    {{Autogoles_eq2}}
                 </div>
                 <br>
                 <div>

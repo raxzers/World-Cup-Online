@@ -5,6 +5,7 @@
     <app-client-navbar></app-client-navbar>
 </div>
 
+
 <mat-tab-group>
     <mat-tab (change)="limpiar();" label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
         <h1 (click)="limpiar();"> {{username}} </h1>

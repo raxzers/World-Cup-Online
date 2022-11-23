@@ -22,6 +22,10 @@ export class QuinielaService {
     return this.http.get<quinielaModel[]>('http://localhost:3000/api/quinielas/' + usuario);
   }
 
+  getQuinielasByTorneo(torneo: string): Observable<quinielaModel[]> {
+    return this.http.get<quinielaModel[]>('http://localhost:3000/api/usuarios/name_torneo/' + torneo);
+  }
+
   guardarQuiniela(quiniela: quinielaModel): Observable<quinielaModel> {
     return this.http.post<quinielaModel>('http://localhost:3000/api/quinielas/', quiniela);
   }

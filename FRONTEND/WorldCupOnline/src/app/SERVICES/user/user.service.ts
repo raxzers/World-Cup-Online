@@ -6,6 +6,7 @@ import { paisModel } from 'src/app/MODELS/paisModel';
 import { clientsModel } from 'src/app/MODELS/clientsModel';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PopUpComponent } from 'src/app/PAGES/register/popUp/pop-up/pop-up.component';
+import { fullUserModel } from 'src/app/MODELS/fullUserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -53,12 +54,17 @@ export class UserService {
   }
 
   getUsername() {
-    return localStorage.getItem('username');
+    return localStorage.getItem('usuario');
   }
 
   login(usuario: userModel) {
     return this.http.post<userModel>('http://localhost:3000/api/usuarios/login/', usuario);
   }
+
+  getUserByUsername(usuario: string): Observable<fullUserModel> {
+    return this.http.get<fullUserModel>('http://localhost:3000/api/usuarios/user/' + usuario);
+  }
+
   getUsers(): Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
   }

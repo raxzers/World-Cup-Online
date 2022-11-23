@@ -16,6 +16,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { jugadorModel } from 'src/app/MODELS/jugadorModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
 import { resultadoModel } from 'src/app/MODELS/resultadoModel';
+import { fullUserModel } from 'src/app/MODELS/fullUserModel';
 
 @Component({
   selector: 'app-llenar-quiniela',
@@ -29,6 +30,8 @@ export class LlenarQuinielaComponent implements OnInit {
   tipo_torneo: String = '';
   username: string = '';
   rol: string = '';
+  user: fullUserModel = { ID: null, Fecha_Nacimiento: null, Nombre: null, Apellido1: null, Correo: null, Password: null, Rol: null, Username: null, Pais: null };
+
   todos_los_jugadores_club: jugador_club_Model[] = [];
   todos_los_jugadores_seleccion: jugador_seleccion_Model[] = [];
 
@@ -111,7 +114,15 @@ export class LlenarQuinielaComponent implements OnInit {
       this.rol = 'user'
     }
 
+    this.userService.getUserByUsername(this.username).subscribe((data: fullUserModel) => {
+      this.user = data;
+      this.id_Usuario = this.user[0].ID;
+    });
+
+
+
   }
+
 
   obtener_datos_torneo(nombre_torneo: String, tipo_torneo: String) {
     this.partidos_por_torneo = this.obtener_partidos_por_torneo(nombre_torneo);
@@ -400,7 +411,13 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   enviar_datos() {
-    this.confirmar_goleadores_asistencias();
+    //this.confirmar_goleadores_asistencias();
+    if (this.rol == "admin") {
+      this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
+    }
+    else if (this.rol == "user") {
+      this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
+    }
 
     if (this.rol == "admin") {
       let resultado_ = this.resultado;
