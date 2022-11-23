@@ -381,7 +381,7 @@ CREATE TABLE public."Usuarios"
     "Nombre" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Apellido1" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Correo" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "Password" character varying(8) COLLATE pg_catalog."default" NOT NULL,
+    "Password" character varying(70) COLLATE pg_catalog."default" NOT NULL,
     "Rol" character varying(5) COLLATE pg_catalog."default" NOT NULL,
     "Username" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Pais" character varying COLLATE pg_catalog."default" NOT NULL,
@@ -481,7 +481,8 @@ CREATE TABLE IF NOT EXISTS public."Resultados"
     "Goles_Eq2" integer NOT NULL,
     "id_Jugadores_goles_Eq2" bigint[],
     "id_Jugadores_asistencias_Eq2" bigint[],
-    "Autogoles" integer,
+    "Autogoles_eq1" integer,
+    "Autogoles_eq2" integer,
     CONSTRAINT id_resultado PRIMARY KEY ("Id"),
     CONSTRAINT id_partido_resultado FOREIGN KEY ("id_Partido")
         REFERENCES public."Partido" ("ID") MATCH SIMPLE

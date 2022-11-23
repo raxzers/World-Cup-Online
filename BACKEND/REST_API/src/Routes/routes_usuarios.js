@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/', controller.get);
 router.get("/:id", controller.getById);
+router.get("/user/:Username", controller.getByusername);
 router.post("/", controller.add);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.remove);

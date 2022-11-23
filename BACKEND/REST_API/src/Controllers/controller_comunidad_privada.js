@@ -29,7 +29,7 @@ const add = (req, res) => {
                 if(error) throw error; 
                 res.status(201).send();
             });
-            res.status(201).send();
+            res.json({codigo:COD_Invita});
         });
     
 };
