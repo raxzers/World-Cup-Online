@@ -1,7 +1,7 @@
 <app-client-navbar></app-client-navbar>
 <mat-tab-group>
-    <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
-        <h1> {{username}} </h1>
+    <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos" (click)="quinielas_por_torneo(torneo.Nombre)">
+        <h1 (click)="quinielas_por_torneo(torneo.Nombre)"> {{username}} </h1>
         <mat-card class="card">
             <div>
                 <label>
@@ -11,7 +11,8 @@
                 <mat-form-field style="width:20%" (click)="quinielas_por_torneo(torneo.Nombre)">
                     <mat-select (click)="quinielas_por_torneo(torneo.Nombre)">
                         <mat-option value="quiniela" *ngFor="let quiniela of quinielas_torneo_usuario"
-                            (click)="mostrar_quiniela(quiniela)">{{Equipo_1}} VS {{Equipo_2}}
+                            (click)="mostrar_quiniela(quiniela)">{{partido_quiniela.Equipo_1}} vs
+                            {{partido_quiniela.Equipo_2}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -19,12 +20,12 @@
             </div>
             <td class="columnas">
                 <div>
-                    Fecha: {{Fecha}}
+                    Fecha: {{partido_quiniela.Fecha}}
                 </div>
                 <br>
                 <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_1}}: {{Goles_Eq1}}
+                    {{partido_quiniela.Equipo_1}}: {{Goles_Eq1}}
                 </div>
                 <br>
                 <div>
@@ -33,18 +34,18 @@
                 </div>
                 <br>
                 <div>
-                    Sede: {{Sede}}
+                    Sede: {{partido_quiniela.Sede}}
                 </div>
             </td>
 
             <td class="columnas">
                 <div>
-                    Hora: {{Hora}}
+                    Hora: {{partido_quiniela.Hora}}
                 </div>
                 <br>
                 <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_2}}: {{Goles_Eq2}}
+                    {{partido_quiniela.Equipo_2}}: {{Goles_Eq2}}
                 </div>
                 <br>
                 <div>
@@ -53,7 +54,7 @@
                 </div>
                 <br>
                 <div>
-                    Estado del partido: {{Estado_del_partido}}
+                    Estado del partido: {{partido_quiniela.Estado_del_partido}}
                 </div>
             </td>
 
