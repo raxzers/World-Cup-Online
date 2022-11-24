@@ -35,8 +35,8 @@ export class VQuinielaComponent implements OnInit {
   torneos: torneoModel[];
   partido_quiniela: gameModel = { ID: null, Fecha: null, Hora: null, Nombre_Torneo: null, Fase: null, Equipo_1: null, Goles_Equipo_1: null, Equipo_2: null, Goles_Equipo_2: null, Sede: null, Estado_del_partido: null };
 
-  Equipo_1: string = '';
-  Equipo_2: string = '';
+  Equipo_1: string = 'hhhhhhh';
+  Equipo_2: string = 'lllllll';
   Fecha: Date = null;
   Hora: string = '';
   Sede: string = '';
@@ -93,20 +93,70 @@ export class VQuinielaComponent implements OnInit {
 
   quinielas_por_torneo(torneo: string) {
 
+    this.quinielas_torneo_usuario = [];
+    this.quinielas_torneo = [];
+    //let quiniela_aux: quinielaModel = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
+    let quiniela_aux: quinielaModel[];
     this.quinielaService.getQuinielasByTorneo(torneo).subscribe((data: quinielaModel[]) => {
-      this.quinielas_torneo = data
+      quiniela_aux = data;
 
-      for (let quiniela of this.quinielas_torneo) {
-        if (quiniela.id_Usuario == this.id_Usuario) {
-          this.quinielas_torneo_usuario.push(quiniela)
-        }
-
+      for (let quiniela of quiniela_aux) {
+        this.lista_quinielas_del_torneo(quiniela)
       }
+
+      /*
+      for (let quiniela of this.quinielas_torneo) {
+        
+        quiniela_aux.id_Usuario = quiniela.id_Usuario;
+        quiniela_aux.id_Partido = quiniela.id_Partido;
+        quiniela_aux.id_Jugadores_goles_Eq1 = quiniela.id_Jugadores_goles_Eq1;
+        quiniela_aux.id_Jugadores_asistencias_Eq1 = quiniela.id_Jugadores_asistencias_Eq1;
+        quiniela_aux.id_Jugadores_goles_Eq2 = quiniela.id_Jugadores_goles_Eq2;
+        quiniela_aux.id_Jugadores_asistencias_Eq2 = quiniela.id_Jugadores_asistencias_Eq2;
+        quiniela_aux.Goles_Eq1 = quiniela.Goles_Eq1;
+        quiniela_aux.Goles_Eq2 = quiniela.Goles_Eq2;
+        quiniela_aux.Autogoles_eq1 = quiniela.Autogoles_eq1;
+        quiniela_aux.Autogoles_eq2 = quiniela.Autogoles_eq2;
+        quiniela_aux.id_Jugador_GOAT = quiniela.id_Jugador_GOAT;
+       
+
+
+        if (quiniela.id_Usuario != this.id_Usuario) {
+          //this.lista_quinielas_del_torneo_por_usuario(quiniela);
+          //this.quinielas_torneo_usuario.push(quiniela);
+        }
+        else if (quiniela.id_Usuario == this.id_Usuario) {
+          this.lista_quinielas_del_torneo_por_usuario(quiniela);
+        }
+      }
+      */
     });
+    console.log('todas las quinielas')
+    console.log(this.quinielas_torneo);
+    for (let quiniela of this.quinielas_torneo) {
+
+      if (quiniela.id_Usuario != this.id_Usuario) {
+      }
+      else if (quiniela.id_Usuario == this.id_Usuario) {
+        this.lista_quinielas_del_torneo_por_usuario(quiniela);
+      }
+    }
+
+    console.log('quinielas del usuario')
+    console.log(this.quinielas_torneo_usuario);
   }
 
-  mostrar_quiniela(quiniela: quinielaModel) {
+  lista_quinielas_del_torneo(quiniela: quinielaModel) {
+    this.quinielas_torneo.push(quiniela)
+  }
 
+  lista_quinielas_del_torneo_por_usuario(quiniela: quinielaModel) {
+    this.quinielas_torneo_usuario.push(quiniela)
+  }
+
+
+  mostrar_quiniela(quiniela: quinielaModel) {
+    console.log('mostrar quiniela');
     this.partido_quinela(quiniela.id_Partido);
     this.listar_asistencias(quiniela.id_Jugadores_asistencias_Eq1, quiniela.id_Jugadores_asistencias_Eq2);
     this.listar_goleadores(quiniela.id_Jugadores_goles_Eq1, quiniela.id_Jugadores_goles_Eq2);
@@ -118,16 +168,17 @@ export class VQuinielaComponent implements OnInit {
   }
 
   partido_quinela(id: number) {
+    console.log('partido quiniela');
     this.partidoService.partido_por_id(id).subscribe((data: gameModel) => {
-      this.partido_quiniela = data
+      this.partido_quiniela = data;
     });
 
-    this.Equipo_1 = this.partido_quiniela[0].Equipo_1;
-    this.Equipo_2 = this.partido_quiniela[0].Equipo_2;
-    this.Fecha = this.partido_quiniela[0].Fecha;
-    this.Hora = this.partido_quiniela[0].Hora;
-    this.Fase = this.partido_quiniela[0].Fase;
-    this.Estado_del_partido = this.partido_quiniela[0].Estado_del_partido;
+    this.Equipo_1 = this.partido_quiniela.Equipo_1;
+    this.Equipo_2 = this.partido_quiniela.Equipo_2;
+    this.Fecha = this.partido_quiniela.Fecha;
+    this.Hora = this.partido_quiniela.Hora;
+    this.Fase = this.partido_quiniela.Fase;
+    this.Estado_del_partido = this.partido_quiniela.Estado_del_partido;
 
   }
 

@@ -23,7 +23,7 @@ export class QuinielaService {
   }
 
   getQuinielasByTorneo(torneo: string): Observable<quinielaModel[]> {
-    return this.http.get<quinielaModel[]>('http://localhost:3000/api/usuarios/name_torneo/' + torneo);
+    return this.http.get<quinielaModel[]>('http://localhost:3000/api/quinielas/name_torneo/' + torneo);
   }
 
   guardarQuiniela(quiniela: quinielaModel): Observable<quinielaModel> {

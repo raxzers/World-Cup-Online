@@ -7,7 +7,7 @@
 
 
 <mat-tab-group>
-    <mat-tab (change)="limpiar();" label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
+    <mat-tab (click)="limpiar();" label="{{torneo.Nombre}}" *ngFor="let torneo of torneos">
         <h1 (click)="limpiar();"> {{username}} </h1>
         <mat-card class="card">
             <div>
@@ -103,7 +103,7 @@
                     <table mat-table [dataSource]="goleadores" class="mat-elevation-z8">
 
                         <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Goleador </th>
+                            <th mat-header-cell *matHeaderCellDef> * </th>
                             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                         </ng-container>
 
@@ -120,7 +120,7 @@
                     <table mat-table [dataSource]="asistencias" class="mat-elevation-z8">
 
                         <ng-container matColumnDef="nombre">
-                            <th mat-header-cell *matHeaderCellDef> Asiste </th>
+                            <th mat-header-cell *matHeaderCellDef> * </th>
                             <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                         </ng-container>
 

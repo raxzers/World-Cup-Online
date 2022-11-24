@@ -97,6 +97,8 @@ export class LlenarQuinielaComponent implements OnInit {
   constructor(public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
 
   ngOnInit(): void {
+    this.limpiar();
+
     this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {
       this.partidos = data
     });
@@ -106,7 +108,6 @@ export class LlenarQuinielaComponent implements OnInit {
     });
 
     this.username = this.userService.getUsername();
-    //this.id_Usuario =
 
     if (this.userService.getRol() == "admin") {
       this.rol = 'admin'
