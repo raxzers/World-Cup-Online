@@ -1,6 +1,7 @@
 const pool = require("./database");
 const funciones = require("./src/Funtion_queries/Funtion_queries_partidos");
 
+
 function cadenaAleatoria() { 
     const banco = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let aleatoria = "";
@@ -55,7 +56,16 @@ function filterAlpha (str) {
     } else {
       return false;
     }
+}
+
+function Algoritmo_Puntos(id_partido) { 
+  const banco = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let aleatoria = "";
+  for (let i = 0; i < 6; i++) {
+      aleatoria += banco.charAt(Math.floor(Math.random() * banco.length));
   }
+  return aleatoria;
+};
 
 module.exports = {
     cadenaAleatoria , 

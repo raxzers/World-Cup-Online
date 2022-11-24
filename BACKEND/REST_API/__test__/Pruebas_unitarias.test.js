@@ -19,10 +19,10 @@ describe("Pruebas unitarias", () =>{
         expect(val1).toBe(false)
     })
 
-    test("Comprobacion fecha torneo",() => {
-        var val1 = filterAlpha.Comparar_fechas_partido("2022-12-03T06:00:00.000Z","2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
-        expect(val1).toBe("si")
-    })
+    //test("Comprobacion fecha torneo",() => {
+    //    var val1 = filterAlpha.Comparar_fechas_partido("2022-12-03T06:00:00.000Z","2022-11-30T06:00:00.000Z","2022-12-30T06:00:00.000Z");
+    //    expect(val1).toBe("si")
+    /////})
     
 
     test("Comprobacion formato correo",() => {
@@ -30,19 +30,14 @@ describe("Pruebas unitarias", () =>{
         expect(val1).toBe(true)
     })
 
-    test("Get api",async() => {
-        const response = await request(app).get("/");
-        expect(response.text).toEqual("WORLD CUP ONLINE API (1)");
-        
-    })
 //------------------------------------------------------------------------
     test("Get club",async() => {
-        const response = await request(app).get("/api/clubes/");
+        const response = await request(app).get("/api/clubes/").send({Test:"si"});
         expect(response.statusCode).toBe(200);
     })
 
     test("Get id club",async() => {
-        const response = await request(app).get("/api/clubes/1");
+        const response = await request(app).get("/api/clubes/00").send({Test:"si"});
         expect(response.statusCode).toBe(200);
     })
 
@@ -50,24 +45,25 @@ describe("Pruebas unitarias", () =>{
         const response = await request(app).post("/api/clubes/")
         .send({
 
-            Club: "Guadalupe"
-
-      });
-        expect(response.statusCode).toBe(201);
-    })
-
-    test("Put club",async() => {
-        const response = await request(app).put("/api/clubes/12")
-        .send({
-
-            Club: "Guadalupe2"
+            Club: "Guadalupe",
+            Test:"si"
 
       });
         expect(response.statusCode).toBe(200);
     })
 
+    test("Put club",async() => {
+        const response = await request(app).put("/api/clubes/00")
+        .send({
+
+            Club: "Guadalupe2",
+            Test:"si"
+      });
+        expect(response.statusCode).toBe(200);
+    })
+
     test("Remove club",async() => {
-        const response = await request(app).get("/api/clubes/12");
+        const response = await request(app).get("/api/clubes/00").send({Test:"si"});
         expect(response.statusCode).toBe(200);
     })
 
@@ -75,12 +71,12 @@ describe("Pruebas unitarias", () =>{
 
 
 test("Get jugadores_club",async() => {
-    const response = await request(app).get("/api/jugadores_club/");
+    const response = await request(app).get("/api/jugadores_club/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id jugadores_club",async() => {
-    const response = await request(app).get("/api/jugadores_club/1");
+    const response = await request(app).get("/api/jugadores_club/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -90,26 +86,26 @@ test("Post jugadores_club",async() => {
         Club: "Heredia",
         Nombre_Jugador: "Brandon",
         Apellido1_Jugador: "Soto",
-        Apellido2_Jugador: " Perez "
-
+        Apellido2_Jugador: " Perez ",
+        Test:"si"
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put jugadores_club",async() => {
-    const response = await request(app).put("/api/jugadores_club/81")
+    const response = await request(app).put("/api/jugadores_club/1")
     .send({
         Club: "Heredia",
         Nombre_Jugador: "Carlos",
         Apellido1_Jugador: "Soto",
-        Apellido2_Jugador: " Perez "
-
+        Apellido2_Jugador: " Perez ",
+        Test:"si"
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove jugadores_club",async() => {
-    const response = await request(app).get("/api/jugadores_club/81");
+    const response = await request(app).get("/api/jugadores_club/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -117,12 +113,12 @@ test("Remove jugadores_club",async() => {
 
 
 test("Get jugadores_seleccion",async() => {
-    const response = await request(app).get("/api/jugadores_seleccion/");
+    const response = await request(app).get("/api/jugadores_seleccion/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id jugadores_seleccion",async() => {
-    const response = await request(app).get("/api/jugadores_seleccion/1");
+    const response = await request(app).get("/api/jugadores_seleccion/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -132,37 +128,38 @@ test("Post jugadores_seleccion",async() => {
         Seleccion: "Francia",
         Nombre_Jugador: "Brandon",
         Apellido1_Jugador: "Soto",
-        Apellido2_Jugador: " Perez "
+        Apellido2_Jugador: " Perez ",
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put jugadores_seleccion",async() => {
-    const response = await request(app).put("/api/jugadores_seleccion/161")
+    const response = await request(app).put("/api/jugadores_seleccion/1")
     .send({
         Seleccion: "Francia",
         Nombre_Jugador: "Carlos",
         Apellido1_Jugador: "Soto",
-        Apellido2_Jugador: " Perez "
-
+        Apellido2_Jugador: " Perez ",
+        Test:"si"
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove jugadores_seleccion",async() => {
-    const response = await request(app).get("/api/jugadores_seleccion/161");
+    const response = await request(app).get("/api/jugadores_seleccion/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //-------------------------------------------------------------------------------
 
 test("Get selecciones",async() => {
-    const response = await request(app).get("/api/selecciones/");
+    const response = await request(app).get("/api/selecciones/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id selecciones",async() => {
-    const response = await request(app).get("/api/selecciones/1");
+    const response = await request(app).get("/api/selecciones/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -170,31 +167,33 @@ test("Post selecciones",async() => {
     const response = await request(app).post("/api/selecciones/")
     .send({
 
-        Seleccion: "Holanda"
+        Seleccion: "Holanda",
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put selecciones",async() => {
-    const response = await request(app).put("/api/selecciones/9")
+    const response = await request(app).put("/api/selecciones/1")
     .send({
 
-        Seleccion: "Holanda2"
+        Seleccion: "Holanda2",
+        Test:"si"
 
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove selecciones",async() => {
-    const response = await request(app).get("/api/selecciones/9");
+    const response = await request(app).get("/api/selecciones/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 //--------------------------------------------------------------------
 
 test("Get paises_fifa",async() => {
-    const response = await request(app).get("/api/paises_fifa/");
+    const response = await request(app).get("/api/paises_fifa/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -202,31 +201,31 @@ test("Post paises_fifa",async() => {
     const response = await request(app).post("/api/paises_fifa/")
     .send({
 
-        Nombre: "Holanda"
+        Nombre: "Holanda",
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Remove paises_fifa",async() => {
-    const response = await request(app).get("/api/paises_fifa/3");
+    const response = await request(app).get("/api/paises_fifa/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 //-----------------------------------------------------------------
 
 test("Get quinielas",async() => {
-    const response = await request(app).get("/api/quinielas/");
+    const response = await request(app).get("/api/quinielas/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id quinielas",async() => {
-    const response = await request(app).get("/api/quinielas/1");
+    const response = await request(app).get("/api/quinielas/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 test("Get nombre torneo quinielas",async() => {
-    const response = await request(app).get("/api/quinielas/Libertadores");
-    expect(response.statusCode).toBe(200);
+    const response = await request(app).get("/api/quinielas/Libertadores").send({Test:"si"});
 })
 test("Post quinielas",async() => {
     const response = await request(app).post("/api/quinielas/")
@@ -242,14 +241,15 @@ test("Post quinielas",async() => {
         id_Jugadores_goles_Eq2:[3,3],
         id_Jugadores_asistencias_Eq2: [1,2],
         Autogoles_eq1:0,
-        Autogoles_eq2:0
+        Autogoles_eq2:0,
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put quinielas",async() => {
-    const response = await request(app).put("/api/quinielas/4")
+    const response = await request(app).put("/api/quinielas/3")
     .send({
 
         id_Usuario:9,
@@ -262,26 +262,27 @@ test("Put quinielas",async() => {
         id_Jugadores_goles_Eq2:[3,3],
         id_Jugadores_asistencias_Eq2: [1,2],
         Autogoles_eq1:0,
-        Autogoles_eq2:0
+        Autogoles_eq2:0,
+        Test:"si"
 
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove quinielas",async() => {
-    const response = await request(app).get("/api/quinielas/4");
+    const response = await request(app).get("/api/quinielas/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 //-----------------------------------------------------------------
 
 test("Get partido",async() => {
-    const response = await request(app).get("/api/partido/");
+    const response = await request(app).get("/api/partido/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id partido",async() => {
-    const response = await request(app).get("/api/partido/1");
+    const response = await request(app).get("/api/partido/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -296,14 +297,15 @@ test("Post partido",async() => {
         Equipo_1: "Francia",
         Equipo_2: "Colombia",
         Sede: "Estadio Nacional Costa Rica",
-        Estado_del_partido: "Pendiente"
+        Estado_del_partido: "Pendiente",
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put partido",async() => {
-    const response = await request(app).put("/api/partido/10")
+    const response = await request(app).put("/api/partido/3")
     .send({
 
         Fecha: "2022-11-01T06:00:00.000Z",
@@ -313,13 +315,14 @@ test("Put partido",async() => {
         Equipo_1: "Francia",
         Equipo_2: "Colombia",
         Sede: "Estadio Nacional Costa Rica 2",
-        Estado_del_partido: "Pendiente"
+        Estado_del_partido: "Pendiente",
+        Test:"si"
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove partido",async() => {
-    const response = await request(app).get("/api/partido/10");
+    const response = await request(app).get("/api/partido/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -327,12 +330,12 @@ test("Remove partido",async() => {
 //-----------------------------------------------------------------
 
 test("Get ranking",async() => {
-    const response = await request(app).get("/api/ranking/");
+    const response = await request(app).get("/api/ranking/").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 test("Get id ranking",async() => {
-    const response = await request(app).get("/api/ranking/1");
+    const response = await request(app).get("/api/ranking/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -342,35 +345,37 @@ test("Post ranking",async() => {
 
         id_Torneo: "WQLP3a",
         id_Usuario: "9",
-        Puntaje: 454
+        Puntaje: 454,
+        Test:"si"
 
   });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("Put ranking",async() => {
-    const response = await request(app).put("/api/ranking/13")
+    const response = await request(app).put("/api/ranking/3")
     .send({
 
         id_Torneo: "WQLP3a",
         id_Usuario: "9",
-        Puntaje: 500
+        Puntaje: 500,
+        Test:"si"
   });
     expect(response.statusCode).toBe(200);
 })
 
 test("Remove ranking",async() => {
-    const response = await request(app).get("/api/ranking/13");
+    const response = await request(app).get("/api/ranking/3").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
 //===================================================================================
 test("GET torneo_equipo",async() => {
-    const response = await request(app).get("/api/torneo_equipo");
+    const response = await request(app).get("/api/torneo_equipo").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 test("GET torneo_equipo especifica",async() => {
-    const response = await request(app).get("/api/torneo_equipo/1");
+    const response = await request(app).get("/api/torneo_equipo/1").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -378,28 +383,30 @@ test("POST torneo_equipo ",async() => {
     const response = await request(app).post("/api/torneo_equipo/").send({
         "id": "2",
         "Torneo": "Libertadores",
-        "Equipo": "Cartago"  
+        "Equipo": "Cartago"  ,
+        Test:"si"
     });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("PUT torneo_equipo especifica",async() => {
-    const response = await request(app).patch("/api/torneo_equipo/2").send({
-        "Equipo": "Belen"   
+    const response = await request(app).patch("/api/torneo_equipo/1").send({
+        "Equipo": "Belen" ,
+        "Test":"si"  
     });
     expect(response.statusCode).toBe(200);
 })
 test("DELETE torneo_equipo especifica",async() => {
-    const response = await request(app).delete("/api/torneo_equipo/2");
+    const response = await request(app).delete("/api/torneo_equipo/EiOASj").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //===================================================================================
 test("GET torneo_fase",async() => {
-    const response = await request(app).get("/api/torneo_fase");
+    const response = await request(app).get("/api/torneo_fase").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 test("GET torneo_fase especifica",async() => {
-    const response = await request(app).get("/api/torneo_fase/1");
+    const response = await request(app).get("/api/torneo_fase/2").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -407,28 +414,31 @@ test("POST torneo_fase ",async() => {
     const response = await request(app).post("/api/torneo_fase/").send({
         "id": "2",
         "Torneo": "Libertadores",
-        "Fase": "Final"   
+        "Fase": "Final",
+        "Test":"si"  
     });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("PUT torneo_fase especifica",async() => {
     const response = await request(app).patch("/api/torneo_fase/2").send({
-        "Fase": "Semifinal"   
+        "Torneo": "Libertadores",
+        "Fase": "Semifinal",
+        "Test":"si"   
     });
     expect(response.statusCode).toBe(200);
 })
 test("DELETE torneo_fase especifica",async() => {
-    const response = await request(app).delete("/api/torneo_fase/2");
+    const response = await request(app).delete("/api/torneo_fase/2").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //===================================================================================
 test("GET torneo",async() => {
-    const response = await request(app).get("/api/torneo");
+    const response = await request(app).get("/api/torneo").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 test("GET torneo especifica",async() => {
-    const response = await request(app).get("/api/torneo/1");
+    const response = await request(app).get("/api/torneo/EiOASj").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -439,28 +449,34 @@ test("POST torneo ",async() => {
     "Fecha_inicio": "2020-10-31T06:00:00.000Z",
     "Fecha_fin": "2020-12-31T06:00:00.000Z",
     "Equipos": "Seleccion",
-    "Reglas": "fkwhfibjebvjdsbvs"    
+    "Reglas": "fkwhfibjebvjdsbvs"  ,
+    "Test":"si"  
     });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("PUT torneo especifica",async() => {
-    const response = await request(app).patch("/api/torneo/2").send({
-        "Reglas": "abc"  
+    const response = await request(app).patch("/api/torneo/EiOASj").send({
+        "Nombre": "Copa del Mundo",
+        "Fecha_inicio": "2020-10-31T06:00:00.000Z",
+        "Fecha_fin": "2020-12-31T06:00:00.000Z",
+        "Equipos": "Seleccion",
+         "Reglas": "sasasss"  ,
+        "Test":"si"  
     });
     expect(response.statusCode).toBe(200);
 })
 test("DELETE torneo especifica",async() => {
-    const response = await request(app).delete("/api/torneo/2");
+    const response = await request(app).delete("/api/torneo/EiOASj").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //===================================================================================
 test("GET usuarios",async() => {
-    const response = await request(app).get("/api/usuarios");
+    const response = await request(app).get("/api/usuarios").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 test("GET usuarios especifica",async() => {
-    const response = await request(app).get("/api/usuarios/1");
+    const response = await request(app).get("/api/usuarios/8").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 
@@ -472,19 +488,27 @@ test("POST usuarios ",async() => {
     "Pais": "Japón",
     "Correo": "cocwjqws@qasu.com",
     "Password": "sss20",
-    "Username": "new22" 
+    "Username": "new22" ,
+    "Test":"si" 
     });
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
 })
 
 test("PUT usuarios especifica",async() => {
-    const response = await request(app).patch("/api/usuarios/2").send({
-        "Fecha_Nacimiento": "2022-09-31T06:00:00.000Z"    
+    const response = await request(app).patch("/api/usuarios/8").send({
+        "Fecha_Nacimiento": "2022-10-31T06:00:00.000Z",
+        "Nombre": "Leo",
+        "Apellido1": "Alvarez22",
+        "Pais": "Japón",
+        "Correo": "cocwjqws@qasu.com",
+        "Password": "sss20",
+        "Username": "new22" ,
+        "Test":"si"    
     });
     expect(response.statusCode).toBe(200);
 })
 test("DELETE usuarios especifica",async() => {
-    const response = await request(app).delete("/api/usuarios/2");
+    const response = await request(app).delete("/api/usuarios/8").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //===================================================================================

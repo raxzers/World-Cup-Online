@@ -8,7 +8,7 @@ async function get_clubes(){
 
 async function getById_clubes(id){
     var response = [];
-    if(id==00) {
+    if(id== 0) {
         response = [{ "Club": "Saprissa"}];
     }
     return response
@@ -16,17 +16,17 @@ async function getById_clubes(id){
 }
 
 async function add_clubes(Club){
-    return ( 200) 
+    return (200) 
 }
 
 async function remove_clubes(id){
 
-    return ( 200) 
+    return (200) 
 }
 
 async function update_clubes(id,Club){
 
-    return ( 200) 
+    return (200) 
 }
 
 module.exports = {
