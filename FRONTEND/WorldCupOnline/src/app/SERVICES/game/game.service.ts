@@ -52,7 +52,7 @@ export class GameService {
   }
 
   obtener_partidos_por_torneo(torneo: String): Observable<gameModel[]> {
-    return this.http.get<gameModel[]>(this.partido_URL + torneo);
+    return this.http.get<gameModel[]>('http://localhost:3000/api/partido/partido_torneo/' + torneo);
   }
 
   obtener_fases_del_torneo(torneo: string): Observable<torneo_fase_Model[]> {

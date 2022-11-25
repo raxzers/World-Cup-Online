@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { quinielaModel } from 'src/app/MODELS/quinielaModel';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { resultadoModel } from 'src/app/MODELS/resultadoModel';
+import { quiniela_torneo_usuario_Model } from 'src/app/MODELS/quinielas_torneo_usuario_Model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class QuinielaService {
 
   guardarQuiniela(quiniela: quinielaModel): Observable<quinielaModel> {
     return this.http.post<quinielaModel>('http://localhost:3000/api/quinielas/', quiniela);
+  }
+
+  get_quinielas_torneo_usuario(get_quiniela: quiniela_torneo_usuario_Model): Observable<quinielaModel[]> {
+    return this.http.post<quinielaModel[]>('http://localhost:3000/api/quinielas/name_usuario/', get_quiniela);
   }
 
   //////////////

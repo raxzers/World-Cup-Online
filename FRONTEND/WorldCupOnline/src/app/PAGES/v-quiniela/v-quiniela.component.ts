@@ -4,6 +4,7 @@ import { gameModel } from 'src/app/MODELS/gameModel';
 import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Model';
 import { jugador_goles_Model } from 'src/app/MODELS/jugador_goles_Model';
 import { quinielaModel } from 'src/app/MODELS/quinielaModel';
+import { quiniela_torneo_usuario_Model } from 'src/app/MODELS/quinielas_torneo_usuario_Model';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { GameService } from 'src/app/SERVICES/game/game.service';
 import { QuinielaService } from 'src/app/SERVICES/quiniela/quiniela.service';
@@ -21,7 +22,10 @@ export class VQuinielaComponent implements OnInit {
   asistenciasColumns: string[] = ['nombre', 'asistencias'];
 
   goleadores: jugador_goles_Model[] = [];
+  goleadores_aux: number[] = [];
+
   asistencias: jugador_asistencias_Model[] = [];
+  asistencias_aux: number[] = [];
 
   username: string = '';
   id_Usuario: number = 0;
@@ -35,34 +39,14 @@ export class VQuinielaComponent implements OnInit {
   torneos: torneoModel[];
   partido_quiniela: gameModel = { ID: null, Fecha: null, Hora: null, Nombre_Torneo: null, Fase: null, Equipo_1: null, Goles_Equipo_1: null, Equipo_2: null, Goles_Equipo_2: null, Sede: null, Estado_del_partido: null };
 
-  Equipo_1: string = '1';
-  Equipo_2: string = '2';
-
-  Fecha: Date = null;
-  Hora: string = '';
-  Sede: string = '';
-  Estado_del_partido: string = '';
-  Fase: string = '';
-
   Goles_Eq1: number = 0;
   Goles_Eq2: number = 0;
   Autogoles_eq1: number = 0;
   Autogoles_eq2: number = 0;
 
   /*
-    Fecha: Date;
-    Hora: string;
-    Nombre_Torneo: string;
-    Fase: string;
-    Equipo_1: string;
-    Goles_Equipo_1: number;
-    Equipo_2: string;
-    Goles_Equipo_2: number;
-    Sede: string;
-    Estado_del_partido: string;
+    
   
-    autogoles1: string;
-    autogoles2: string;
   
     partidos: gameModel[];
     partidos_por_torneo: gameModel[];
@@ -106,7 +90,7 @@ export class VQuinielaComponent implements OnInit {
 
         if (quiniela.id_Usuario == this.id_Usuario) {
           this.add_quiniela_por_usuario(quiniela);
-          console.log(quiniela)
+
         }
       }
     });
@@ -114,8 +98,22 @@ export class VQuinielaComponent implements OnInit {
 
   add_quiniela_por_usuario(quiniela: quinielaModel) {
     this.quinielas_torneo_usuario.push(quiniela);
+    //console.log(quiniela)
   }
 
+  lista_quinielas_torneo_usuario(torneo: string, id_Usuario: number) {
+    this.quinielas_torneo_usuario = [];
+    let quiniela_aux: quinielaModel[];
+    let get_quiniela: quiniela_torneo_usuario_Model = { torneo: torneo, id_Usuario: id_Usuario.toString() };
+
+    this.quinielaService.get_quinielas_torneo_usuario(get_quiniela).subscribe((data: quinielaModel[]) => {
+      quiniela_aux = data as quinielaModel[];
+      for (let quiniela of quiniela_aux) {
+        this.add_quiniela_por_usuario(quiniela);
+      }
+    });
+
+  }
 
 
   mostrar_quiniela(quiniela: quinielaModel) {
@@ -149,26 +147,45 @@ export class VQuinielaComponent implements OnInit {
     this.partido_quiniela.Fase = partido[0].Fase;
     this.partido_quiniela.Sede = partido[0].Sede;
     this.partido_quiniela.Estado_del_partido = partido[0].Estado_del_partido;
-    /*
-    this.Equipo_1 = partido[0].Equipo_1;
-    this.Equipo_2 = partido[0].Equipo_2;
-    this.Fecha = partido[0].Fecha;
-    this.Hora = partido[0].Hora;
-    this.Fase = partido[0].Fase;
-    this.Sede = partido[0].Sede;
-    this.Estado_del_partido = partido[0].Estado_del_partido;
-    */
-    console.log(this.quinielas_torneo_usuario);
   }
 
   listar_goleadores(ids1: number[], ids2: number[]) {
+    this.goleadores_aux = [];
 
+    for (let jugador of ids1) {
+      this.goleadores_aux.push(jugador)
+    }
+
+    for (let jugador of ids2) {
+      this.goleadores_aux.push(jugador)
+    }
   }
 
   listar_asistencias(ids1: number[], ids2: number[]) {
+    this.asistencias_aux = [];
 
+    for (let jugador of ids1) {
+      this.asistencias_aux.push(jugador)
+    }
+
+    for (let jugador of ids2) {
+      this.asistencias_aux.push(jugador)
+    }
   }
 
+  limpiar() {
+    this.partido_quiniela = { ID: null, Fecha: null, Hora: null, Nombre_Torneo: null, Fase: null, Equipo_1: null, Goles_Equipo_1: null, Equipo_2: null, Goles_Equipo_2: null, Sede: null, Estado_del_partido: null };
+    this.Goles_Eq1 = null;
+    this.Goles_Eq2 = null;
+    this.Autogoles_eq1 = null;
+    this.Autogoles_eq2 = null;
+    this.quinielas_torneo_usuario = [];
+    this.goleadores = [];
+    this.asistencias = [];
+
+    this.goleadores_aux = [];
+    this.asistencias_aux = [];
+  }
 
 
 
