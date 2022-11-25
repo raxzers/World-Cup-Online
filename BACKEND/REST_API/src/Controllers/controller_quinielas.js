@@ -17,15 +17,15 @@ const getById = (req, res) => {
 };
 
 const getByname_Torneo = (req, res) => {
-    const {id_Usuario,torneo} = req.body;
-    pool.query(queries.getByname_torneo, [id_Usuario,torneo], (error, results) => {
+    const id = req.params.id;
+    pool.query(queries.getByname_torneo, [id], (error, results) => {
         if(error) throw error;
         res.status(200).json(results.rows);
     });
 };
 const getByname_Usuario = (req, res) => {
-    const id = req.params.id;
-    pool.query(queries.getByname_torneo, [id], (error, results) => {
+    const {id_Usuario,torneo} = req.body;
+    pool.query(queries.getByname_usuario, [id_Usuario,torneo], (error, results) => {
         if(error) throw error;
         res.status(200).json(results.rows);
     });
