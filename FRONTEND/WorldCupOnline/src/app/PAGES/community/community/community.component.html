@@ -45,7 +45,7 @@
             </h2>
             <div style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
                 <select formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
-                <option [value]='torneo' *ngFor="let torneo of torneos">{{torneo}}</option>
+                <option [value]='torneo' *ngFor="let torneo of comunidades">{{torneo}}</option>
               </select>
             </div>
             <form [formGroup]="ingresarComunidad" class="select">
@@ -64,7 +64,7 @@
             </form>
         </div>
         <div class="centeredButton">
-            <button class="button1 btn-sucess btn-lg btn-block" >Ver Comunidades</button>
+            <button class="button1 btn-sucess btn-lg btn-block" >Ver Rankings de Comunidades</button>
         </div>
 
     </div>

@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [RoleGuardGuard] },
-  { path: 'view_ranking', component: VRankingComponent, canActivate: [RoleGuardGuard] },
+  { path: 'view_ranking', component: VRankingComponent/*, canActivate: [RoleGuardGuard]*/ },
   { path: 'new_football_game', component: NewFootballGameComponent, canActivate: [RoleGuardGuard] },
   { path: 'view_events', component: ViewEventsComponent, canActivate: [RoleGuardGuard] },
   { path: 'view_quiniela', component: VQuinielaComponent, canActivate: [RoleGuard2Guard]  },

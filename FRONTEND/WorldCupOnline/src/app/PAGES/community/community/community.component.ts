@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { comunidadModel } from 'src/app/MODELS/comunidadModel';
+import { communityGetModel } from 'src/app/MODELS/getComunityModel';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { ComunidadService } from 'src/app/SERVICES/comunidad/comunidad.service';
@@ -16,12 +17,16 @@ export class CommunityComponent implements OnInit {
   guardarLiga:FormGroup;
   ingresarComunidad:FormGroup;
   arrayEquipos: any[];
+  arrayComunidades:any[];
   torneos:any[];
+  comunidades:any[];
   constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService, private comunidadService:ComunidadService, private toastr:ToastrService) { }
   
   ngOnInit(): void {
     this.torneos=[];
+    this.comunidades=[];
     this.arrayEquipos=[];
+    this.arrayComunidades=[];
     this.guardarLiga= this.formBuilder.group({
       nombreComunidad: ['', [Validators.required]]
     })
@@ -29,6 +34,7 @@ export class CommunityComponent implements OnInit {
       codigoControl: ['', [Validators.required]]
     })
     this.obtenerNombresTorneos();
+    this.obtenerComunidades();
   }
   obtenerNombresTorneos() {
     this.torneos = [];
@@ -41,7 +47,18 @@ export class CommunityComponent implements OnInit {
       }
 
     });
-   
+  }
+  obtenerComunidades() {
+    this.comunidades = [];
+    this.comunidadService.getComunidades(localStorage.getItem('usuario')).then(data => {
+      this.arrayComunidades as communityGetModel[];
+      this.arrayComunidades = data as communityGetModel[];
+      for (let equipo of this.arrayComunidades) {
+        var nombreEquipo = equipo.Nombre;
+        this.comunidades.push(nombreEquipo);
+      }
+
+    });
   }
   guardarComunidad(){
     var usuario=localStorage.getItem('usuario');
