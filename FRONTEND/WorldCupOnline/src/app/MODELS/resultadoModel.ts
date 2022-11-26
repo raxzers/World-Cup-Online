@@ -1,5 +1,5 @@
 export interface resultadoModel {
-    Id?: number;
+
     id_Partido: number;
     id_Jugadores_goles_Eq1: number[];
     id_Jugadores_asistencias_Eq1: number[];
