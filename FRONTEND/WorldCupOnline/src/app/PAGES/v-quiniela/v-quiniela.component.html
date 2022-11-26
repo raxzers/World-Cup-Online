@@ -1,64 +1,104 @@
 <app-client-navbar></app-client-navbar>
-<mat-tab-group >
-    <mat-tab label="{{torneo}}"  *ngFor="let torneo of nombre_torneos" > 
-        <h1> Nombre del usuario </h1>
-        <mat-card class="card" >
+<mat-tab-group>
+    <mat-tab label="{{torneo.Nombre}}" *ngFor="let torneo of torneos" (click)="limpiar()">
+        <h1 (click)="limpiar()"> {{username}} </h1>
+        <mat-card class="card">
             <div>
-                <label><h2>Elija el partido al que pertenece la quiniela</h2></label>
-                
-                <mat-form-field style="width:20%">              
-                    <mat-select (click)="obtener_partidos_por_torneo(torneo)">
-                        <mat-option value="partido" (click)="quiniela_del_partido(partido);" *ngFor="let partido of partidos_por_torneo">{{partido.Equipo_1}} VS {{partido.Equipo_2}}</mat-option>
+                <label>
+                    <h3>Elija una de sus quinielas para ver la información: </h3>
+                </label>
+
+                <mat-form-field style="width:20%" (click)="lista_quinielas_torneo_usuario(torneo.Nombre, id_Usuario)">
+                    <mat-select>
+                        <mat-option value="quiniela" *ngFor="let quiniela of quinielas_torneo_usuario"
+                            (click)="mostrar_quiniela(quiniela)"> ID #{{quiniela.Id}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
+
             </div>
-            
             <div>
-                <h2>Pronostico del evento</h2>
-                <td class="columnas">
-                    
-                    Fecha: {{Fecha}}
-                </td>
-                
-                <td class="columnas">
-                    Hora: {{Hora}}
-                </td>
+                {{partido_quiniela.Equipo_1}} vs
+                {{partido_quiniela.Equipo_2}}
             </div>
-            
-            <div>
-                <td class="columnas">
+            <td class="columnas">
+                <div>
+                    Fecha: {{partido_quiniela.Fecha}}
+                </div>
+                <br>
+                <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_1}}: {{Goles_Equipo_1}}
-                    <br>
+                    {{partido_quiniela.Equipo_1}}: {{Goles_Eq1}}
+                </div>
+                <br>
+                <div>
                     <label>Autogoles</label>
-                    {{autogoles1}}  
-                </td>
-                <td class="columnas">
+                    {{Autogoles_eq1}}
+                </div>
+                <br>
+                <div>
+                    Sede: {{partido_quiniela.Sede}}
+                </div>
+            </td>
+
+            <td class="columnas">
+                <div>
+                    Hora: {{partido_quiniela.Hora}}
+                </div>
+                <br>
+                <div>
                     <label>Cantidad de goles para </label>
-                    {{Equipo_2}}: {{Goles_Equipo_2}}
-                    <br>
+                    {{partido_quiniela.Equipo_2}}: {{Goles_Eq2}}
+                </div>
+                <br>
+                <div>
                     <label>Autogoles</label>
-                    {{autogoles2}}
-                </td>
+                    {{Autogoles_eq2}}
+                </div>
+                <br>
+                <div>
+                    Estado del partido: {{partido_quiniela.Estado_del_partido}}
+                </div>
+            </td>
+
+            <td class="columnas">
+                <div>
+            <td>
+                <table mat-table [dataSource]="goleadores_aux" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef> ID Jugador </th>
+                        <td mat-cell *matCellDef="let element"> {{element}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="goles">
+                        <th mat-header-cell *matHeaderCellDef> Goles </th>
+                        <td mat-cell *matCellDef="let element"> # </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="goleadoresColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: goleadoresColumns;"></tr>
+                </table>
+            </td>
+            <td>
+                <table mat-table [dataSource]="asistencias_aux" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef> ID Jugador </th>
+                        <td mat-cell *matCellDef="let element"> {{element}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="asistencias">
+                        <th mat-header-cell *matHeaderCellDef> Asistencias </th>
+                        <td mat-cell *matCellDef="let element"> # </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="asistenciasColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: asistenciasColumns;"></tr>
+                </table>
+            </td>
             </div>
-            <br>
-            <div>
-                <td class="columnas">
-                    Fase: {{Fase}}
-                </td>
-                
-                <td class="columnas">
-                    Estado del partido: {{Estado_del_partido}}
-                </td>          
-            </div>
-            <div>
-                <td class="columnas">
-                    Sede: {{Sede}}
-                </td>           
-            </div>
-            
+            </td>
         </mat-card>
-    
     </mat-tab>
 </mat-tab-group>
-

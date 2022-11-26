@@ -1,6 +1,5 @@
-export interface quinielaModel {
-    Id?: number;
-    id_Usuario: number;
+export interface resultadoModel {
+
     id_Partido: number;
     id_Jugadores_goles_Eq1: number[];
     id_Jugadores_asistencias_Eq1: number[];
@@ -12,3 +11,4 @@ export interface quinielaModel {
     Autogoles_eq2: number;
     id_Jugador_GOAT: number;
 }
+

@@ -6,6 +6,7 @@ import { paisModel } from 'src/app/MODELS/paisModel';
 import { clientsModel } from 'src/app/MODELS/clientsModel';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PopUpComponent } from 'src/app/PAGES/register/popUp/pop-up/pop-up.component';
+import { fullUserModel } from 'src/app/MODELS/fullUserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -48,12 +49,26 @@ export class UserService {
     return JSON.parse(localStorage.getItem('rol'));
   }
 
+  getRol() {
+    return localStorage.getItem('rol');
+  }
+
+  getUsername() {
+    return localStorage.getItem('usuario');
+  }
+
   login(usuario: userModel) {
     return this.http.post<userModel>('http://localhost:3000/api/usuarios/login/', usuario);
   }
+
+  getUserByUsername(usuario: string): Observable<fullUserModel> {
+    return this.http.get<fullUserModel>('http://localhost:3000/api/usuarios/user/' + usuario);
+  }
+
   getUsers(): Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
   }
+
   obtenerPaises() {
     this.http.get('http://localhost:3000/api/paises_fifa/').toPromise().then(data => { this.paises = data as paisModel[]; });
   }
@@ -64,5 +79,9 @@ export class UserService {
   }
   guardarUsuario(usuario: clientsModel): Observable<clientsModel> {
     return this.http.post<clientsModel>('http://localhost:3000/api/usuarios/', usuario);
+  }
+
+  setAdmin(usuario: userModel): Observable<userModel> {
+    return this.http.post<userModel>('http://localhost:3000/api/usuarios/', usuario);
   }
 }
