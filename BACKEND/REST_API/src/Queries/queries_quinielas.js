@@ -1,6 +1,7 @@
 const get = "SELECT * FROM public.\"Quinielas\"";
 const getById = "SELECT * FROM public.\"Quinielas\" WHERE \"Id\" = $1";
 const getByname_torneo = "SELECT \"Id\", \"id_Usuario\", \"id_Partido\", \"id_Jugadores_goles_Eq1\", \"id_Jugadores_asistencias_Eq1\", \"id_Jugador_GOAT\", \"Goles_Eq1\", \"Goles_Eq2\", \"id_Jugadores_goles_Eq2\", \"id_Jugadores_asistencias_Eq2\", \"Autogoles_eq1\", \"Autogoles_eq2\" FROM public.\"Quinielas\" q inner join public.\"Partido\" p on q.\"id_Partido\" = p.\"ID\" WHERE p.\"Nombre_Torneo\" = $1";
+const getByname_usuario="SELECT \"Id\", \"id_Usuario\", \"id_Partido\", \"id_Jugadores_goles_Eq1\", \"id_Jugadores_asistencias_Eq1\", \"id_Jugador_GOAT\", \"Goles_Eq1\", \"Goles_Eq2\", \"id_Jugadores_goles_Eq2\", \"id_Jugadores_asistencias_Eq2\", \"Autogoles_eq1\", \"Autogoles_eq2\" FROM public.\"Quinielas\" q INNER JOIN public.\"Partido\" pt ON pt.\"ID\" = q.\"id_Partido\" INNER JOIN  public.\"Torneo\" tr ON tr.\"Nombre\" = pt.\"Nombre_Torneo\" WHERE q.\"id_Usuario\"=$1 AND tr.\"Nombre\"=$2;";
 const checkIdExists = "SELECT * FROM public.\"Quinielas\"  WHERE \"Id\" = $1";
 const add = "INSERT INTO public.\"Quinielas\" ( \"id_Usuario\",\"id_Partido\",\"id_Jugadores_goles_Eq1\",\"id_Jugadores_asistencias_Eq1\",\"id_Jugadores_goles_Eq2\",\"id_Jugadores_asistencias_Eq2\",\"Goles_Eq1\",\"Goles_Eq2\",\"Autogoles_eq1\",\"Autogoles_eq2\",\"id_Jugador_GOAT\") VALUES ($1,$2, $3, $4, $5, $6,$7,$8,$9,$10,$11)";
 const remove = "DELETE FROM public.\"Quinielas\" WHERE \"Id\" = $1";
@@ -14,4 +15,5 @@ module.exports = {
     remove,
     update,
     getByname_torneo,
+    getByname_usuario
 }

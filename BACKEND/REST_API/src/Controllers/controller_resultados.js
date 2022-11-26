@@ -1,5 +1,6 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_resultados');
+const validarRes = require("../../extra_f");
 
 const get = (req, res) => {
     pool.query(queries.get, (error, results) => {
@@ -25,10 +26,11 @@ const getByname_Torneo = (req, res) => {
 };
 
 const add = (req, res) => {
-    const { id_Usuario,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
+    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
     
-        pool.query(queries.add, [id_Usuario,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT], (error, results) => {
+        pool.query(queries.add, [id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT], (error, results) => {
             if(error) throw error;
+            validarRes.Calcular_puntos(id_Partido);
             res.status(201).send();
         });
     
@@ -51,7 +53,7 @@ const remove = (req, res) => {
 
 const update = (req, res) => {
     const id = parseInt(req.params.id);
-    const { id_Usuario,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
+    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
 
     pool.query(queries.getById, [id], (error, results) => {
         const notFound = !results.rows.length;
@@ -59,7 +61,7 @@ const update = (req, res) => {
             res.send("No existe en la base de datos");
             return;
         }
-        pool.query(queries.update, [id,id_Usuario,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT, id], (error, results) => {
+        pool.query(queries.update, [id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT, id], (error, results) => {
             if(error) throw error;
             res.status(200).send();
         });
