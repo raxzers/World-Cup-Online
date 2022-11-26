@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { fullUserModel } from 'src/app/MODELS/fullUserModel';
 import { gameModel } from 'src/app/MODELS/gameModel';
 import { jugador_asistencias_Model } from 'src/app/MODELS/jugador_asistencias_Model';
@@ -57,7 +58,7 @@ export class VQuinielaComponent implements OnInit {
 
 
 
-  constructor(public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public quinielaService: QuinielaService) { }
+  constructor(private toastr: ToastrService, public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public quinielaService: QuinielaService) { }
 
   ngOnInit(): void {
     this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { gameModel } from 'src/app/MODELS/gameModel';
 import { quinielaModel } from 'src/app/MODELS/quinielaModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
@@ -17,7 +17,44 @@ import { jugadorModel } from 'src/app/MODELS/jugadorModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
 import { resultadoModel } from 'src/app/MODELS/resultadoModel';
 import { fullUserModel } from 'src/app/MODELS/fullUserModel';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+
+
+
+
+
+
+// Dialogo de confirmación
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+@Component({
+  selector: 'dialogo-confirmacion',
+  templateUrl: 'dialogo-confirmacion.html',
+})
+export class DialogoConfirmacion {
+  constructor(
+    public dialogRef: MatDialogRef<DialogoConfirmacion>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  confirmacion() {
+    this.data.confirmar = 't';
+  }
+  no_confirmacion() {
+    this.data.confirmar = 'f';
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+export interface DialogData {
+  username: string;
+  confirmar: string;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
 @Component({
   selector: 'app-llenar-quiniela',
   templateUrl: './llenar-quiniela.component.html',
@@ -27,11 +64,12 @@ import { fullUserModel } from 'src/app/MODELS/fullUserModel';
 
 export class LlenarQuinielaComponent implements OnInit {
 
-  tipo_torneo: String = '';
   username: string = '';
   rol: string = '';
   user: fullUserModel = { ID: null, Fecha_Nacimiento: null, Nombre: null, Apellido1: null, Correo: null, Password: null, Rol: null, Username: null, Pais: null };
+  confirmar: string = 'f';
 
+  tipo_torneo: String = '';
   todos_los_jugadores_club: jugador_club_Model[] = [];
   todos_los_jugadores_seleccion: jugador_seleccion_Model[] = [];
 
@@ -94,7 +132,19 @@ export class LlenarQuinielaComponent implements OnInit {
   torneos: torneoModel[];
 
 
-  constructor(public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
+
+  constructor(public dialog: MatDialog, private toastr: ToastrService, public userService: UserService, public partidoService: GameService, public equipoService: TeamService, public torneoService: TorneoServiceService, public quinielaService: QuinielaService) { }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogoConfirmacion, {
+      width: '250px',
+      data: { username: this.username, confirmar: this.confirmar },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.confirmar = result;
+    });
+  }
 
   ngOnInit(): void {
     this.limpiar();
@@ -119,9 +169,6 @@ export class LlenarQuinielaComponent implements OnInit {
       this.user = data;
       this.id_Usuario = this.user[0].ID;
     });
-
-
-
   }
 
 
@@ -337,6 +384,7 @@ export class LlenarQuinielaComponent implements OnInit {
       this.Autogoles_eq1 = +autogoles;
     }
     else {
+      this.toastr.show("Cero autogoles para el equipo 1");
       this.Autogoles_eq1 = 0;
     }
   }
@@ -346,6 +394,7 @@ export class LlenarQuinielaComponent implements OnInit {
       this.Autogoles_eq2 = +autogoles;
     }
     else {
+      this.toastr.show("Cero autogoles para el equipo 2");
       this.Autogoles_eq2 = 0;
     }
   }
@@ -360,6 +409,8 @@ export class LlenarQuinielaComponent implements OnInit {
 
     for (let jugador of this.jugadores_goles_1) {
       if (jugador.goles <= 0) {
+        //this.toastr.warning("NO pueden haber cantidades negativas en los goles");
+        //this.toastr.show("Verifique la cantidad de goles para " + jugador.nombre);
       }
       else if (jugador.goles > 0) {
         goles_1 += jugador.goles;
@@ -370,6 +421,8 @@ export class LlenarQuinielaComponent implements OnInit {
 
     for (let jugador of this.jugadores_asistencias_1) {
       if (jugador.asistencias <= 0) {
+        //this.toastr.warning("NO pueden haber cantidades negativas en las asistencias");
+        //this.toastr.show("Verifique la cantidad de asistencias para " + jugador.nombre);
       }
       else if (jugador.asistencias > 0) {
         this.id_Jugadores_asistencias_Eq1.push(jugador.ID)
@@ -379,6 +432,8 @@ export class LlenarQuinielaComponent implements OnInit {
 
     for (let jugador of this.jugadores_goles_2) {
       if (jugador.goles <= 0) {
+        //this.toastr.warning("NO pueden haber cantidades negativas en los goles");
+        //this.toastr.show("Verifique la cantidad de goles para " + jugador.nombre);
       }
       else if (jugador.goles > 0) {
         goles_2 += jugador.goles;
@@ -389,6 +444,8 @@ export class LlenarQuinielaComponent implements OnInit {
 
     for (let jugador of this.jugadores_asistencias_2) {
       if (jugador.asistencias <= 0) {
+        //this.toastr.warning("NO pueden haber cantidades negativas en las asistencias");
+        //this.toastr.show("Verifique la cantidad de asistencias para " + jugador.nombre);
       }
       else if (jugador.asistencias > 0) {
         this.id_Jugadores_asistencias_Eq2.push(jugador.ID)
@@ -412,7 +469,9 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   enviar_datos() {
-    //this.confirmar_goleadores_asistencias();
+
+    //this.openDialog();
+
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
@@ -422,24 +481,41 @@ export class LlenarQuinielaComponent implements OnInit {
 
     if (this.rol == "admin") {
       let resultado_ = this.resultado;
-      if (resultado_.id_Partido == null || resultado_.id_Jugadores_goles_Eq1 == null || resultado_.id_Jugadores_asistencias_Eq1 == null || resultado_.id_Jugadores_goles_Eq2 == null || resultado_.id_Jugadores_asistencias_Eq2 == null || resultado_.Goles_Eq1 == null || resultado_.Goles_Eq2 == null || resultado_.Autogoles_eq1 == null || resultado_.Autogoles_eq2 == null || resultado_.id_Jugador_GOAT == null) {
-        console.log('resultado incompleto')
+      if (resultado_.id_Partido == null) {
+        this.toastr.warning("Debe elegir un partido");
       }
       else {
-        this.quinielaService.guardarResultado(resultado_).subscribe(data => { })
+        if (resultado_.id_Jugador_GOAT == null) {
+          this.toastr.warning("Debe elegir al mejor jugador");
+        }
+        else {
+          this.quinielaService.guardarResultado(resultado_).subscribe(data => { })
+          this.toastr.success("Resultado OFICIAL guardado");
+        }
       }
+
     }
     else if (this.rol == "user") {
       let quiniela_ = this.quiniela;
-      if (quiniela_.id_Usuario == null || quiniela_.id_Partido == null || quiniela_.id_Jugadores_goles_Eq1 == null || quiniela_.id_Jugadores_asistencias_Eq1 == null || quiniela_.id_Jugadores_goles_Eq2 == null || quiniela_.id_Jugadores_asistencias_Eq2 == null || quiniela_.Goles_Eq1 == null || quiniela_.Goles_Eq2 == null || quiniela_.Autogoles_eq1 == null || quiniela_.Autogoles_eq2 == null || quiniela_.id_Jugador_GOAT == null) {
-        console.log('quiniela incompleta')
+      if (quiniela_.id_Partido == null) {
+        this.toastr.warning("Debe elegir un partido para hacer el pronostico");
       }
       else {
-        this.quinielaService.guardarQuiniela(quiniela_).subscribe(data => { })
+        if (quiniela_.id_Jugador_GOAT == null) {
+          this.toastr.warning("Debe elegir al mejor jugador");
+        }
+        else {
+          this.quinielaService.guardarQuiniela(quiniela_).subscribe(data => { })
+          if ((quiniela_.Goles_Eq1 == 0) && (quiniela_.Goles_Eq2 == 0)) {
+            this.toastr.success("Su quiniela se envió a la X-FIFA");
+            this.toastr.show("Partido termina con empate a 0");
+          }
+          else { this.toastr.success("Su quiniela se envió a la X-FIFA"); }
+        }
       }
     }
     else {
-      console.log('No se conoce el rol del usuario')
+      this.toastr.warning('No se conoce el rol del usuario');
     }
     this.limpiar();
   }
@@ -453,4 +529,5 @@ export class LlenarQuinielaComponent implements OnInit {
     this.resultado = { id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq2, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.resultado;
   }
+
 }

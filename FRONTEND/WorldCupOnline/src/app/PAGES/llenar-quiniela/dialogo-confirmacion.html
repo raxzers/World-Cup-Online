@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Hola {{data.username}}</h1>
+<div mat-dialog-content>
+    <p>¿Seguro de registrar el resultado en la X-FIFA?</p>
+</div>
+<div>
+    <mat-dialog-actions>
+        <button mat-button (click)="confirmacion();" (click)="onNoClick()">SI</button>
+        <button mat-button (click)="no_confirmacion();" (click)="onNoClick()">NO</button>
+    </mat-dialog-actions>
+</div>

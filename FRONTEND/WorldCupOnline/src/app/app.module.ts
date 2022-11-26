@@ -29,7 +29,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
 import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
-import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
+import { DialogoConfirmacion, LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 import { RegisterComponent } from './PAGES/register/register/register.component';
 import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
 import { CommunityComponent } from './PAGES/community/community/community.component';
@@ -58,6 +58,7 @@ import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-result
     ClientNavbarComponent,
     PopUpComponent,
     CommunityComponent,
+    DialogoConfirmacion
   ],
   imports: [
     BrowserModule,
