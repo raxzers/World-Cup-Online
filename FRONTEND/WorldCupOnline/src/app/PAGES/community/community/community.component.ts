@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { comunidadModel } from 'src/app/MODELS/comunidadModel';
-import { communityGetModel } from 'src/app/MODELS/getComunityModel';
+import { communityGetModel, joinCommModel } from 'src/app/MODELS/getComunityModel';
 import { teamModel } from 'src/app/MODELS/teamModel';
 import { torneoModel } from 'src/app/MODELS/torneoModel';
 import { ComunidadService } from 'src/app/SERVICES/comunidad/comunidad.service';
@@ -14,27 +14,45 @@ import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.ser
   styleUrls: ['./community.component.scss']
 })
 export class CommunityComponent implements OnInit {
-  guardarLiga:FormGroup;
-  ingresarComunidad:FormGroup;
+  guardarLiga: FormGroup;
+  ingresarComunidad: FormGroup;
   arrayEquipos: any[];
-  arrayComunidades:any[];
-  torneos:any[];
-  comunidades:any[];
-  constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService, private comunidadService:ComunidadService, private toastr:ToastrService) { }
-  
+  arrayComunidades: any[];
+  torneos: any[];
+  comunidades: any[];
+  nombreTorneoCondicion: boolean = false;
+
+  constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService, private comunidadService: ComunidadService, private toastr: ToastrService) { }
+
   ngOnInit(): void {
-    this.torneos=[];
-    this.comunidades=[];
-    this.arrayEquipos=[];
-    this.arrayComunidades=[];
-    this.guardarLiga= this.formBuilder.group({
+    this.torneos = [];
+    this.comunidades = [];
+    this.arrayEquipos = [];
+    this.arrayComunidades = [];
+    this.guardarLiga = this.formBuilder.group({
       nombreComunidad: ['', [Validators.required]]
     })
-    this.ingresarComunidad= this.formBuilder.group({
+    this.ingresarComunidad = this.formBuilder.group({
       codigoControl: ['', [Validators.required]]
     })
     this.obtenerNombresTorneos();
     this.obtenerComunidades();
+  }
+  unirseComunidad() {
+    var usuario = localStorage.getItem('usuario');
+    var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
+    console.log(usuario);
+    const comunidad:  joinCommModel ={
+      COD_Invita: this.ingresarComunidad.get('codigoControl').value,
+      Usuario: usuario,
+    }
+    console.log(comunidad);
+    this.comunidadService.unirseComunidad(comunidad).subscribe(data => {
+      this.toastr.warning(JSON.stringify(data));
+      if (JSON.stringify(data) == 'null') {
+        this.toastr.success('Se ha unido a la comunidad', 'Agregada Exitosamente');
+      }
+    })
   }
   obtenerNombresTorneos() {
     this.torneos = [];
@@ -60,23 +78,37 @@ export class CommunityComponent implements OnInit {
 
     });
   }
-  guardarComunidad(){
-    var usuario=localStorage.getItem('usuario');
-    var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
-    console.log(usuario);
-    const comunidad:comunidadModel={
-      NombreComunidad:this.guardarLiga.get('nombreComunidad').value,
-      Usuario:usuario,
-      NombreTorneo:torneo.value,
-    }
-    console.log(comunidad);
-    this.comunidadService.guardarComunidad(comunidad).subscribe(data => {
-      this.toastr.warning(JSON.stringify(data));
-      if(JSON.stringify(data)=='null'){
-        this.toastr.success('Usuario Registrado', 'Agregado Exitosamente');
-      }
-    })
 
+  verificarNombreComunidad() {
+    console.log(this.guardarLiga.get('nombreComunidad').value)
+    if (this.guardarLiga.get('nombreComunidad').value == '') {
+      console.log(this.guardarLiga.get('nombreComunidad').value);
+      return true;
+    } else {
+      console.log(this.guardarLiga.get('nombreComunidad').value);
+      return false;
+    }
+  }
+  guardarComunidad() {
+    if (this.verificarNombreComunidad() == false) {
+      var usuario = localStorage.getItem('usuario');
+      var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
+      console.log(usuario);
+      const comunidad: comunidadModel = {
+        NombreComunidad: this.guardarLiga.get('nombreComunidad').value,
+        Usuario: usuario,
+        NombreTorneo: torneo.value,
+      }
+      console.log(comunidad);
+      this.comunidadService.guardarComunidad(comunidad).subscribe(data => {
+        this.toastr.warning(JSON.stringify(data));
+        if (JSON.stringify(data) == 'null') {
+          this.toastr.success('Comunidad Creada', 'Agregada Exitosamente');
+        }
+      })
+    } else {
+      this.toastr.warning('Favor Completar Datos', 'La comunidad necesita un nombre');
+    }
   }
 
 }

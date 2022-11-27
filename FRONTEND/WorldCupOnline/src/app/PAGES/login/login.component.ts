@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       Password: password,
     }
     this.userService.login(usuario).subscribe(data => {
-      localStorage.setItem('usuario',usuario.Username.toString());
+      localStorage.setItem('usuario',user);
       localStorage.setItem('rol',JSON.stringify(data));
      
       this.toastr.warning(JSON.stringify(data));

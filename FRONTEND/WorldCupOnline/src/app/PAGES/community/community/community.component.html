@@ -18,8 +18,8 @@
                 Crear comunidad
             </h2>
             <div style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
-                <select formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
-                <option [value]='torneo' *ngFor="let torneo of torneos">{{torneo}}</option>
+                <select formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;" >
+                <option  [value]='torneo' *ngFor="let torneo of torneos">{{torneo}}</option>
               </select>
             </div>
             
@@ -33,7 +33,7 @@
                 </div>
                 <div class="column">
                     <div>
-                        <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarComunidad()">Crear Comunidad</button>
+                        <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarComunidad()" >Crear Comunidad</button>
                     </div>
                 </div>
             </form>
@@ -44,8 +44,8 @@
                 Comunidades
             </h2>
             <div style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
-                <select formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
-                <option [value]='torneo' *ngFor="let torneo of comunidades">{{torneo}}</option>
+                <select   formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
+                <option (click)="obtenerComunidades()" [value]='torneo' *ngFor="let torneo of comunidades">{{torneo}}</option>
               </select>
             </div>
             <form [formGroup]="ingresarComunidad" class="select">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="column">
                     <div>
-                        <button class="button1 btn-sucess btn-lg btn-block" >Unirse a la comunidad</button>
+                        <button  (click)="unirseComunidad();obtenerComunidades()" class="button1 btn-sucess btn-lg btn-block" >Unirse a la comunidad</button>
                     </div>
                 </div>
             </form>

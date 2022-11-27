@@ -3,3 +3,7 @@ export interface communityGetModel {
     Nombre: string;
     COD_Invita:string;
 }
+export interface joinCommModel {
+    Usuario: string;
+    COD_Invita:string;
+}

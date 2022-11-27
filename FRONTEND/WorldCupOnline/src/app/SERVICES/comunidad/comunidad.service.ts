@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { comunidadModel } from 'src/app/MODELS/comunidadModel';
-import { communityGetModel } from 'src/app/MODELS/getComunityModel';
+import { communityGetModel, joinCommModel } from 'src/app/MODELS/getComunityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,7 @@ export class ComunidadService {
   guardarComunidad(comunidad: comunidadModel): Observable<comunidadModel> {
     return this.http.post<comunidadModel>('http://localhost:3000/api/comunidad_privada/', comunidad);
   }
-  
+  unirseComunidad(comu): Observable<joinCommModel> {
+    return this.http.post<joinCommModel>('http://localhost:3000/api/ranking_privado/', comu);
+  }
 }
