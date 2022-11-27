@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { rankingModel } from 'src/app/MODELS/rankingModel';
 import { RankingService } from 'src/app/SERVICES/ranking/ranking.service';
+import { UserService } from 'src/app/SERVICES/user/user.service';
 
 @Component({
   selector: 'app-v-ranking',
@@ -11,6 +12,7 @@ export class VRankingComponent implements OnInit {
   rankingNames: any[];
   arrayRankTorneos:any[];
   torneosBueno:any[];
+  rol: string;
   torneos:string[]=['Torneo 1','Torneo 2','Torneo 3','Torneo 4'];
 
   x: rankingModel[] = [
@@ -23,13 +25,22 @@ export class VRankingComponent implements OnInit {
   ];
   
 
-  constructor( private rankingService: RankingService) { }
+  constructor( private rankingService: RankingService, private userService:UserService) { }
 
   ngOnInit(): void {
+    this.rol='';
     this.rankingNames=[];
     this.torneosBueno=[];
     this.obtenerClub();
+    if (this.userService.getRol() == '"admin"') {
+      this.rol = "admin"
+    } else {
+      this.rol = 'user'
+    }
+
+    console.log(this.rol)
   }
+
   obtenerClub() {
     this.rankingNames = [];
     this.rankingService.obtenerRankings().then(data => {

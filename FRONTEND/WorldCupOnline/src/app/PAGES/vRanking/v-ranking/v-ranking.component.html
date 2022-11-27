@@ -1,4 +1,10 @@
-<app-navbar></app-navbar>
+<div *ngIf='rol=="admin"'>
+  <app-navbar></app-navbar>
+</div>
+<div *ngIf="rol=='user'">
+  <app-client-navbar></app-client-navbar>
+</div>
+
 <mat-tab-group>
     <mat-tab  *ngFor="let item of torneosBueno; let i=index" label="{{item.Nombre}}" > 
       <mat-grid-list cols="3" rowHeight="3:1" >
