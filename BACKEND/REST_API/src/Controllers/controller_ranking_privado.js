@@ -16,6 +16,13 @@ const getById = (req, res) => {
     });
 };
 
+const getByComunidad = (req, res) => {
+    pool.query(queries.getbycomunidad, (error, results) => {
+        if(error) throw error;
+        res.status(200).json(results.rows);
+    });
+};
+
 const add = (req, res) => {
     const {Usuario,COD_Invita } = req.body;
         pool.query(queries.add, [Usuario,COD_Invita], (error, results) => {
@@ -59,6 +66,7 @@ const update = (req, res) => {
 module.exports = {
     get,
     getById,
+    getByComunidad,
     add,
     remove,
     update,
