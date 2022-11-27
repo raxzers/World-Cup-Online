@@ -46,6 +46,17 @@ const add = (req, res) => {
                         if(!encriptar.filterAlpha(Password)){
                             pool.query(queries.add, [Fecha_Nacimiento,Nombre,Apellido1,Correo,n_Pass,Username,Pais], (error, results) => {
                                 if(error) throw error;
+                                /*obtiene el nuevo usuario  */
+                                pool.query("SELECT \"ID\" FROM public.\"Usuarios\" WHERE \"ID\" = (SELECT MAX(\"ID\") FROM public.\"Usuarios\");",(error, user_actual)=>{
+                                    pool.query("SELECT \"ID\" FROM public.\"Torneo\";", (error, Torneo) => {
+                                        if(error) throw error;
+                                        for (let i = 0; i < Torneo.rowCount; i++) {
+                                        pool.query(queries_ranking.add, [Torneo.rows[i].ID,user_actual.rows[0].ID,0], (error, results) => {
+                                            if(error) throw error;
+        
+                                        });}
+                                    });
+                                });
                                 res.status(201).send();
                             });
                         }

@@ -67,8 +67,14 @@ const add = (req, res) => {
                                         console.log('Agrego Fase');}
                                 });
                             }
-                            pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
+                            /*codigo que agrega los usuario an a torneo */
+                            pool.query("SELECT \"ID\" FROM public.\"Usuarios\";", (error, users) => {
                                 if(error) throw error;
+                                for (let i = 0; i < users.rowCount; i++) {
+                                pool.query(queries_ranking.add, [ID,users.rows[i].ID,0], (error, results) => {
+                                    if(error) throw error;
+
+                                });}
                             });
                             res.status(201).json("Torneo Agregado Exitosamente");
                         });
