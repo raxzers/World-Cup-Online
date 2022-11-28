@@ -401,7 +401,7 @@ export class LlenarQuinielaComponent implements OnInit {
   }
 
   confirmar_goleadores_asistencias() {//CUIDADO CUANDO SE USA COMO ADMINISTRADOR 
-   // this.rol = this.userService.getRol().toString();
+    // this.rol = this.userService.getRol().toString();
     this.goleadores = [];
     this.asistencias = [];
     this.Goles_Eq2 = 0;
@@ -473,7 +473,7 @@ export class LlenarQuinielaComponent implements OnInit {
   enviar_datos() {
 
     //this.openDialog();
-   //// this.rol = this.userService.getRol().toString();
+    //// this.rol = this.userService.getRol().toString();
 
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
