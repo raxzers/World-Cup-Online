@@ -22,8 +22,10 @@ async function Calcular_puntos(id_partido) {
 
           
   for (let i = 0; i < res_quiniela.rowCount; i++) {
+
+    const res_usuario = await pool.query("SELECT * FROM public.\"Ranking\" WHERE \"id_Usuario\" = $1 AND \"id_Torneo\" = $2",[res_quiniela.rows[i].id_Usuario,res_torneo.rows[0].ID]);
     //console.log("entra for resultados");
-    let puntos =0;
+    let puntos = res_usuario.rows[0].Puntaje;
 
     /*comparcion */
     if(res_quiniela.rows[i].Goles_Eq1===res_resultados.rows[0].Goles_Eq1){
