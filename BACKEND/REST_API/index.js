@@ -1,6 +1,8 @@
 const express = require("express");
 const rankingRoutes = require('./src/Routes/routes_ranking');
+const rankingPrivRoutes = require('./src/Routes/routes_ranking_privado');
 const clubesRoutes = require('./src/Routes/routes_clubes');
+const comunidadRoutes = require('./src/Routes/routes_comunidad_privada');
 const jugadores_clubRoutes = require('./src/Routes/routes_jugadores_club');
 const jugadores_seleccionRoutes = require('./src/Routes/routes_jugadores_seleccion');
 const partidoRoutes = require('./src/Routes/routes_partido');
@@ -11,6 +13,7 @@ const torneo_faseRoutes = require('./src/Routes/routes_torneo_fase');
 const torneo_sedeRoutes = require('./src/Routes/routes_torneo_sede');
 const usuarios = require('./src/Routes/routes_usuarios');
 const quinielas = require('./src/Routes/routes_quinielas');
+const resultados= require('./src/Routes/routes_resultados');
 const paises_fifa = require('./src/Routes/routes_paises_fifa');
 
 const app = express();
@@ -45,6 +48,9 @@ app.use((req, res, next) => {
   app.use('/api/usuarios', usuarios );
   app.use('/api/quinielas', quinielas );
   app.use('/api/paises_fifa', paises_fifa );
+  app.use ('/api/comunidad_privada',comunidadRoutes);
+  app.use ('/api/ranking_privado',rankingPrivRoutes);
+  app.use('/api/resultados',resultados);
 
 app.listen(port, () => console.log(`listening on port ${port}`));
 
