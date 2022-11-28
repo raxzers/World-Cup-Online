@@ -11,111 +11,119 @@ function cadenaAleatoria() {
 async function Calcular_puntos(id_partido) { 
   /trae la tabla resultado oficial/
   
-  
-  
-  const valor = await pool.query("SELECT * FROM public.\"Resultados\" WHERE \"id_Partido\" = $1",[id_partido], (error, resultsRes) => {
-    /trae las quinielas de ese partido/
-    pool.query("SELECT * FROM public.\"Quinielas\" WHERE \"id_Partido\" = $1",[id_partido], (error, resultsQui) => {
-      console.log("entra idpartido");
-      /* obtner nombre torneo*/
-      pool.query("SELECT \"Nombre_Torneo\" FROM public.\"Partido\" WHERE \"ID\" = $1",[id_partido], (error, n_torneo) => {
-        console.log("entra nombretorneo");
-        /* obtner id de torneo */
-        pool.query("SELECT \"ID\" FROM public.\"Torneo\" WHERE \"Nombre\" = $1",[n_torneo.rows[0].Nombre_Torneo], (error, ID_torneo) => {
-          console.log("entra puntajes");
-          /*ciclo para puntaje */
-          for (let i = 0; i < resultsQui.rowCount; i++) {
-            console.log("entra for resultados");
-            let puntos =0;
+  const res_resultados = await pool.query("SELECT * FROM public.\"Resultados\" WHERE \"id_Partido\" = $1",[id_partido]);
+  const res_quiniela = await pool.query("SELECT * FROM public.\"Quinielas\" WHERE \"id_Partido\" = $1",[id_partido]);
+  const res_partido = await pool.query("SELECT \"Nombre_Torneo\" FROM public.\"Partido\" WHERE \"ID\" = $1",[id_partido]);
+  const res_torneo = await pool.query("SELECT \"ID\" FROM public.\"Torneo\" WHERE \"Nombre\" = $1",[res_partido.rows[0].Nombre_Torneo]);
+  //console.log(res_resultados.rows);
+  //console.log(res_quiniela.rows);
+  //console.log(res_partido.rows);
+  //console.log(res_torneo.rows);
 
-            /*comparcion */
-            if(resultsQui.rows[i].Goles_Eq1===resultsRes.rows[0].Goles_Eq1){
-              console.log("entra if goles 1");
-              puntos +=1;
-            }
-            if(resultsQui.rows[i].Goles_Eq2===resultsRes.rows[0].Goles_Eq2){
-              console.log("entra if goles 2");
-              puntos +=1;
-            }
-            if(resultsQui.rows[i].id_Jugador_GOAT===resultsRes.rows[0].id_Jugador_GOAT){
-              console.log("entra if mvp");
-              puntos +=1;
-
-            }
-            if(resultsQui.rows[i].Autogoles_eq1===resultsRes.rows[0].Autogoles_eq1){
-              console.log("entra if autogoles1");
-              puntos +=1;
-            }
-            if(resultsQui.rows[i].Autogoles_eq2===resultsRes.rows[0].Autogoles_eq2){
-              console.log("entra if autogoles2");
-              puntos +=1;
-            }
-            //comparar lista goleadores
-            //console.log(puntos);
-            if(resultsQui.rows[i].id_Jugadores_goles_Eq1.length>0 && resultsRes.rows[0].id_Jugadores_goles_Eq1.length>0){
-              for (let k = 0; k < resultsRes.rows[0].id_Jugadores_goles_Eq1.length; k++){
-                for (let j = 0; i < resultsQui.rows[i].id_Jugadores_goles_Eq1.length; j++){
-                  if(resultsQui.rows[i].id_Jugadores_goles_Eq1[j]===resultsRes.rows[0].id_Jugadores_goles_Eq1[k]){
-                    puntos +=1;
-                    console.log("entra a puntos 1");
-                    break;
-                  }
-                }
-              }
-            }
-            if(resultsQui.rows[i].id_Jugadores_goles_Eq2.length>0 && resultsRes.rows[0].id_Jugadores_goles_Eq2.length>0){
-              for (let k = 0; k < resultsRes.rows[0].id_Jugadores_goles_Eq2.length; k++){
-                for (let j = 0; i < resultsQui.rows[i].id_Jugadores_goles_Eq2.length; j++){
-                  if(resultsQui.rows[i].id_Jugadores_goles_Eq2[j]===resultsRes.rows[0].id_Jugadores_goles_Eq2[k]){
-                    puntos +=1;
-                    //console.log(puntos);
-                    console.log("entra a puntos 2");
-                    break;
-                  }
-                }
-              }
-            }
-            if(resultsQui.rows[i].id_Jugadores_asistencias_Eq1.length>0 && resultsRes.rows[0].id_Jugadores_asistencias_Eq1.length>0 ){
-              for (let k = 0; k < resultsRes.rows[0].id_Jugadores_asistencias_Eq1.length; k++){
-                for (let j = 0; i < resultsQui.rows[i].id_Jugadores_asistencias_Eq1.length; j++){
-                  if(resultsQui.rows[i].id_Jugadores_asistencias_Eq1[j] === resultsRes.rows[0].id_Jugadores_asistencias_Eq1[k]){
-                    puntos +=1;
-                    //console.log(puntos);
-                    console.log("entra a puntos 3");
-                    break;
-                  }
-                }
-              }
-            }
-            if(resultsQui.rows[i].id_Jugadores_asistencias_Eq2.length>0  && resultsRes.rows[0].id_Jugadores_asistencias_Eq2.length>0 ){
-              for (let k = 0; k < resultsRes.rows[0].id_Jugadores_asistencias_Eq2.length; k++){
-                for (let j = 0; i < resultsQui.rows[i].id_Jugadores_asistencias_Eq2.length; j++){
-                  if(resultsQui.rows[i].id_Jugadores_asistencias_Eq2[j]===resultsRes.rows[0].id_Jugadores_asistencias_Eq2[k]){
-                    puntos +=1;
-                    //console.log(puntos);
-                    console.log("entra a puntos 4");
-                    break;
-                  }
-                }
-              }
-            }
-            
-            pool.query("UPDATE public.\"Ranking\" SET \"Puntaje\"= $1 WHERE \"id_Usuario\" = $2 AND \"id_Torneo\"= $3",[puntos,resultsQui.rows[i].id_Usuario,ID_torneo.rows[0].ID], (error, res1) => {
-              if (error) console.log("ERROR");;
-                /* actualizacion */
-              console.log("datos");
-              console.log(puntos);
-              console.log(resultsQui.rows[i].id_Usuario);
-              console.log(ID_torneo.rows[0].ID);
-            });
-
-          }
           
-        });
-      });
-    });
+  for (let i = 0; i < res_quiniela.rowCount; i++) {
+    //console.log("entra for resultados");
+    let puntos =0;
+
+    /*comparcion */
+    if(res_quiniela.rows[i].Goles_Eq1===res_resultados.rows[0].Goles_Eq1){
+      //console.log("entra if goles 1");
+      puntos +=1;
+    }
+    if(res_quiniela.rows[i].Goles_Eq2===res_resultados.rows[0].Goles_Eq2){
+      //console.log("entra if goles 2");
+      puntos +=1;
+    }
+    if(res_quiniela.rows[i].id_Jugador_GOAT===res_resultados.rows[0].id_Jugador_GOAT){
+      //console.log("entra if mvp");
+      puntos +=1;
+
+    }
+    if(res_quiniela.rows[i].Autogoles_eq1===res_resultados.rows[0].Autogoles_eq1){
+      //console.log("entra if autogoles1");
+      puntos +=1;
+    }
+    if(res_quiniela.rows[i].Autogoles_eq2===res_resultados.rows[0].Autogoles_eq2){
+      //console.log("entra if autogoles2");
+      puntos +=1;
+    }
+    //comparar lista goleadores
+    //console.log(puntos);
+    //console.log("Cnt 1");
+    if(res_quiniela.rows[i].id_Jugadores_goles_Eq1.length>0 && res_resultados.rows[0].id_Jugadores_goles_Eq1.length>0){
+      //console.log("Cnt 2");
+      for (let k = 0; k < res_resultados.rows[0].id_Jugadores_goles_Eq1.length; k++){
+        //console.log("Cnt 3");
+        for (let j = 0; j < res_quiniela.rows[i].id_Jugadores_goles_Eq1.length; j++){
+          //console.log("Cnt 4");
+          if(res_quiniela.rows[i].id_Jugadores_goles_Eq1[j]===res_resultados.rows[0].id_Jugadores_goles_Eq1[k]){
+            puntos +=1;
+            console.log("entra a puntos 5");
+            break;
+          }
+        }
+      }
+    }
+    //console.log("Cnt 6");
+    if(res_quiniela.rows[i].id_Jugadores_goles_Eq2.length>0 && res_resultados.rows[0].id_Jugadores_goles_Eq2.length>0){
+      //console.log("Cnt 7");
+      for (let k = 0; k < res_resultados.rows[0].id_Jugadores_goles_Eq2.length; k++){
+        //console.log("Cnt 8");
+        for (let j = 0; j < res_quiniela.rows[i].id_Jugadores_goles_Eq2.length; j++){
+          //console.log("Cnt 9");
+          if(res_quiniela.rows[i].id_Jugadores_goles_Eq2[j]===res_resultados.rows[0].id_Jugadores_goles_Eq2[k]){
+            puntos +=1;
+            //console.log(puntos);
+            console.log("entra a puntos 2");
+            break;
+          }
+        }
+      }
+    }
+    //console.log("Cnt 10");
+    if(res_quiniela.rows[i].id_Jugadores_asistencias_Eq1.length>0 && res_resultados.rows[0].id_Jugadores_asistencias_Eq1.length>0 ){
+      //console.log("Cnt 11");
+      for (let k = 0; k < res_resultados.rows[0].id_Jugadores_asistencias_Eq1.length; k++){
+        //console.log("Cnt 12");
+        for (let j = 0; j < res_quiniela.rows[i].id_Jugadores_asistencias_Eq1.length; j++){
+          //console.log("Cnt 13");
+          if(res_quiniela.rows[i].id_Jugadores_asistencias_Eq1[j] === res_resultados.rows[0].id_Jugadores_asistencias_Eq1[k]){
+            puntos +=1;
+            //console.log(puntos);
+            console.log("entra a puntos 3");
+            break;
+          }
+        }
+      }
+    }
+    //console.log("Cnt 14");
+    if(res_quiniela.rows[i].id_Jugadores_asistencias_Eq2.length>0  && res_resultados.rows[0].id_Jugadores_asistencias_Eq2.length>0 ){
+      //console.log("Cnt 15");
+      for (let k = 0; k < res_resultados.rows[0].id_Jugadores_asistencias_Eq2.length; k++){
+        //console.log("Cnt 16");
+        for (let j = 0; j < res_quiniela.rows[i].id_Jugadores_asistencias_Eq2.length; j++){
+          //console.log("Cnt 17");
+          if(res_quiniela.rows[i].id_Jugadores_asistencias_Eq2[j]===res_resultados.rows[0].id_Jugadores_asistencias_Eq2[k]){
+            puntos +=1;
+            //console.log(puntos);
+            console.log("entra a puntos 4");
+            break;
+          }
+        }
+      }
+    }
     
-  });
+    pool.query("UPDATE public.\"Ranking\" SET \"Puntaje\"= $1 WHERE \"id_Usuario\" = $2 AND \"id_Torneo\"= $3",[puntos,res_quiniela.rows[i].id_Usuario,res_torneo.rows[0].ID], (error, res1) => {
+      if (error) console.log("ERROR");;
+        /* actualizacion */
+      console.log("datos");
+      console.log(puntos);
+      console.log(res_quiniela.rows[i].id_Usuario);
+      console.log(res_torneo.rows[0].ID);
+    });
+
+  }
+  
   
   return 201;
   
