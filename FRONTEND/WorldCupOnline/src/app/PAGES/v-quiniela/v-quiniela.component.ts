@@ -19,6 +19,8 @@ import { UserService } from 'src/app/SERVICES/user/user.service';
 })
 export class VQuinielaComponent implements OnInit {
 
+  encuentros: string[] = [];
+
   goleadoresColumns: string[] = ['nombre', 'goles'];
   asistenciasColumns: string[] = ['nombre', 'asistencias'];
 
@@ -81,6 +83,7 @@ export class VQuinielaComponent implements OnInit {
 
     this.quinielas_torneo_usuario = [];
     this.quinielas_torneo = [];
+    this.encuentros = [];
     //let quiniela_aux: quinielaModel = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
     //let quiniela_aux: quinielaModel[];
     this.quinielaService.getQuinielasByTorneo(torneo).subscribe((data: quinielaModel[]) => {
@@ -99,12 +102,14 @@ export class VQuinielaComponent implements OnInit {
 
   add_quiniela_por_usuario(quiniela: quinielaModel) {
     this.quinielas_torneo_usuario.push(quiniela);
-    //console.log(quiniela)
+    this.set_encuentros(quiniela.id_Partido);
   }
+
 
   lista_quinielas_torneo_usuario(torneo: string, id_Usuario: number) {
     this.quinielas_torneo_usuario = [];
     let quiniela_aux: quinielaModel[];
+    this.encuentros = [];
     let get_quiniela: quiniela_torneo_usuario_Model = { torneo: torneo, id_Usuario: id_Usuario.toString() };
 
     this.quinielaService.get_quinielas_torneo_usuario(get_quiniela).subscribe((data: quinielaModel[]) => {
@@ -130,14 +135,59 @@ export class VQuinielaComponent implements OnInit {
     this.Autogoles_eq2 = quiniela.Autogoles_eq2;
   }
 
-  partido_quinela(id: number) {
+  partido_quinela(id_partido: number) {
     let partido_quiniela: gameModel;
-    this.partidoService.partido_por_id(id).subscribe((data: gameModel) => {
+    this.partidoService.partido_por_id(id_partido).subscribe((data: gameModel) => {
       partido_quiniela = data as gameModel;
       this.set_partido(partido_quiniela)
 
     });
   }
+
+
+
+
+  agregar_encuentro(Eq1: string, Eq2: string) {
+    this.encuentros.push(Eq1 + ' vs ' + Eq2);
+  }
+
+  set_encuentros(id_partido: number) {
+
+    let partido_quiniela: gameModel;
+    this.partidoService.partido_por_id(id_partido).subscribe((data: gameModel) => {
+      partido_quiniela = data as gameModel;
+      this.agregar_encuentro(partido_quiniela[0].Equipo_1, partido_quiniela[0].Equipo_2)
+    });
+
+
+
+    /*
+    
+        this.selecciones = [];
+        this.clubes = [];
+        let club: string = '';
+    
+        this.equipoService.obtenerClubs_Id(id_Eq1).subscribe((data: string) => {
+          club = data as string;
+        });
+    
+        this.equipoService.obtenerClubs_Id(id_Eq2).subscribe((data: string) => {
+          club = data as string;
+        });
+    
+        this.equipoService.obtenerSelecciones_Id(id_Eq1).subscribe((data: string) => {
+          seleccion = data as string;
+        });
+    
+        this.equipoService.obtenerSelecciones_Id(id_Eq2).subscribe((data: string) => {
+          seleccion = data as string;
+        });
+    
+        */
+  }
+
+
+
 
   set_partido(partido: gameModel) {
 

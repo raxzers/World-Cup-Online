@@ -159,7 +159,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
     this.username = this.userService.getUsername();
 
-    if (this.userService.getRol() == "admin") {
+    if (this.userService.getRol() == '"admin"') {
       this.rol = 'admin'
     } else {
       this.rol = 'user'
@@ -461,7 +461,7 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Equipo_2 = this.Goles_Eq2;
 
-    if (this.rol == '"admin"') {
+    if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
     else if (this.rol == "user") {
@@ -475,7 +475,7 @@ export class LlenarQuinielaComponent implements OnInit {
     //this.openDialog();
     this.rol = this.userService.getRol().toString();
 
-    if (this.rol == '"admin"') {
+    if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
     else if (this.rol == "user") {
@@ -484,7 +484,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
     console.log(this.rol)
 
-    if (this.rol == '"admin"') {
+    if (this.rol == "admin") {
       let resultado_ = this.resultado;
       if (resultado_.id_Partido == null) {
         this.toastr.warning("Debe elegir un partido");

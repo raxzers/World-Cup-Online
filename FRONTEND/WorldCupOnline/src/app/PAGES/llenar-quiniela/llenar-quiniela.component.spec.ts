@@ -10,10 +10,10 @@ describe('LlenarQuinielaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LlenarQuinielaComponent ],
-      imports:[HttpClientModule, ToastrModule.forRoot()]
+      declarations: [LlenarQuinielaComponent],
+      imports: [HttpClientModule, ToastrModule.forRoot()]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LlenarQuinielaComponent);
     component = fixture.componentInstance;
@@ -23,4 +23,18 @@ describe('LlenarQuinielaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  /*
+    it('validar que la cantidad de torneos sea mayor a cero', () => {
+      const lista = component.torneox;
+      expect(Boolean(lista.length)).toBe(true);
+    });
+  
+    it('validar un formControl', () => {
+      const email = component.testForm.controls['testControl']
+      email.setValue('usuario@correo.com')
+      expect(component.testForm.invalid).toBeTrue();
+    });
+    */
 });
