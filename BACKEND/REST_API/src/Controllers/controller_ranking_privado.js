@@ -26,10 +26,11 @@ const getByComunidad = (req, res) => {
 
 const add = (req, res) => {
     const {Usuario,COD_Invita } = req.body;
-        pool.query(queries.add, [Usuario,COD_Invita], (error, results) => {
-            if(error) throw error;
-            res.status(201).send();
-        });
+    if(Usuario == null) res.status(400).json("Error");
+    pool.query(queries.add, [Usuario,COD_Invita], (error, results) => {
+        if(error) throw error;
+        res.status(201).send();
+    });
     
 };
 

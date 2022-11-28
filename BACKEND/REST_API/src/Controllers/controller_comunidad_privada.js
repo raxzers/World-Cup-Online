@@ -21,6 +21,7 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { NombreComunidad,NombreTorneo,Usuario } = req.body;
+    if(NombreComunidad == null) res.status(400).json("Error");
     const COD_Invita=cadenaAleatoria.cadenaAleatoria();
         
             //if(error) {throw error;}
