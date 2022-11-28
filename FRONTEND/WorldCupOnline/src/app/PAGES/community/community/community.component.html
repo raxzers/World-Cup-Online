@@ -17,12 +17,14 @@
             <h2 style="color: black;" class="text-center">
                 Crear comunidad
             </h2>
-            <div style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
-                <select formControlName="torneoControl" id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
-                <option [value]='torneo' *ngFor="let torneo of torneos">{{torneo}}</option>
-              </select>
+            <div
+                style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
+                <select  id="torneos"
+                    style="margin-left: auto;margin-right: auto; vertical-align: middle;">
+                    <option [value]='torneo' *ngFor="let torneo of torneos">{{torneo}}</option>
+                </select>
             </div>
-            
+
             <form [formGroup]="guardarLiga" class="select">
 
                 <div class="column">
@@ -33,7 +35,8 @@
                 </div>
                 <div class="column">
                     <div>
-                        <button class="button1 btn-sucess btn-lg btn-block">Crear Comunidad</button>
+                        <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarComunidad()">Crear
+                            Comunidad</button>
                     </div>
                 </div>
             </form>
@@ -43,24 +46,33 @@
             <h2 style="color: black;" class="text-center">
                 Comunidades
             </h2>
+            <div class="column"
+                style="align-items: center;margin-left: auto;margin-right: auto; vertical-align: middle;display: flex;">
+                Ver Codigo de Comunidad:
+                <select id="torneos" style="margin-left: auto;margin-right: auto; vertical-align: middle;">
+                    <option [value]='torneo' *ngFor="let torneo of arrayComunidades"
+                        (click)="obtenerCodigo(torneo.COD_Invita)">{{torneo.Nombre}}: {{torneo.COD_Invita}}</option>
+                </select>
+            </div>
+ 
             <form [formGroup]="ingresarComunidad" class="select">
 
                 <div class="column">
                     <div class="input-group">
                         <input class="text" type="text" class="form-control" formControlName="codigoControl"
-                            placeholder="Nombre Comunidad" maxlength="30" required>
+                            placeholder="Ingresar Codigo" maxlength="30" required>
                     </div>
                 </div>
                 <div class="column">
                     <div>
-                        <button class="button1 btn-sucess btn-lg btn-block">Crear Comunidad</button>
+                        <button (click)="unirseComunidad();obtenerComunidades()"
+                            class="button1 btn-sucess btn-lg btn-block">Unirse a la comunidad</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="centeredButton">
-            <button class="button1 btn-sucess btn-lg btn-block" (click)="guardarComunidad()">Guardar
-                Torneo</button>
+            <button class="button1 btn-sucess btn-lg btn-block"  routerLink="/view_ranking">Ver Rankings de Comunidades</button>
         </div>
 
     </div>

@@ -21,15 +21,29 @@ const getById = (req, res) => {
 
 const add = (req, res) => {
     const { NombreComunidad,NombreTorneo,Usuario } = req.body;
+    if(NombreComunidad == null) res.status(400).json("Error");
     const COD_Invita=cadenaAleatoria.cadenaAleatoria();
-        pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
+        
             //if(error) {throw error;}
-            
-            pool.query(queryran.add,[Usuario,COD_Invita], (error, results) => {
-                if(error) throw error; 
-                res.status(201).send();
-            });
-            res.json({codigo:COD_Invita});
+            pool.query(queries.checkUserYTorneo, [NombreTorneo,Usuario], (error, results1) => {
+                if(error) {throw error;}
+                const notFound = results1.rows.length;
+                if(notFound){
+                    res.json("Ya el usuario ya esta en una comunidad privada para este torneo");
+                    return;
+                }
+                else{
+
+                    pool.query(queries.add, [NombreComunidad,COD_Invita,NombreTorneo], (error, results) => {
+                        pool.query(queryran.add,[Usuario,COD_Invita], (error, results) => {
+                        if(error) throw error; 
+                        res.status(201).send();
+                        });
+                        res.json({codigo:COD_Invita});});
+                }
+
+                
+                
         });
     
 };

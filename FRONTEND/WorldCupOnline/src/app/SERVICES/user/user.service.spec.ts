@@ -27,8 +27,8 @@ describe('UserService', () => {
   });
   it('Verificar Login', (done) => {
     let user = {
-      Username: 'Traznar',
-      Password: 'papugod',
+      Username: 'admingod',
+      Password: 'abcd1234',
     }
     service.login(user).subscribe(data => {
       expect(JSON.stringify(data)).toEqual(JSON.stringify('admin'));
@@ -38,8 +38,8 @@ describe('UserService', () => {
   });
   it('Verificar Rol', () => {
     let user = {
-      Username: 'Traznar',
-      Password: 'papugod',
+      Username: 'admingod',
+      Password: 'abcd1234',
     }
     let rol=  service.IsLoggedIn();
     expect(rol).toBe('admin');

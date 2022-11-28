@@ -51,6 +51,18 @@ const add = (req, res) => {
                         pool.query(queries.add, [ID,Nombre,Fecha_inicio,Fecha_fin,Equipos,Reglas], (error, results) => {
                             if(error) throw error;
                             console.log('Creo torneo');
+
+                            /*codigo que agrega los usuario an a torneo */
+                            pool.query("SELECT \"ID\" FROM public.\"Usuarios\";", (error, users) => {
+                                if(error) throw error;
+                                for (let i = 0; i < users.rowCount; i++) {
+                                pool.query(queries_ranking.add, [ID,users.rows[i].ID,0], (error, results) => {
+                                    if(error) throw error;
+
+                                });}
+                            });
+
+
                             for(var i=0; i<listaEquipos.length;i++){
                                 pool.query(queries_Equipos.add, [Nombre,listaEquipos[i]], (error, results) => {
                                     if(error) {
@@ -60,6 +72,8 @@ const add = (req, res) => {
                                         console.log('Agrego Equipos');}
                                 });
                             }
+                            
+
                             for(var i=0; i<Fase.length;i++){
                                 pool.query(queries_fase.add, [Nombre,Fase[i]], (error, results) => {
                                     if(error) {pool.query(queries_fase.remove, [ID], (error, results) => {}); pool.query(queries_Equipos.remove, [ID], (error, results) => {}); throw error;}
@@ -67,9 +81,7 @@ const add = (req, res) => {
                                         console.log('Agrego Fase');}
                                 });
                             }
-                            pool.query(queries_ranking.add, [ID,0,0], (error, results) => {
-                                if(error) throw error;
-                            });
+                            
                             res.status(201).json("Torneo Agregado Exitosamente");
                         });
                     

@@ -171,5 +171,24 @@ describe('HomeComponent', () => {
     homeComponent.equiposTorneo[0]="Costa Rica";
     expect(homeComponent.equiposTorneo.length).toBe(1);
   });
+  it('validar equipos torneo ', () => {
+    const homeComponent =fixture.componentInstance;
+    homeComponent.equiposTorneo=["CostaRica","Venezuela","Jamaica",];
+    homeComponent.guardarTorneo();
+    expect(homeComponent.equiposTorneo.length).toBe(3);
+  });
+  it('validar equipos torneo ', () => {
+    const homeComponent =fixture.componentInstance;
+    homeComponent.equiposTorneo=["Costa Rica","Colombia"];
+    homeComponent.eliminarEquipo("Colombia");
+    expect(homeComponent.equiposTorneo.length).toBe(1);
+  });
+  it('validar fases torneo ', () => {
+    const homeComponent =fixture.componentInstance;
+    homeComponent.fases=[];
+    homeComponent.eliminarFase("SemiFinal");
+    expect(homeComponent.equiposTorneo.length).toBe(0);
+  });
+  
 
 });

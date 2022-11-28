@@ -62,7 +62,7 @@ describe('RegisterComponent', () => {
     expect(registerComponent.nacimientoCondicion).toBe(false);
   });
 
-  it('validar correo', () => {
+  it('validar fechas mayor', () => {
     const nombre = fixture.debugElement.nativeElement.querySelector('[data-testid="nacimientoTest"]');
     const registerComponent = fixture.componentInstance;
     let form = registerComponent.form;
@@ -70,6 +70,16 @@ describe('RegisterComponent', () => {
     fecha.setValue('04/04/2000');
     registerComponent.verificarFechas();
     expect(registerComponent.fechaCondicion).toBe(false);
+  });
+
+  it('validar fechas vacio', () => {
+    const nombre = fixture.debugElement.nativeElement.querySelector('[data-testid="nacimientoTest"]');
+    const registerComponent = fixture.componentInstance;
+    let form = registerComponent.form;
+    let fecha = registerComponent.form.controls['fechaNacimiento'];
+    fecha.setValue('');
+    registerComponent.verificarFechas();
+    expect(registerComponent.fechaCondicion).toBe(true);
   });
   it('validar espacios del formulario llenos', () => {
     const registerComponent = fixture.componentInstance;
@@ -103,4 +113,16 @@ describe('RegisterComponent', () => {
     expect(registerComponent.apellidoCondicion).toBe(false);
   });
 
+  it('validar condiciones verdaderas', () => {
+    const registerComponent = fixture.componentInstance;
+    registerComponent.condiciones=[true,true,true,true,true,true,true,true]
+    
+    expect(registerComponent.verificarCondiciones()).toBe(true);
+  });
+  it('validar condiciones falsas', () => {
+    const registerComponent = fixture.componentInstance;
+    registerComponent.condiciones=[false,false,false,false,false,false,false,false]
+    
+    expect(registerComponent.verificarCondiciones()).toBe(true);
+  });
 });

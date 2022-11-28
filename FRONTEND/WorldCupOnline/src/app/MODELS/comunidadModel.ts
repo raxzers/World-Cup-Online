@@ -1,5 +1,5 @@
 export interface comunidadModel {
     Usuario: string;
-    Torneo:string;
+    NombreTorneo:string;
     NombreComunidad: string;
 }
