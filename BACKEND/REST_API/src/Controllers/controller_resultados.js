@@ -1,71 +1,105 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_resultados');
 const validarRes = require("../../extra_f");
+const funciones = require("../Funtion_queries/Funtion_queries_resultados");
+const mook = require("../Mooks/Mook_resultados");
 
-const get = (req, res) => {
-    pool.query(queries.get, (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+const get = async (req, res) => {
+    const { Test } = req.body;
+    if (Test== "si"){
+        res.status(200).json(await mook.get_resultados());
+    }
+    else {
+        res.status(200).json(await funciones.get_resultados());
+    }
 };
 
-const getById = (req, res) => {
+const getById = async (req, res) => {
     const id = req.params.id;
-    pool.query(queries.getById, [id], (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
+    const { Test } = req.body;
+    if (Test== "si"){
+        res.status(200).json(await mook.getById_resultados(id));
+    }
+    else {
+        res.status(200).json(await funciones.getById_resultados(id));
+    }
 };
 
-const getByname_Torneo = (req, res) => {
+const getByname_Torneo = async (req, res) => {
     const id = req.params.id;
-    pool.query(queries.getByname_torneo, [id], (error, results) => {
-        if(error) throw error;
-        res.status(200).json(results.rows);
-    });
-};
-
-const add = (req, res) => {
-    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
-    
-        pool.query(queries.add, [id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT], (error, results) => {
-            if(error) throw error;
-            validarRes.Calcular_puntos(id_Partido);
-            res.status(201).send();
-        });
+    const { Test } = req.body;
+    if (Test== "si"){
+        res.status(200).json(await mook.getBynametorneo_resultados(id));
+    }
+    else {
+        res.status(200).json(await funciones.getBynametorneo_resultados(id));
+    }
     
 };
 
-const remove = (req, res) => {
-    const id = parseInt(req.params.id);
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        } 
-        pool.query(queries.remove, [id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });    
-    });  
+const add = async (req, res) => {
+    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT,Test } = req.body;
+    if (Test== "si"){
+        var get_var = await mook.add_resultados(id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT);
+        res.status(get_var).json(get_var);
+    }
+    else {
+        var get_var = await funciones.add_resultados(id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT);
+        validarRes.Calcular_puntos(id_Partido);
+        res.status(get_var).json(get_var);
+    }
+    
+            
+    
 };
 
-const update = (req, res) => {
+const remove = async (req, res) => {
     const id = parseInt(req.params.id);
-    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
+    const { Test } = req.body;
+    if (Test== "si"){
+        var get_var = await mook.getById_resultados(id);
+    }
+    else {
+        var get_var = await funciones.getById_resultados(id);
+    }
+    const notFound = !get_var.rows.length;
+    if(notFound){
+        res.send("No existe en la base de datos"); 
+    } 
+    if (Test== "si"){
+        var get_var2 = await mook.remove_resultados(id); 
+        res.status(get_var2).json(get_var2); 
+    }
+    else {
+        var get_var2 = await funciones.remove_resultados(id); 
+        res.status(get_var2).json(get_var2); 
+    }  
+    
+};
 
-    pool.query(queries.getById, [id], (error, results) => {
-        const notFound = !results.rows.length;
-        if(notFound){
-            res.send("No existe en la base de datos");
-            return;
-        }
-        pool.query(queries.update, [id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT, id], (error, results) => {
-            if(error) throw error;
-            res.status(200).send();
-        });
-    });
+const update = async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT,Test } = req.body;
+    if (Test== "si"){
+        var get_var = await mook.getById_resultados(id);
+    }
+    else {
+        var get_var = await funciones.getById_resultados(id);
+    }
+    const notFound = !get_var.rows.length;
+    if(notFound){
+        res.send("No existe en la base de datos");
+    }
+    if (Test== "si"){
+        var get_var2 = await mook.update_resultados(id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT); 
+        res.status(get_var2).json(get_var2); 
+    }
+    else {
+        var get_var2 = await funciones.update_resultados(id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT); 
+        res.status(get_var2).json(get_var2); 
+    } 
+    
+
 };
 
 module.exports = {

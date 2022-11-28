@@ -6,13 +6,18 @@ const cadenaAleatoria = require("../../extra_f");
 async function get_comunidad_privada(){
     const response = await pool.query(queries.get);
     
-    
     return response.rows
     
 }
 
 async function getById_comunidad_privada(id){
     const response = await pool.query(queries.getById, [id]);
+    return response.rows
+    
+}
+
+async function getByUseryTorneo(NombreTorneo,Usuario){
+    const response = await pool.query(queries.checkUserYTorneo, [NombreTorneo,Usuario]);
     return response.rows
     
 }
@@ -54,4 +59,5 @@ module.exports = {
     getById_comunidad_privada,
     remove_comunidad_privada,
     update_comunidad_privada,
+    getByUseryTorneo,
 } 

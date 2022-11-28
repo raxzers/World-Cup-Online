@@ -27,7 +27,8 @@ const getById = async (req, res) => {
 const add = async (req, res) => {
     const { Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador,Test } = req.body;
     if (Test== "si"){
-        res.status(200).json(await mook.add_jugadores_club(Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador));
+        var get_var = await mook.add_jugadores_club(Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador);
+        res.status(get_var).json(get_var);
     }
     else {
         var get_var = await funciones.add_jugadores_club(Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador);
