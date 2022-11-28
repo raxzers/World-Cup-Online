@@ -482,7 +482,6 @@ export class LlenarQuinielaComponent implements OnInit {
       this.llenar_quiniela(this.id_Usuario, this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
 
-    console.log(this.rol)
 
     if (this.rol == "admin") {
       let resultado_ = this.resultado;

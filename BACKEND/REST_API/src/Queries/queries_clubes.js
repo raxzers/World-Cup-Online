@@ -1,5 +1,5 @@
 const get = "SELECT * FROM public.\"Clubes\"";
-const getById = "SELECT \"ID\",\"Club\" FROM public.\"Clubes\" WHERE \"ID\" = $1";
+const getById = "SELECT \"Club\" FROM public.\"Clubes\" WHERE \"ID\" = $1";
 const checkIdExists = "SELECT \"Club\" FROM public.\"Clubes\" WHERE \"ID\" = $1";
 const add = "INSERT INTO public.\"Clubes\" (\"Club\") VALUES ($1)";
 const remove = "DELETE FROM public.\"Clubes\" WHERE \"ID\" = $1";

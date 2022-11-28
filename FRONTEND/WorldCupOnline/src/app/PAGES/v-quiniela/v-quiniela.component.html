@@ -10,16 +10,23 @@
 
                 <mat-form-field style="width:20%" (click)="lista_quinielas_torneo_usuario(torneo.Nombre, id_Usuario)">
                     <mat-select>
-                        <mat-option value="quiniela" *ngFor="let quiniela of quinielas_torneo_usuario"
-                            (click)="mostrar_quiniela(quiniela)"> ID #{{quiniela.Id}}
+                        <mat-option value="encuentros[indice]"
+                            *ngFor="let quiniela of quinielas_torneo_usuario; let indice=index"
+                            (click)="mostrar_quiniela(quiniela)"> ID #{{quiniela.Id}} --> {{encuentros[indice]}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
 
             </div>
             <div>
-                {{partido_quiniela.Equipo_1}} vs
+                <h2>Contrincantes</h2>
+                {{partido_quiniela.Equipo_1}} ---------
                 {{partido_quiniela.Equipo_2}}
+            </div>
+            <br>
+            <div>
+                <h2>Mejor jugador</h2>
+                <mat-icon>grade</mat-icon> {{mejor_Jugador}}
             </div>
             <td class="columnas">
                 <div>

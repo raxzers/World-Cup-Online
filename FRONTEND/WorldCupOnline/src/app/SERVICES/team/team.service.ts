@@ -34,6 +34,16 @@ export class TeamService {
   obtenerSelecciones() {
     this.http.get('http://localhost:3000/api/selecciones/').toPromise().then(data => { this.list2 = data as seleccionModel[]; });
   }
+
+  obtenerClubs_Id(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/clubes/' + id);
+  }
+  obtenerSelecciones_Id(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/selecciones/' + id);
+  }
+
+
+
   actualizar(equipo) {
     this.actualizarForm.next(equipo);
   }
