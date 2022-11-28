@@ -461,6 +461,8 @@ export class LlenarQuinielaComponent implements OnInit {
     this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Equipo_2 = this.Goles_Eq2;
 
+    this.verificar_no_nulos();
+
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }
@@ -474,6 +476,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
     //this.openDialog();
     //// this.rol = this.userService.getRol().toString();
+    this.verificar_no_nulos();
 
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
@@ -525,6 +528,9 @@ export class LlenarQuinielaComponent implements OnInit {
     this.limpiar();
   }
 
+
+
+
   llenar_quiniela(id_Usuario: number, id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
     this.quiniela = { id_Usuario: id_Usuario, id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq2, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.quiniela;
@@ -533,6 +539,24 @@ export class LlenarQuinielaComponent implements OnInit {
   llenar_resultado(id_Partido: number, id_Jugadores_goles_Eq1: number[], id_Jugadores_asistencias_Eq1: number[], id_Jugadores_goles_Eq2: number[], id_Jugadores_asistencias_Eq2: number[], Goles_Eq1: number, Goles_Eq2: number, Autogoles_eq1: number, Autogoles_eq2: number, id_Jugador_GOAT: number) {
     this.resultado = { id_Partido: id_Partido, id_Jugadores_goles_Eq1: id_Jugadores_goles_Eq1, id_Jugadores_asistencias_Eq1: id_Jugadores_asistencias_Eq1, id_Jugadores_goles_Eq2: id_Jugadores_goles_Eq2, id_Jugadores_asistencias_Eq2: id_Jugadores_asistencias_Eq2, Goles_Eq1: Goles_Eq1, Goles_Eq2: Goles_Eq2, Autogoles_eq1: Autogoles_eq1, Autogoles_eq2: Autogoles_eq2, id_Jugador_GOAT: id_Jugador_GOAT };
     return this.resultado;
+  }
+
+  verificar_no_nulos() {
+    if (this.id_Jugadores_goles_Eq1 = null) {
+      this.id_Jugadores_goles_Eq1 = []
+    }
+
+    if (this.id_Jugadores_goles_Eq2 = null) {
+      this.id_Jugadores_goles_Eq2 = []
+    }
+
+    if (this.id_Jugadores_asistencias_Eq1 = null) {
+      this.id_Jugadores_asistencias_Eq1 = []
+    }
+
+    if (this.id_Jugadores_asistencias_Eq2 = null) {
+      this.id_Jugadores_asistencias_Eq2 = []
+    }
   }
 
 }

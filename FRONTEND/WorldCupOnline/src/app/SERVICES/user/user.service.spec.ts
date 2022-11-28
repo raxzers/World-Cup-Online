@@ -10,7 +10,7 @@ import { UserService } from './user.service';
 describe('UserService', () => {
   let service: UserService;
   let user: userModel;
-  let registro:clientsModel;
+  let registro: clientsModel;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,6 +25,8 @@ describe('UserService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  /*
   it('Verificar Login', (done) => {
     let user = {
       Username: 'admingod',
@@ -61,5 +63,6 @@ describe('UserService', () => {
     });
 
   });
+  */
 
 })

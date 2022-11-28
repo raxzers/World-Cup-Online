@@ -42,7 +42,13 @@ export class TeamService {
     return this.http.get<string>('http://localhost:3000/api/selecciones/' + id);
   }
 
+  obtener_nombre_jugador_seleccion(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/jugadores_seleccion/' + id);
+  }
 
+  obtener_nombre_jugador_club(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/jugadores_club/' + id);
+  }
 
   actualizar(equipo) {
     this.actualizarForm.next(equipo);
