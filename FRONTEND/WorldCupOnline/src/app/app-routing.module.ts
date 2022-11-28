@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'view_quiniela', component: VQuinielaComponent, canActivate: [RoleGuard2Guard] },
   { path: 'register', component: RegisterComponent },
   { path: 'community', component: CommunityComponent },
-  { path: 'fill_quiniela', component: LlenarQuinielaComponent } //canActivate: [RoleGuard2Guard] se quita para hacer pruebas entre usuarios y administradores
+  { path: 'fill_quiniela', component: LlenarQuinielaComponent } ,//canActivate: [RoleGuard2Guard] se quita para hacer pruebas entre usuarios y administradores
+  { path: 'fill_quinielaAdmin', component: LlenarQuinielaComponent, canActivate: [RoleGuardGuard]  }
 ];
 
 @NgModule({

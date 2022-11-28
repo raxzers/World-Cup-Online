@@ -6,3 +6,71 @@
     border-color: #ffffff;
     background-color: #bbd8f5;
 }
+.input-group{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+  }
+  .column {
+    float: left;
+    width: 50%;
+   // border: 3px solid #004590;
+    padding: 10px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .select{
+    text-align: center;
+  }
+  h2{
+    padding: 1%;
+  }
+  .button1 {
+    background-color: #004590; /* Green */
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 5px 16px;
+    display: inline-block;
+    font-size: 16px;  
+    font-weight:bold;
+    position:relative;
+  }
+  .button2 {
+    background-color: #004590; /* Green */
+    border: none;
+    color: rgb(255, 255, 255);
+    padding: 5px 16px;
+    display: inline-block;
+    font-size: 16px;  
+    font-weight:bold;
+    position:relative;
+    margin: 1%;
+  }
+  .description{
+    padding: 2%;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    background-color: white;
+  
+  }
+  .table {
+    width: 50%;
+    border: 3px solid #004590;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+  .centeredButton{
+    border: 3px solid #004590;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //height: 0%;
+  }

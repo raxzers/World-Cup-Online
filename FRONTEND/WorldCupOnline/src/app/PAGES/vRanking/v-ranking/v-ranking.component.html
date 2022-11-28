@@ -5,26 +5,30 @@
   <app-client-navbar></app-client-navbar>
 </div>
 
-<mat-tab-group>
-    <mat-tab  *ngFor="let item of torneosBueno; let i=index" label="{{item.Nombre}}" > 
-      <mat-grid-list cols="3" rowHeight="3:1" >
-        <mat-card class="card">
-          <td class="columnas">
-            {{i+1}}
-          </td>
-          <td class="columnas">
-            {{item.Username}}
-          </td>
-          <td class="columnas">
-            {{item.Puntaje}}
-          </td>
-        </mat-card>
-        
-      </mat-grid-list>
-    </mat-tab>
-</mat-tab-group>
-<div>
-  <button class="button1 btn-sucess btn-lg btn-block" >Ver Ranking Privado</button>
-</div>
-  
+<mat-tab-group (selectedTabChange)="setTrue()" style="align-items: center;">
+  <mat-tab *ngFor="let item of torneos; let i=index" label="{{item}}">
+    <mat-grid-list cols="3" rowHeight="3:1" *ngFor="let item2 of infoRanking; let i=index">
+      <mat-card class="card">
+        <td class="columnas">
+          {{i+1}}
+        </td>
+        <td class="columnas">
+          {{item2.Username}}
+        </td>
+        <td class="columnas">
+          {{item2.Puntaje}}
+        </td>
+      </mat-card>
 
+    </mat-grid-list>
+    <div class="column">
+      <button class="button1 btn-sucess btn-lg btn-block" (click)="obtenerPosiciones(item);">Actualizar Ranking
+        General</button>
+
+    </div>
+    <div *ngIf="rol=='user'" class="column">
+      <button class="button1 btn-sucess btn-lg btn-block" (click)="obtenerPosicionesPrivado(item)" >Ver Ranking Privado</button>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

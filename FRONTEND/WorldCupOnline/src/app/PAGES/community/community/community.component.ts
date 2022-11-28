@@ -20,6 +20,8 @@ export class CommunityComponent implements OnInit {
   arrayComunidades: any[];
   torneos: any[];
   comunidades: any[];
+  paisCondicion: boolean = true;
+  codigo: string;
   nombreTorneoCondicion: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private torneoService: TorneoServiceService, private comunidadService: ComunidadService, private toastr: ToastrService) { }
@@ -35,6 +37,7 @@ export class CommunityComponent implements OnInit {
     this.ingresarComunidad = this.formBuilder.group({
       codigoControl: ['', [Validators.required]]
     })
+
     this.obtenerNombresTorneos();
     this.obtenerComunidades();
   }
@@ -42,7 +45,7 @@ export class CommunityComponent implements OnInit {
     var usuario = localStorage.getItem('usuario');
     var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
     console.log(usuario);
-    const comunidad:  joinCommModel ={
+    const comunidad: joinCommModel = {
       COD_Invita: this.ingresarComunidad.get('codigoControl').value,
       Usuario: usuario,
     }
@@ -71,6 +74,7 @@ export class CommunityComponent implements OnInit {
     this.comunidadService.getComunidades(localStorage.getItem('usuario')).then(data => {
       this.arrayComunidades as communityGetModel[];
       this.arrayComunidades = data as communityGetModel[];
+      console.log(this.arrayComunidades)
       for (let equipo of this.arrayComunidades) {
         var nombreEquipo = equipo.Nombre;
         this.comunidades.push(nombreEquipo);
@@ -78,7 +82,10 @@ export class CommunityComponent implements OnInit {
 
     });
   }
-
+  obtenerCodigo(codigo) {
+    console.log("Entra");
+    this.codigo = codigo;
+  }
   verificarNombreComunidad() {
     console.log(this.guardarLiga.get('nombreComunidad').value)
     if (this.guardarLiga.get('nombreComunidad').value == '') {
@@ -89,8 +96,19 @@ export class CommunityComponent implements OnInit {
       return false;
     }
   }
+  verificarTorneoSeleccionado() {
+    var nombres = (document.getElementById("torneos")) as HTMLSelectElement;
+    var nombreSeleccionado = nombres.selectedIndex;
+    console.log(nombreSeleccionado)
+    if (nombreSeleccionado == -1) {
+      this.paisCondicion = true;
+    } else {
+      this.paisCondicion = false;
+    }
+  }
   guardarComunidad() {
-    if (this.verificarNombreComunidad() == false) {
+    this.verificarTorneoSeleccionado();
+    if (this.verificarNombreComunidad() == false && this.paisCondicion == false) {
       var usuario = localStorage.getItem('usuario');
       var torneo = (document.getElementById("torneos")) as HTMLSelectElement;
       console.log(usuario);

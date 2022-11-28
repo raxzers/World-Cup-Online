@@ -1,5 +1,6 @@
 const pool = require("../../database");
 const queries = require('../Queries/queries_usuarios');
+const queries_ranking= require('../Queries/queries_ranking');
 const encriptar = require("../../extra_f");
 
 const get = (req, res) => {
