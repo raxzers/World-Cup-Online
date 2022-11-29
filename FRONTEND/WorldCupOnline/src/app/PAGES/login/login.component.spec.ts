@@ -5,7 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { Observable, observable } from 'rxjs';
 import { userModel } from 'src/app/MODELS/userModel';
 import { UserService } from 'src/app/SERVICES/user/user.service';
-
+import * as Rx from 'rxjs';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -13,6 +13,10 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let userService: UserService
   let user:userModel;
+  let service: UserService;
+  let a;
+  //let httpClientMock: HttpClientMock;
+  let httpClientSpy: { post: jasmine.Spy };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
@@ -27,6 +31,8 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    service = new UserService(httpClientSpy as any, a as any);
     fixture.detectChanges();
     
     
@@ -45,14 +51,30 @@ describe('LoginComponent', () => {
       Password: 'abcd1234',
   }
    userService.login(user).subscribe(data => { 
-      expect(JSON.stringify(data)).toBe(JSON.stringify('admin'));
+      expect(JSON.stringify(data)).toBe(JSON.stringify("El usuario ingresado es incorrecto"));
    //   expect(userService.IsLoggedIn()).toBe("admin");
     });  
     loginComponent.enter('admingod','abcd1234');
     localStorage.setItem('rol','admin')
     expect(localStorage.getItem('rol')).toBe('admin')
-    
-   
   });
-  
+  it('Login con service', (done: DoneFn) => {
+    const quiniela = { 
+      Username:"string",
+      Password: "string"};
+
+    component.enter("brandon","abc123");
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.login(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(service.login(quiniela)).toHaveBeenCalled;
+        done();
+      })
+  });
 });

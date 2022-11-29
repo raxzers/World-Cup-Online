@@ -1,15 +1,22 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
-
+import { ComunidadService } from 'src/app/SERVICES/comunidad/comunidad.service';
+import * as Rx from 'rxjs';
 import { CommunityComponent } from './community.component';
+import { delay } from 'rxjs';
+import { communityGetModel } from 'src/app/MODELS/getComunityModel';
+import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
 
 describe('CommunityComponent', () => {
   let component: CommunityComponent;
   let fixture: ComponentFixture<CommunityComponent>;
+  let service: ComunidadService;
+  //let httpClientMock: HttpClientMock;
+  let httpClientSpy: { post: jasmine.Spy };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,6 +28,10 @@ describe('CommunityComponent', () => {
     fixture = TestBed.createComponent(CommunityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    service = new ComunidadService(httpClientSpy as any);
   });
 
   it('should create', () => {
@@ -46,8 +57,6 @@ describe('CommunityComponent', () => {
     user.setValue('111111111122222222223333333333')
 
     expect(homeComponent.verificarNombreComunidad()).toBe(false);
-
-
   });
   it('validar nombre comunidad erroneo', () => {
     const homeComponent = fixture.componentInstance;
@@ -78,5 +87,86 @@ describe('CommunityComponent', () => {
     expect(homeComponent.paisCondicion).toBe(false);
   });
 
+  it('Error datos nulos comunidad', (done: DoneFn) => {
+    const quiniela = { Usuario: null, NombreTorneo: null, NombreComunidad: null };
+    const error_ = {
+      error: "Datos incorrectos",
+      status: 409,
+      statusText: "Datos nulos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.guardarComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(409);
+        done();
+      })
+  });
+  it('Ingresar a comunidad de otro usuario valido', (done: DoneFn) => {
+    const quiniela = { COD_Invita: "c9x1LA2" };
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.unirseComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(200);
+        done();
+      })
+  });
+  it('test obtenerNombres Torneos prueba service)', async () => {
+    const serviceSpy: TorneoServiceService = TestBed.get(TorneoServiceService);
+    spyOn(serviceSpy, 'obtenerTorneos').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerNombresTorneos()).toBe();
+    expect(await serviceSpy.obtenerTorneos).toHaveBeenCalled();
+  });
+  it('test obtenerComunidades Torneos prueba service)', async () => {
+    const serviceSpy: ComunidadService = TestBed.get(ComunidadService);
+    spyOn(serviceSpy, 'getComunidades').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerComunidades()).toBe();
+    expect(await serviceSpy.getComunidades).toHaveBeenCalled();
+  });
 
+  it('Ingresar a comunidad de otro usuario MAIN', (done: DoneFn) => {
+    const quiniela = { COD_Invita: "c9x1LA2" };
+    component.unirseComunidad();
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.unirseComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(200);
+        done();
+      })
+  });
+  it('Guardar comunidad con service', (done: DoneFn) => {
+    const quiniela = { Usuario: "string",
+      NombreTorneo:"string",
+      NombreComunidad: "string"};
+    const homeComponent = fixture.componentInstance;
+    let user = homeComponent.guardarLiga.controls['nombreComunidad'];
+    user.setValue('abcd')
+    homeComponent.paisCondicion=false;
+    component.guardarComunidad();
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.guardarComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(service.guardarComunidad(quiniela)).toHaveBeenCalled;
+        done();
+      })
+  });
+  
 });

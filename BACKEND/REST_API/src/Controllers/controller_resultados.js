@@ -27,12 +27,9 @@ const getByname_Torneo = (req, res) => {
 const add = async (req, res) => {
     const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT } = req.body;
     
-    const val=  await  pool.query(queries.add, [id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT], async (error, results) => {
-            if(error) throw error;
-            
-            res.status(201).json( await validarRes.Calcular_puntos(id_Partido));
-        });
-    
+    const val=  await  pool.query(queries.add, [id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT]);
+    const val2 = await validarRes.Calcular_puntos(id_Partido);
+    res.status(201).json(val2 );
 };
 const remove = (req, res) => {
     const id = parseInt(req.params.id);

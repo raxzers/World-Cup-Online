@@ -4,8 +4,8 @@ const Pool = require("pg").Pool;
 const pool = new Pool({
     user: "postgres",
     host: "localhost",
-    database: "test",
-    password: "xxx",
+    database: "World Cup-Online",
+    password: "xxxx",
     port: 5432,    
 });
 */
@@ -13,8 +13,8 @@ const pool = new Pool({
 const pool = new Pool({
     user: "postgres",
     host: "localhost",
-    database: "wco",
-    password: "xxx",
+    database: "WorldCupOnline1",
+    password: "root",
     //ssl: { "rejectUnauthorized": false },
     //rejectUnauthorized: false,//add when working with https sites
     //requestCert: false,//add when working with https sites

@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { TeamService } from 'src/app/SERVICES/team/team.service';
 
 import { HomeComponent } from './home.component';
 
@@ -189,6 +190,17 @@ describe('HomeComponent', () => {
     homeComponent.eliminarFase("SemiFinal");
     expect(homeComponent.equiposTorneo.length).toBe(0);
   });
-  
+  it('test obtenerSeleccion prueba service)', async () => {
+    const serviceSpy: TeamService = TestBed.get(TeamService);
+    spyOn(serviceSpy, 'obtenerSelecciones1').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerSeleccion()).toBe();
+    expect(await serviceSpy.obtenerSelecciones1).toHaveBeenCalled();
+  });
+  it('test obtenerClub prueba service)', async () => {
+    const serviceSpy: TeamService = TestBed.get(TeamService);
+    spyOn(serviceSpy, 'obtenerClubs1').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerClub()).toBe();
+    expect(await serviceSpy.obtenerClubs1).toHaveBeenCalled();
+  });
 
 });
