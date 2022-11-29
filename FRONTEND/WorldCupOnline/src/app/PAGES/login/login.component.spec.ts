@@ -45,7 +45,7 @@ describe('LoginComponent', () => {
       Password: 'abcd1234',
   }
    userService.login(user).subscribe(data => { 
-      expect(JSON.stringify(data)).toBe(JSON.stringify('admin'));
+      expect(JSON.stringify(data)).toBe(JSON.stringify("El usuario ingresado es incorrecto"));
    //   expect(userService.IsLoggedIn()).toBe("admin");
     });  
     loginComponent.enter('admingod','abcd1234');

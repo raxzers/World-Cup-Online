@@ -65,9 +65,9 @@ export class UserService {
     return this.http.get<fullUserModel>('http://localhost:3000/api/usuarios/user/' + usuario);
   }
 
-  getUsers(): Observable<userModel> {
+/*  getUsers(): Observable<userModel> {
     return this.http.get<userModel>(this.APIurl);
-  }
+  }*/
 
   obtenerPaises() {
     this.http.get('http://localhost:3000/api/paises_fifa/').toPromise().then(data => { this.paises = data as paisModel[]; });

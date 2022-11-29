@@ -460,6 +460,7 @@ export class LlenarQuinielaComponent implements OnInit {
 
     this.Goles_Eq2 = goles_2 + this.Autogoles_eq2;
     this.Goles_Equipo_2 = this.Goles_Eq2;
+    this.verificar_no_nulos();
 
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
@@ -469,12 +470,28 @@ export class LlenarQuinielaComponent implements OnInit {
     }
 
   }
+  verificar_no_nulos() {
+    if (this.id_Jugadores_goles_Eq1 == null) {
+      this.id_Jugadores_goles_Eq1 = []
+    }
 
+    if (this.id_Jugadores_goles_Eq2 == null) {
+      this.id_Jugadores_goles_Eq2 = []
+    }
+
+    if (this.id_Jugadores_asistencias_Eq1 == null) {
+      this.id_Jugadores_asistencias_Eq1 = []
+    }
+
+    if (this.id_Jugadores_asistencias_Eq2 == null) {
+      this.id_Jugadores_asistencias_Eq2 = []
+    }
+  }
   enviar_datos() {
 
     //this.openDialog();
     //// this.rol = this.userService.getRol().toString();
-
+    this.verificar_no_nulos(); 
     if (this.rol == "admin") {
       this.llenar_resultado(this.id_Partido, this.id_Jugadores_goles_Eq1, this.id_Jugadores_asistencias_Eq1, this.id_Jugadores_goles_Eq2, this.id_Jugadores_asistencias_Eq2, this.Goles_Eq1, this.Goles_Eq2, this.Autogoles_eq1, this.Autogoles_eq2, this.id_Jugador_GOAT)
     }

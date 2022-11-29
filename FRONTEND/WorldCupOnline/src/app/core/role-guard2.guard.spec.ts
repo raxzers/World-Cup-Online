@@ -19,4 +19,5 @@ describe('RoleGuard2Guard', () => {
   it('should be created', () => {
     expect(guard).toBeTruthy();
   });
+  
 });
