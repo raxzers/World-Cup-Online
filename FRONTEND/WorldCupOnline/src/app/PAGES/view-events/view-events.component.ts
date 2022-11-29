@@ -11,31 +11,31 @@ import { GameService } from 'src/app/SERVICES/game/game.service';
 })
 export class ViewEventsComponent implements OnInit {
 
-  partidos:gameModel[];
-  torneos:torneoModel[];
-  ver_eventos:viewEventsModel[] = [];
+  partidos: gameModel[];
+  torneos: torneoModel[];
+  ver_eventos: viewEventsModel[] = [];
 
-  torneo_actual:string;
+  torneo_actual: string = '';
 
-  partidos_por_torneo:gameModel;
+  partidos_por_torneo: gameModel;
 
-  nombre_torneos:string[] = [];
+  nombre_torneos: string[] = [];
 
 
 
-  constructor(public partidoService:GameService) { }
+  constructor(public partidoService: GameService) { }
 
   ngOnInit(): void {
-    this.partidoService.obtener_partidos().subscribe((data:gameModel[]) => {
-      this.partidos=data
+    this.partidoService.obtener_partidos().subscribe((data: gameModel[]) => {
+      this.partidos = data
     });
 
-    this.partidoService.obtener_torneos().subscribe((data:torneoModel[]) => {
-      this.torneos=data
-      for(let torn of this.torneos){
+    this.partidoService.obtener_torneos().subscribe((data: torneoModel[]) => {
+      this.torneos = data
+      for (let torn of this.torneos) {
         this.nombre_torneos.push(torn.Nombre)
       }
-    });  
+    });
   }
 }
 

@@ -77,4 +77,13 @@ describe('NewFootballGameComponent', () => {
     expect(sede.length).toBe(6);
   });
 
+  it('set fecha', () => {
+    const partido = component.nuevo_partido;
+    const fecha = component.fechaInicioForm.controls['fechaInicioControl'].setValue(new Date)
+    //fecha.setValue('20/12/2024')
+    const hoy = new Date()
+    component.setFechaInicio();
+    expect(partido.Fecha).toEqual(hoy);
+  });
+
 });

@@ -14,10 +14,11 @@ class HttpClientMock {
 describe('QuinielaService', () => {
   let service: QuinielaService;
   //let httpClientMock: HttpClientMock;
-  let httpClientSpy: { post: jasmine.Spy };
+  let httpClientSpy: { post: jasmine.Spy, get: jasmine.Spy };
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post'], ['get']);
+    //httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     service = new QuinielaService(httpClientSpy as any);
 
     /*
@@ -51,17 +52,17 @@ describe('QuinielaService', () => {
     });
     */
 
- /* it('Enviar una quiniela con los datos correctos', (done: DoneFn) => {
-    const quiniela = { id_Usuario: 1, id_Partido: 1, id_Jugadores_goles_Eq1: [1, 2], id_Jugadores_asistencias_Eq1: [1, 2], id_Jugadores_goles_Eq2: [3, 4], id_Jugadores_asistencias_Eq2: [3, 4], Goles_Eq1: 6, Goles_Eq2: 9, Autogoles_eq1: 3, Autogoles_eq2: 0, id_Jugador_GOAT: 21 };
-    const mockResult = {
-      status: 201
-    }
-    httpClientSpy.post.and.returnValue(throwError(error_))
-    service.guardarQuiniela(quiniela).subscribe(resultado => {
-      expect(resultado.Id).toEqual(1);
-      done();
-    })
-  });*/
+  /* it('Enviar una quiniela con los datos correctos', (done: DoneFn) => {
+     const quiniela = { id_Usuario: 1, id_Partido: 1, id_Jugadores_goles_Eq1: [1, 2], id_Jugadores_asistencias_Eq1: [1, 2], id_Jugadores_goles_Eq2: [3, 4], id_Jugadores_asistencias_Eq2: [3, 4], Goles_Eq1: 6, Goles_Eq2: 9, Autogoles_eq1: 3, Autogoles_eq2: 0, id_Jugador_GOAT: 21 };
+     const mockResult = {
+       status: 201
+     }
+     httpClientSpy.post.and.returnValue(throwError(error_))
+     service.guardarQuiniela(quiniela).subscribe(resultado => {
+       expect(resultado.Id).toEqual(1);
+       done();
+     })
+   });*/
 
 
   it('Enviar un resultado con los datos nulos', (done: DoneFn) => {
@@ -79,4 +80,55 @@ describe('QuinielaService', () => {
         done();
       })
   });
+
+  it('Enviar una quiniela con los datos nulos', (done: DoneFn) => {
+    const quiniela = { id_Usuario: null, id_Partido: null, id_Jugadores_goles_Eq1: null, id_Jugadores_asistencias_Eq1: null, id_Jugadores_goles_Eq2: null, id_Jugadores_asistencias_Eq2: null, Goles_Eq1: null, Goles_Eq2: null, Autogoles_eq1: null, Autogoles_eq2: null, id_Jugador_GOAT: null };
+    const error_ = {
+      error: "Datos incorrectos",
+      status: 409,
+      statusText: "Datos nulos"
+    }
+    httpClientSpy.post.and.returnValue(throwError(error_))
+    service.guardarQuiniela(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(409);
+        done();
+      })
+  });
+
+  it('Consultar con datos nulos una quiniela', (done: DoneFn) => {
+    const quiniela_torneo_usuario = { id_Usuario: null, torneo: "Torneo 1" };
+    const error_ = {
+      error: "Datos incorrectos",
+      status: 409,
+      statusText: "Datos nulos"
+    }
+    httpClientSpy.post.and.returnValue(throwError(error_))
+    service.get_quinielas_torneo_usuario(quiniela_torneo_usuario).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(409);
+        done();
+      })
+  });
+
+  /*
+    it('get de resultados',
+      (done: DoneFn) => {
+        const error_ = {
+          error: "Datos incorrectos",
+          status: 409,
+          statusText: "Datos nulos"
+        }
+        httpClientSpy.get.and.returnValue(throwError(error_))
+        service.getResultado('user').subscribe(value => {
+          expect(value.length).toEqual(0);
+          done();
+        }, error => {
+          //expect(error.status).toEqual(409);
+          //done();
+        });
+      });
+  */
 });
