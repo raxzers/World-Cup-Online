@@ -24,18 +24,22 @@ import { ViewEventsComponent } from './PAGES/view-events/view-events.component';
 import { NavbarComponent } from './PAGES/navbar/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http';
-import { MatTableModule} from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { VRankingComponent } from './PAGES/vRanking/v-ranking/v-ranking.component';
 import { VQuinielaComponent } from './PAGES/v-quiniela/v-quiniela.component';
-import { LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
+import { DialogoConfirmacion, LlenarQuinielaComponent } from './PAGES/llenar-quiniela/llenar-quiniela.component';
 import { RegisterComponent } from './PAGES/register/register/register.component';
 import { ClientNavbarComponent } from './PAGES/clientNavbar/client-navbar/client-navbar.component';
+import { CommunityComponent } from './PAGES/community/community/community.component';
+
 import { UserService } from './SERVICES/user/user.service';
 import { RoleGuardGuard } from './core/guards/role-guard.guard';
 import { PopUpComponent } from './PAGES/register/popUp/pop-up/pop-up.component';
-import {MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LlenarResultadoComponent } from './PAGES/llenar-resultado/llenar-resultado.component';
+
 
 
 @NgModule({
@@ -49,9 +53,12 @@ import {MatDialogModule } from '@angular/material/dialog';
     VRankingComponent,
     VQuinielaComponent,
     LlenarQuinielaComponent,
+    LlenarResultadoComponent,
     RegisterComponent,
     ClientNavbarComponent,
     PopUpComponent,
+    CommunityComponent,
+    DialogoConfirmacion
   ],
   imports: [
     BrowserModule,
@@ -68,13 +75,13 @@ import {MatDialogModule } from '@angular/material/dialog';
     MatTableModule,
     MatCardModule,
     MatNativeDateModule,
-    MatTabsModule,MatDialogModule,
+    MatTabsModule, MatDialogModule,
     MatDividerModule,
-    MatGridListModule,NgbModule,
-    FormsModule,ReactiveFormsModule,HttpClientModule,
+    MatGridListModule, NgbModule,
+    FormsModule, ReactiveFormsModule, HttpClientModule,
     ToastrModule.forRoot(),
   ],
-  providers: [UserService,RoleGuardGuard],
+  providers: [UserService, RoleGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ const router = Router();
 
 router.get('/', controller.get);
 router.get("/:id", controller.getById);
+router.get("/partido_torneo/:id", controller.getByTorneo);
 router.get("/partido_Spc/:id", controller.getByPartido);
 router.post("/", controller.add);
 router.put("/:id", controller.update);

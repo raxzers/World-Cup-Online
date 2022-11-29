@@ -303,8 +303,6 @@ export class HomeComponent implements OnInit {
     this.verificarNombre();
     this.verificarFechas();
     this.verificarTipoEquipo();
-   // this.verificarFechaActual();
-   // this.verificarFechaActual2();
     if (this.verificarCondiciones()) {
       if (this.equiposTorneo.length >= 2) {
         console.log(this.categoriaForm.get('categoriaControl').value);

@@ -41,14 +41,14 @@ describe('LoginComponent', () => {
     const loginComponent =fixture.componentInstance;
     
     user={
-      Username: 'Traznar',
-      Password: 'papugod',
+      Username: 'admingod',
+      Password: 'abcd1234',
   }
    userService.login(user).subscribe(data => { 
-      expect(JSON.stringify(data)).toBe(JSON.stringify('admin'));
+      expect(JSON.stringify(data)).toBe(JSON.stringify("El usuario ingresado es incorrecto"));
    //   expect(userService.IsLoggedIn()).toBe("admin");
     });  
-    loginComponent.enter('Traznar','papugod');
+    loginComponent.enter('admingod','abcd1234');
     localStorage.setItem('rol','admin')
     expect(localStorage.getItem('rol')).toBe('admin')
     

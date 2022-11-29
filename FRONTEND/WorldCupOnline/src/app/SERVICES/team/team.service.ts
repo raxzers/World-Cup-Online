@@ -19,7 +19,7 @@ export class TeamService {
 
   actualizarForm = new BehaviorSubject<teamModel>({} as any);
 
-  actualizarForm2 =new BehaviorSubject<seleccionModel>({} as any);
+  actualizarForm2 = new BehaviorSubject<seleccionModel>({} as any);
 
   constructor(private http: HttpClient) { }
 
@@ -27,13 +27,23 @@ export class TeamService {
     return this.http.post<teamModel>('http://localhost:3000/api/clubes/', equipo);
   }
 
- 
+
   obtenerClubs() {
     this.http.get('http://localhost:3000/api/clubes/').toPromise().then(data => { this.list = data as teamModel[]; });
   }
   obtenerSelecciones() {
     this.http.get('http://localhost:3000/api/selecciones/').toPromise().then(data => { this.list2 = data as seleccionModel[]; });
   }
+
+  obtenerClubs_Id(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/clubes/' + id);
+  }
+  obtenerSelecciones_Id(id: number): Observable<string> {
+    return this.http.get<string>('http://localhost:3000/api/selecciones/' + id);
+  }
+
+
+
   actualizar(equipo) {
     this.actualizarForm.next(equipo);
   }
@@ -62,12 +72,12 @@ export class TeamService {
       .toPromise()
       .then(data => this.list2 = data as seleccionModel[]);
   }
-  
-  obtener_jugadores_por_club(equipo:String): Observable<jugador_club_Model>{
-    return this.http.get<jugador_club_Model>('http://localhost:3000/api/jugadores_club/'+equipo);
+
+  obtener_jugadores_por_club(equipo: String): Observable<jugador_club_Model[]> {
+    return this.http.get<jugador_club_Model[]>('http://localhost:3000/api/jugadores_club/' + equipo);
   }
 
-  obtener_jugadores_por_seleccion(equipo:String): Observable<jugador_seleccion_Model[]>{
-    return this.http.get<jugador_seleccion_Model[]>('http://localhost:3000/api/jugadores_seleccion/'+equipo);
+  obtener_jugadores_por_seleccion(equipo: String): Observable<jugador_seleccion_Model[]> {
+    return this.http.get<jugador_seleccion_Model[]>('http://localhost:3000/api/jugadores_seleccion/' + equipo);
   }
 }

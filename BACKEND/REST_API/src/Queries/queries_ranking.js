@@ -1,4 +1,4 @@
-const get = "SELECT * FROM public.\"Ranking\"";
+const get = "select r.\"Id\",u.\"Username\",r.\"Puntaje\" from public.\"Ranking\"  r left join public.\"Torneo\" t on t.\"ID\"= r.\"id_Torneo\" left join public.\"Usuarios\" u on u.\"ID\"= r.\"id_Usuario\"  order by r.\"Puntaje\" DESC";
 const getById = "select r.\"Id\",u.\"Username\",r.\"Puntaje\" from public.\"Ranking\"  r left join public.\"Torneo\" t on t.\"ID\"= r.\"id_Torneo\" left join public.\"Usuarios\" u on u.\"ID\"= r.\"id_Usuario\" where t.\"Nombre\" = $1 order by r.\"Puntaje\" DESC";
 const getXNombres= "select r.\"Id\",t.\"Nombre\",u.\"Username\",r.\"Puntaje\" from public.\"Ranking\"  r left join public.\"Torneo\" t on t.\"ID\"= r.\"id_Torneo\" left join public.\"Usuarios\" u on u.\"ID\"= r.\"id_Usuario\" order by r.\"Puntaje\" DESC";
 const checkIdExists = "SELECT * FROM public.\"Ranking\" WHERE \"Id\" = $1";
