@@ -4,24 +4,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
-
+import { UserService } from 'src/app/SERVICES/user/user.service';
+import * as Rx from 'rxjs';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-
+  let httpClientSpy: { post: jasmine.Spy };
+  let service: UserService;
+  let a;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RegisterComponent], imports: [HttpClientModule, ToastrModule.forRoot(), MatDialogModule, ReactiveFormsModule, MatIconModule]
     })
       .compileComponents();
-
+      
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
+  beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['post']);
+    service = new UserService(httpClientSpy as any,a as any);
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -115,14 +121,51 @@ describe('RegisterComponent', () => {
 
   it('validar condiciones verdaderas', () => {
     const registerComponent = fixture.componentInstance;
-    registerComponent.condiciones=[true,true,true,true,true,true,true,true]
-    
+    registerComponent.condiciones = [true, true, true, true, true, true, true, true]
+
     expect(registerComponent.verificarCondiciones()).toBe(true);
   });
   it('validar condiciones falsas', () => {
     const registerComponent = fixture.componentInstance;
-    registerComponent.condiciones=[false,false,false,false,false,false,false,false]
-    
+    registerComponent.condiciones = [false, false, false, false, false, false, false, false]
+
     expect(registerComponent.verificarCondiciones()).toBe(true);
+  });
+
+  it('test Obtener Paises prueba service)', async () => {
+    const serviceSpy: UserService = TestBed.get(UserService);
+    spyOn(serviceSpy, 'obtenerPaises1').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerPais()).toBe();
+    expect(await serviceSpy.obtenerPaises1).toHaveBeenCalled();
+  });
+
+  it('Guardar Usuario con service', (done: DoneFn) => {
+    const quiniela = {
+      Fecha_Nacimiento: new Date("20/20/2000"),
+        Nombre: "Brandon",
+        Apellido1:"Gomez",
+        Pais: "Angola",
+        Correo: "abcd@gmail.com",
+        Password: "abcd",
+        Username: "abcd",
+    };
+    const homeComponent = fixture.componentInstance;
+   // let user = homeComponent.form.controls['nombreComunidad'];
+   // user.setValue('abcd')
+    homeComponent.condiciones = [false,false,false,false,false,false,false,false];
+    component.guardarCliente();
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.guardarUsuario(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(service.guardarUsuario(quiniela)).toHaveBeenCalled;
+        done();
+      })
+      
   });
 });

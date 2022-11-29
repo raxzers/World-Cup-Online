@@ -9,6 +9,7 @@ import * as Rx from 'rxjs';
 import { CommunityComponent } from './community.component';
 import { delay } from 'rxjs';
 import { communityGetModel } from 'src/app/MODELS/getComunityModel';
+import { TorneoServiceService } from 'src/app/SERVICES/torneo/torneo-service.service';
 
 describe('CommunityComponent', () => {
   let component: CommunityComponent;
@@ -112,5 +113,56 @@ describe('CommunityComponent', () => {
         done();
       })
   });
+  it('test obtenerNombres Torneos prueba service)', async () => {
+    const serviceSpy: TorneoServiceService = TestBed.get(TorneoServiceService);
+    spyOn(serviceSpy, 'obtenerTorneos').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerNombresTorneos()).toBe();
+    expect(await serviceSpy.obtenerTorneos).toHaveBeenCalled();
+  });
+  it('test obtenerComunidades Torneos prueba service)', async () => {
+    const serviceSpy: ComunidadService = TestBed.get(ComunidadService);
+    spyOn(serviceSpy, 'getComunidades').and.returnValue(Promise.resolve([]));
+    expect(component.obtenerComunidades()).toBe();
+    expect(await serviceSpy.getComunidades).toHaveBeenCalled();
+  });
 
+  it('Ingresar a comunidad de otro usuario MAIN', (done: DoneFn) => {
+    const quiniela = { COD_Invita: "c9x1LA2" };
+    component.unirseComunidad();
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.unirseComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(error.status).toEqual(200);
+        done();
+      })
+  });
+  it('Guardar comunidad con service', (done: DoneFn) => {
+    const quiniela = { Usuario: "string",
+      NombreTorneo:"string",
+      NombreComunidad: "string"};
+    const homeComponent = fixture.componentInstance;
+    let user = homeComponent.guardarLiga.controls['nombreComunidad'];
+    user.setValue('abcd')
+    homeComponent.paisCondicion=false;
+    component.guardarComunidad();
+    const error_ = {
+      error: "Datos Correctos",
+      status: 200,
+      statusText: "Datos validos"
+    }
+    httpClientSpy.post.and.returnValue(Rx.throwError(error_))
+    service.guardarComunidad(quiniela).subscribe(resultado => {
+    },
+      error => {
+        expect(service.guardarComunidad(quiniela)).toHaveBeenCalled;
+        done();
+      })
+  });
+  
 });
