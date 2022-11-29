@@ -12,7 +12,7 @@ const get = async (req, res) => {
         res.status(200).json(await funciones.get_ranking_privado());
     }
     
-};
+};  
 
 const getById = async (req, res) => {
     const username = req.params.id;
@@ -39,7 +39,8 @@ const getByComunidad = async (req, res) => {
 };
 
 const add = async (req, res) => {
-    const {Usuario,COD_Invita,test } = req.body;
+    const {Usuario,COD_Invita,Test } = req.body;
+    
     if(Usuario == null) res.status(400).json("Error");
     if (Test== "si"){
         var get_var = await mook.add_ranking_privado(Usuario,COD_Invita);
@@ -55,6 +56,7 @@ const add = async (req, res) => {
 
 const remove = async (req, res) => {
     const id = parseInt(req.params.id);
+    const { Test } = req.body;
     if (Test== "si"){
         var get_var = await mook.getById_ranking_privado(id);
     }
@@ -90,7 +92,7 @@ const update = async (req, res) => {
         res.send("No existe en la base de datos");
     }
     if (Test== "si"){
-        var get_var = await mook.remove_ranking_privado(id);
+        var get_var = await mook.update_ranking_privado(Usuario,NombreComunidad,id);
         res.status(get_var).json(get_var);
     }
     else {

@@ -41,8 +41,8 @@ async function getByname_torneo(Nombre){
         response = [{
             "ID": "EiOASj",
             "Nombre": "Copa del Mundo",
-            "Fecha_inicio": "2020-10-31T06:00:00.000Z",
-            "Fecha_fin": "2020-12-31T06:00:00.000Z",
+            "Fecha_inicio": "2022-10-31T06:00:00.000Z",
+            "Fecha_fin": "2023-12-31T06:00:00.000Z",
             "Equipos": "Seleccion",
             "Reglas": "fkwhfibjebvjdsbvs"
           }];

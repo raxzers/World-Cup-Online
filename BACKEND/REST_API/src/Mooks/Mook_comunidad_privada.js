@@ -3,25 +3,16 @@
 async function get_comunidad_privada(){
     const response = [
         {
-          "ID": "1",
-          "Club": "Saprissa",
-          "Nombre_Jugador": "Kevin",
-          "Apellido1_Jugador": "Chamorro",
-          "Apellido2_Jugador": "  "
+            "Nombre": "wwwe",
+            "COD_Invita": "Leo",
+            "Id_Torneo": "wddwqe",
+            "Test":"si" 
         },
         {
-          "ID": "2",
-          "Club": "Saprissa",
-          "Nombre_Jugador": "Aron",
-          "Apellido1_Jugador": "Cruz",
-          "Apellido2_Jugador": "  "
-        },
-        {
-          "ID": "21",
-          "Club": "Heredia",
-          "Nombre_Jugador": "Esteban",
-          "Apellido1_Jugador": "Alvarado",
-          "Apellido2_Jugador": "  "
+            "Nombre": "wwwe2",
+            "COD_Invita": "Leo2",
+            "Id_Torneo": "wddwqe2",
+            "Test":"si" 
         }];
     return response
     
@@ -30,34 +21,27 @@ async function get_comunidad_privada(){
 async function getById_comunidad_privada(id){
     var response = [];
     if(id==1) {
-        response = [{
-            "ID": "1",
-            "Club": "Saprissa",
-            "Nombre_Jugador": "Kevin",
-            "Apellido1_Jugador": "Chamorro",
-            "Apellido2_Jugador": "  "
-          }];
+        response = [
+            {
+                "Nombre": "wwwe",
+                "COD_Invita": "Leo",
+                "Id_Torneo": "wddwqe",
+                "Test":"si" 
+            }
+          ];
     }
     return response
 }
 
-async function getByclub_comunidad_privada(Club){
+async function getByUseryTorneo(NombreTorneo,Usuario){
     var response = [];
-    if(Club=="Saprissa") {
+    if(NombreTorneo=="wwwe") {
         response = [
             {
-              "ID": "1",
-              "Club": "Saprissa",
-              "Nombre_Jugador": "Kevin",
-              "Apellido1_Jugador": "Chamorro",
-              "Apellido2_Jugador": "  "
-            },
-            {
-              "ID": "2",
-              "Club": "Saprissa",
-              "Nombre_Jugador": "Aron",
-              "Apellido1_Jugador": "Cruz",
-              "Apellido2_Jugador": "  "
+                "Nombre": "wwwe",
+                "COD_Invita": "Leo",
+                "Id_Torneo": "wddwqe",
+                "Test":"si" 
             }];
     }
     return response
@@ -83,5 +67,5 @@ module.exports = {
     getById_comunidad_privada,
     remove_comunidad_privada,
     update_comunidad_privada,
-    getByclub_comunidad_privada,
+    getByUseryTorneo,
 } 

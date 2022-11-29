@@ -27,7 +27,7 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-    const {Torneo,Fase } = req.body;
+    const {Torneo,Fase,Test } = req.body;
     
     if (Test== "si"){
         var get_var = await mook.add_torneo_fase(Torneo,Fase);

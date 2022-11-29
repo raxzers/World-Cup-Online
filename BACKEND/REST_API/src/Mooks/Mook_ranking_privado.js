@@ -1,25 +1,12 @@
 async function get_ranking_privado(){
     const response = [
         {
-          "ID": "1",
-          "Club": "Saprissa",
-          "Nombre_Jugador": "Kevin",
-          "Apellido1_Jugador": "Chamorro",
-          "Apellido2_Jugador": "  "
+          "Id_comunidad": "1",
+          "Id_usuario": "1"
         },
         {
-          "ID": "2",
-          "Club": "Saprissa",
-          "Nombre_Jugador": "Aron",
-          "Apellido1_Jugador": "Cruz",
-          "Apellido2_Jugador": "  "
-        },
-        {
-          "ID": "21",
-          "Club": "Heredia",
-          "Nombre_Jugador": "Esteban",
-          "Apellido1_Jugador": "Alvarado",
-          "Apellido2_Jugador": "  "
+          "Id_comunidad": "1",
+          "Id_usuario": "2"
         }];
     return response
     
@@ -29,38 +16,29 @@ async function getById_ranking_privado(id){
     var response = [];
     if(id==1) {
         response = [{
-            "ID": "1",
-            "Club": "Saprissa",
-            "Nombre_Jugador": "Kevin",
-            "Apellido1_Jugador": "Chamorro",
-            "Apellido2_Jugador": "  "
+          "Id_comunidad": "1",
+          "Id_usuario": "2"
           }];
     }
     return response
 }
 
-async function getByclub_ranking_privado(Club){
+async function getBycomunidad_ranking_privado(comunidad){
     var response = [];
-    if(Club=="Saprissa") {
+    if(comunidad==1) {
         response = [
-            {
-              "ID": "1",
-              "Club": "Saprissa",
-              "Nombre_Jugador": "Kevin",
-              "Apellido1_Jugador": "Chamorro",
-              "Apellido2_Jugador": "  "
-            },
-            {
-              "ID": "2",
-              "Club": "Saprissa",
-              "Nombre_Jugador": "Aron",
-              "Apellido1_Jugador": "Cruz",
-              "Apellido2_Jugador": "  "
-            }];
+          {
+            "Id_comunidad": "1",
+            "Id_usuario": "1"
+          },
+          {
+            "Id_comunidad": "1",
+            "Id_usuario": "2"
+          }];
     }
     return response
 }
-async function add_ranking_privado(Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador){
+async function add_ranking_privado(Usuario,COD_Invita){
 
     return (200) 
 }
@@ -70,7 +48,7 @@ async function remove_ranking_privado(id){
     return (200)  
 }
 
-async function update_ranking_privado(id,Club,Nombre_Jugador,Apellido1_Jugador,Apellido2_Jugador){
+async function update_ranking_privado(Usuario,NombreComunidad,id){
 
     return (200) 
 }
@@ -81,5 +59,5 @@ module.exports = {
     getById_ranking_privado,
     remove_ranking_privado,
     update_ranking_privado,
-    getByclub_ranking_privado,
+    getBycomunidad_ranking_privado,
 } 

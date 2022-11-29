@@ -210,7 +210,7 @@ test("Post paises_fifa",async() => {
 
 test("Remove paises_fifa",async() => {
     const response = await request(app).get("/api/paises_fifa/3").send({Test:"si"});
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(404);
 })
 
 //-----------------------------------------------------------------
@@ -394,7 +394,7 @@ test("PUT torneo_equipo especifica",async() => {
         "Equipo": "Belen" ,
         "Test":"si"  
     });
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(404);
 })
 test("DELETE torneo_equipo especifica",async() => {
     const response = await request(app).delete("/api/torneo_equipo/EiOASj").send({Test:"si"});
@@ -426,7 +426,7 @@ test("PUT torneo_fase especifica",async() => {
         "Fase": "Semifinal",
         "Test":"si"   
     });
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(404);
 })
 test("DELETE torneo_fase especifica",async() => {
     const response = await request(app).delete("/api/torneo_fase/2").send({Test:"si"});
@@ -464,7 +464,7 @@ test("PUT torneo especifica",async() => {
          "Reglas": "sasasss"  ,
         "Test":"si"  
     });
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(404);
 })
 test("DELETE torneo especifica",async() => {
     const response = await request(app).delete("/api/torneo/EiOASj").send({Test:"si"});
@@ -505,12 +505,152 @@ test("PUT usuarios especifica",async() => {
         "Username": "new22" ,
         "Test":"si"    
     });
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(404);
 })
 test("DELETE usuarios especifica",async() => {
     const response = await request(app).delete("/api/usuarios/8").send({Test:"si"});
     expect(response.statusCode).toBe(200);
 })
 //===================================================================================
+test("GET comunidad privada",async() => {
+    const response = await request(app).get("/api/comunidad_privada/").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+test("GET comunidad privada especifica",async() => {
+    const response = await request(app).get("/api/comunidad_privada/8").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+
+test("POST comunidad privada ",async() => {
+    const response = await request(app).post("/api/comunidad_privada/").send({
+    "Nombre": "wwwe",
+    "COD_Invita": "Leo",
+    "Id_Torneo": "wddwqe",
+    "Test":"si" 
+    });
+    expect(response.statusCode).toBe(400);
+})
+
+test("PUT comunidad privada especifica",async() => {
+    const response = await request(app).patch("/api/comunidad_privada/8").send({
+        "Nombre": "wwwe",
+        "COD_Invita": "Leo",
+        "Id_Torneo": "wddwqe",
+        "Test":"si"    
+    });
+    expect(response.statusCode).toBe(404);
+})
+test("DELETE comunidad privada especifica",async() => {
+    const response = await request(app).delete("/api/comunidad_privada/8").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+
+//===================================================================================
+test("GET ranking privado",async() => {
+    const response = await request(app).get("/api/ranking_privado/").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+test("GET ranking privado especifica",async() => {
+    const response = await request(app).get("/api/ranking_privado/1").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+
+test("POST ranking privado privada ",async() => {
+    const response = await request(app).post("/api/ranking_privado/").send({
+        "Usuario": 1,
+        "COD_Invita": "qgussd",
+        "Test":"si" 
+    });
+    expect(response.statusCode).toBe(200);
+})
+
+test("PUT ranking privado especifica",async() => {
+    const response = await request(app).patch("/api/ranking_privado/8").send({
+        "Usuario": 1,
+        "COD_Invita": "qgussd",
+        "Test":"si"     
+    });
+    expect(response.statusCode).toBe(404);
+})
+test("DELETE ranking privado especifica",async() => {
+    const response = await request(app).delete("/api/ranking_privado/8").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+
+//===================================================================================
+test("GET resultados",async() => {
+    const response = await request(app).get("/api/resultados/").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+test("GET resultados",async() => {
+    const response = await request(app).get("/api/resultados/1").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+})
+
+test("POST resultados",async() => {
+    const response = await request(app).post("/api/resultados/").send({
+        "Id": "1",
+        "id_Partido": "9",
+        "id_Jugadores_goles_Eq1": [
+          "8",
+          "9"
+        ],
+        "id_Jugadores_asistencias_Eq1": [
+          "6",
+          "7"
+        ],
+        "id_Jugador_GOAT": "3",
+        "Goles_Eq1": 2,
+        "Goles_Eq2": 2,
+        "id_Jugadores_goles_Eq2": [
+          "3",
+          "3"
+        ],
+        "id_Jugadores_asistencias_Eq2": [
+          "1",
+          "2"
+        ],
+        "Autogoles_eq1": 0,
+        "Autogoles_eq2": 0,
+        "Test":"si"    
+    });
+    expect(response.statusCode).toBe(200);
+})
+
+test("PUT resultados especifica",async() => {
+    const response = await request(app).patch("/api/resultados/1").send(
+        {
+            "Id": "1",
+            "id_Partido": "9",
+            "id_Jugadores_goles_Eq1": [
+              "8",
+              "9"
+            ],
+            "id_Jugadores_asistencias_Eq1": [
+              "6",
+              "7"
+            ],
+            "id_Jugador_GOAT": "3",
+            "Goles_Eq1": 2,
+            "Goles_Eq2": 2,
+            "id_Jugadores_goles_Eq2": [
+              "3",
+              "3"
+            ],
+            "id_Jugadores_asistencias_Eq2": [
+              "1",
+              "2"
+            ],
+            "Autogoles_eq1": 0,
+            "Autogoles_eq2": 0,
+            "Test":"si"    
+    });
+    expect(response.statusCode).toBe(404);
+})
+test("DELETE resultados especifica",async() => {
+    const response = await request(app).delete("/api/resultados/8").send({Test:"si"});
+    expect(response.statusCode).toBe(200);
+},8000)
+
 });
 

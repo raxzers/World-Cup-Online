@@ -4,7 +4,7 @@ const queryran= require('../Queries/queries_ranking_privado');
 const cadenaAleatoria = require("../../extra_f");
 const funciones = require("../Funtion_queries/Funtion_queries_comunidad_privada");
 const funciones_ran_priv = require("../Funtion_queries/Funtion_queries_ranking_privado");
-const mook = require("../Mooks/Mook_jugadores_club");
+const mook = require("../Mooks/Mook_comunidad_privada");
 
 const get = async (req, res) => {
     const { Test } = req.body;
@@ -21,7 +21,7 @@ const getById = async (req, res) => {
     const id = req.params.id;
     const { Test } = req.body;
     if (Test== "si"){
-        res.status(200).json(await mook.getByclub_jugadores_club(id));
+        res.status(200).json(await mook.getById_comunidad_privada(id));
     }
     else {
         res.status(200).json(await funciones.getById_comunidad_privada(id));

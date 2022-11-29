@@ -7,7 +7,7 @@ const mook = require("../Mooks/Mook_resultados");
 const get = async (req, res) => {
     const { Test } = req.body;
     if (Test== "si"){
-        res.status(200).json(await mook.get_resultados());
+        res.status(200).json(await mook.get_resultado());
     }
     else {
         res.status(200).json(await funciones.get_resultados());
@@ -18,7 +18,7 @@ const getById = async (req, res) => {
     const id = req.params.id;
     const { Test } = req.body;
     if (Test== "si"){
-        res.status(200).json(await mook.getById_resultados(id));
+        res.status(200).json(await mook.getById_resultado(id));
     }
     else {
         res.status(200).json(await funciones.getById_resultados(id));
@@ -40,7 +40,7 @@ const getByname_Torneo = async (req, res) => {
 const add = async (req, res) => {
     const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT,Test } = req.body;
     if (Test== "si"){
-        var get_var = await mook.add_resultados(id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT);
+        var get_var = await mook.add_resultado(id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT);
         res.status(get_var).json(get_var);
     }
     else {
@@ -57,7 +57,7 @@ const remove = async (req, res) => {
     const id = parseInt(req.params.id);
     const { Test } = req.body;
     if (Test== "si"){
-        var get_var = await mook.getById_resultados(id);
+        var get_var = await mook.getById_resultado(id);
     }
     else {
         var get_var = await funciones.getById_resultados(id);
@@ -67,7 +67,7 @@ const remove = async (req, res) => {
         res.send("No existe en la base de datos"); 
     } 
     if (Test== "si"){
-        var get_var2 = await mook.remove_resultados(id); 
+        var get_var2 = await mook.remove_resultado(id); 
         res.status(get_var2).json(get_var2); 
     }
     else {
@@ -81,7 +81,7 @@ const update = async (req, res) => {
     const id = parseInt(req.params.id);
     const { id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT,Test } = req.body;
     if (Test== "si"){
-        var get_var = await mook.getById_resultados(id);
+        var get_var = await mook.getById_resultado(id);
     }
     else {
         var get_var = await funciones.getById_resultados(id);
@@ -91,7 +91,7 @@ const update = async (req, res) => {
         res.send("No existe en la base de datos");
     }
     if (Test== "si"){
-        var get_var2 = await mook.update_resultados(id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT); 
+        var get_var2 = await mook.update_resultado(id,id_Partido,id_Jugadores_goles_Eq1,id_Jugadores_asistencias_Eq1,id_Jugadores_goles_Eq2,id_Jugadores_asistencias_Eq2,Goles_Eq1,Goles_Eq2,Autogoles_eq1,Autogoles_eq2,id_Jugador_GOAT); 
         res.status(get_var2).json(get_var2); 
     }
     else {
