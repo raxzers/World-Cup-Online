@@ -81,11 +81,6 @@ describe('VRankingComponent', () => {
     expect(component.obtenerPosicionesPrivado('Torneo')).toBe();
     expect(await serviceSpy.getComunidades).toHaveBeenCalled();
   });
-  it('test obtenerRankingPosicionesBueno() Service)', async () => {
-    const serviceSpy: RankingService = TestBed.get(RankingService);
-    spyOn(serviceSpy, 'obtenerRankingsBueno').and.returnValue(Promise.resolve([]));
-    expect( component.obtenerPosiciones("torneo")).toBe();
-    expect( await serviceSpy.obtenerRankingsBueno).toHaveBeenCalled();
-  });
+  
 
 });
